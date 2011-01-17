@@ -1,0 +1,12 @@
+#gallery-settings,
+#view-post-btn,
+#advanced-sortables .handlediv,
+.describe .image_alt,
+.describe .post_excerpt,
+.describe .url,
+.describe .align,
+.describe .image-size,
+.describe .submit { display: none !important; }
+
+#gog_sectionid .inside { padding: 0 8px; }
+#add_image img { vertical-align: text-bottom; }
