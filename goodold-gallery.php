@@ -643,6 +643,8 @@ add_action('admin_menu', 'goodold_gallery_create_menu');
 function goodold_gallery_shortcode($attr) {
   global $post;
 
+  static $i = 1;
+
   extract(shortcode_atts(array(
     'id'      => null,
     'size'    => 'Full',
@@ -674,7 +676,7 @@ function goodold_gallery_shortcode($attr) {
 
     if ($attachments) {
       // GO-GALLERY ID
-      $ret .= '  <div id="go-gallery-' . $id . '" class="go-gallery">' . "\n";
+      $ret .= '  <div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery go-gallery-' . $id . '">' . "\n";
 
       // GALLERY CLASS
       $ret .= '    <div class="gallery">' . "\n";
@@ -726,13 +728,13 @@ function goodold_gallery_shortcode($attr) {
 
       // SCRIPT
       $ret .= '    <script type="text/javascript">jQuery(function($) { ' .
-                   '$("#go-gallery-' . $id . ' .gallery").cycle({' .
+                   '$("#go-gallery-' . $id . '-' . $i . ' .gallery").cycle({' .
                      'fx: "' . $fx . '",' .
                      'speed: ' . $speed . ',' .
                      'timeout: ' . $timeout . ',' .
                      $pager .
-                     'prev: "#go-gallery-' . $id . ' .prev",' .
-                     'next: "#go-gallery-' . $id . ' .next"' .
+                     'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
+                     'next: "#go-gallery-' . $id . '-' . $i . ' .next"' .
                      '});' .
                    '});' .
                  '</script>' . "\n";
@@ -741,6 +743,8 @@ function goodold_gallery_shortcode($attr) {
       $ret .= '  </div>' . "\n";
     }
   }
+
+  $i++;
 
   return $ret;
 }
