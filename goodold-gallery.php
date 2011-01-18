@@ -48,23 +48,23 @@ class GoodOldGallery {
    * Constructor
    */
   public function __construct() {
-    register_post_type('goodoldgallery',
+    register_post_type( 'goodoldgallery',
       array(
         'labels' => array(
-            'name'               => __('Galleries'),
-            'singular_name'      => __('Gallery'),
-            'add_new'            => __('Add New'),
-            'add_new_item'       => __('Add New Gallery'),
-            'edit_item'          => __('Edit Gallery'),
-            'new_item'           => __('New Gallery'),
-            'view_item'          => __('View Gallery'),
-            'search_items'       => __('Search Galleries'),
-            'not_found'          => __('No Galleries found'),
-            'not_found_in_trash' => __('No Galleries found in Trash'),
+            'name'               => _x( 'Galleries', 'gallery type general name' ),
+            'singular_name'      => _x( 'Gallery', 'gallery type singular name' ),
+            'add_new'            => __( 'Add New' ),
+            'add_new_item'       => __( 'Add New Gallery' ),
+            'edit_item'          => __( 'Edit Gallery' ),
+            'new_item'           => __( 'New Gallery' ),
+            'view_item'          => __( 'View Gallery' ),
+            'search_items'       => __( 'Search Galleries' ),
+            'not_found'          => __( 'No Galleries found' ),
+            'not_found_in_trash' => __( 'No Galleries found in Trash' ),
             'parent_item_colon'  => ''
         ),
       'public'               => false,
-      'description'          => __('A Gallery that is used to display sliders on the Good Old site.'),
+      'description'          => __( 'A Gallery that is used to display sliders on the Good Old site.' ),
       'publicly_queryable'   => false,
       'show_ui'              => true,
       'show_in_nav_menus'    => false,
@@ -72,16 +72,16 @@ class GoodOldGallery {
       'rewrite'              => true,
       'capability_type'      => 'post',
       'hierarchical'         => false,
-      'menu_position'        => null,
+      'menu_position'        => 10,
       'exclude_from_search'  => true,
-      'supports'             => array('title'),
-      'rewrite'              => array('slug' => 'goodold-gallery', 'with_front' => false),
+      'supports'             => array( 'title' ),
+      'rewrite'              => array( 'slug' => 'goodold-gallery', 'with_front' => false ),
       'menu_icon'            => GOG_PLUGIN_URL . '/img/goodold-gallery.png',
-      'register_meta_box_cb' => array($this, 'addMeta')
+      'register_meta_box_cb' => array( $this, 'addMeta' )
       )
     );
 
-    // Add action to save the fortunecookie metadata
+    // Add action to save the gallery metadata
     // add_action('save_post', array($this, 'saveMetaContent'));
   }
 
