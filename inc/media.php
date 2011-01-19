@@ -4,8 +4,19 @@
  * Adds Good Old Gallery media tab.
  */
 function goodold_gallery_media_tab($tabs) {
-	$newtab = array('gogallery' => __( GOG_PLUGIN_NAME, 'gogallery' ));
-	return array_merge($tabs, $newtab);
+	global $wpdb;
+
+	$posts = $wpdb->get_results($wpdb->prepare("
+		SELECT ID FROM $wpdb->posts
+			WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
+	));
+
+	if ($posts) {
+		$newtab = array('gogallery' => __( GOG_PLUGIN_NAME, 'gogallery' ));
+		$tabs = array_merge($tabs, $newtab);
+	}
+
+	return $tabs;
 }
 add_filter( 'media_upload_tabs', 'goodold_gallery_media_tab' );
 
@@ -152,7 +163,7 @@ function goodold_gallery_image_attachment_fields_to_save($post, $attachment) {
 add_filter( "attachment_fields_to_save", "goodold_gallery_image_attachment_fields_to_save", null , 2 );
 
 /**
- * Hide unwanted tabs in Good Old Gallery uploader
+ * Hide unwanted tabs in Good Old Gallery uploader.
  */
 function goodold_gallery_remove_media_tabs($tabs) {
 	unset($tabs['type_url']);
@@ -164,6 +175,9 @@ if ( is_admin() && get_post_type($_GET['post_id']) == 'goodoldgallery' ) {
 	add_filter( 'media_upload_tabs', 'goodold_gallery_remove_media_tabs' );
 }
 
+/**
+ * Custom upload media button.
+ */
 function goodold_gallery_upload_button($title, $type) {
 	return "<a href='" . esc_url( get_upload_iframe_src($type) ) . "' id='add_$type' class='thickbox button' title='$title'>$title</a>";
 }
