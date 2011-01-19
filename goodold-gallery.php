@@ -891,26 +891,137 @@ class GoodOldGalleryWidget extends WP_Widget {
 <?php
   }
 }
-add_action( 'widgets_init', create_function('', 'return register_widget("GoodOldGalleryWidget");') );
+add_action('widgets_init', create_function('', 'return register_widget("GoodOldGalleryWidget");'));
 
 
 // ------- EXTRAS ------------------------------------------------------------
 // ---------------------------------------------------------------------------
 
 /**
- * Adds custom gallery media button.
+ * Adds Good Old Gallery media button. (Can't get this working properly)
  */
-function goodold_gallery_media_button($context) {
-  $button = ' %s';
-  if (get_post_type() != 'goodoldgallery') {
-    $image = GOG_PLUGIN_URL . '/img/goodold-gallery-small.png';
-    $button .= '<a href="' . GOG_PLUGIN_URL . '/admin/goodold-gallery-insert.php?post_id=null" class="thickbox" title="Insert Good Old Gallery"><img src="' . $image . '" /></a>';
-  }
+// function goodold_gallery_media_button($context) {
+//   $post = wp_get_single_post();
+//
+//   $button = ' %s';
+//   if (get_post_type() != 'goodoldgallery') {
+//     $image = GOG_PLUGIN_URL . '/img/goodold-gallery-small.png';
+//     $button .= '<a href="media-upload.php?post_id=' . $post->ID . '&type=image&tab=gogallery" id="add_gogallery" class="thickbox" title="Insert Good Old Gallery"><img src="' . $image . '" /></a>';
+//   }
+//
+//   return sprintf($context, $button);
+// }
+// add_filter('media_buttons_context', 'goodold_gallery_media_button');
 
-  return sprintf($context, $button);
+/**
+ * Adds Good Old Gallery media tab.
+ */
+function goodold_gallery_media_tab($tabs) {
+  $newtab = array( 'gogallery' => __('Good Old Gallery', 'gogallery' ) );
+  return array_merge($tabs, $newtab);
 }
-add_filter('media_buttons_context', 'goodold_gallery_media_button');
+add_filter( 'media_upload_tabs', 'goodold_gallery_media_tab' );
 
+
+/**
+ * Good Old Gallery tab page.
+ */
+function goodold_gallery_media_process() {
+  global $wpdb;
+
+  media_upload_header();
+
+  // Build dropdown with galleries
+  $posts = $wpdb->get_results($wpdb->prepare("
+    SELECT ID, post_title FROM $wpdb->posts
+      WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
+  ));
+
+  $options = !$posts ? "<option value=\"\">No galleries found</option>" : "";
+
+  foreach ($posts as $p) {
+    $selected = '';
+    $options .= "<option value=\"$p->ID\">$p->post_title</option>";
+  }
+?>
+<div id="goodold-gallery-generator">
+  <h3 class="media-title">Good Old Gallery shortcode generator</h3>
+
+  <div class="postbox">
+    <h3 style="margin: 0; padding: 10px;">Generator</h3>
+    <div class="inside" style="margin: 10px;">
+      <p>
+        Copy and paste the generated shortcode into your post or page in HTML mode.
+      </p>
+
+      <div id="goodold-gallery-shortcode">
+        <p>
+          <code>[goodold-gallery]</code>
+        </p>
+      </div>
+
+      <p>
+        <label for="gallery" title="Select gallery" style="line-height:25px;">Gallery:</label>
+        <select id="gallery" name="Gallery" class="gog-generate">
+          <option value="">Select gallery</option>
+          <?php echo $options; ?>
+        </select>
+      </p>
+
+      <p>
+        <label for="fx" title="Animation" style="line-height:25px;">Animation:</label>
+        <select id="fx" name="fx" class="gog-generate">
+          <option value="">Select animation</option>
+          <option value="none">None (Standard gallery)</option>
+          <option value="scrollHorz">Horizontal scroll</option>
+          <option value="scrollVert">Vertical scroll</option>
+          <option value="fade">Fade</option>
+        </select>
+      </p>
+
+      <div class="cycle-options">
+        <p>
+          <label for="timeout" title="Cycle animation timeout">Timeout:</label>
+          <input id="timeout" name="timeout" type="text" class="gog-generate" /> <span>ms</span>
+        </p>
+
+        <p>
+          <label for="speed" title="Speed of animation">Speed:</label>
+          <input id="speed" name="speed" type="text" class="gog-generate" /> <span>ms</span>
+        </p>
+
+        <p>
+          <label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
+          <select id="size" name="size" class="gog-generate">
+            <option value="">Select size</option>
+            <option value="thumbnail">Thumbnail</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="full">Full</option>
+          </select>
+        </p>
+
+        <p>
+          <input id="pager" type="checkbox" name="pager" class="gog-generate" value="true" />
+          <label for="pager" title="Select gallery" style="line-height:25px;">Show pager</label>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+}
+
+/**
+ * Loads Good Old Gallery tab page.
+ */
+function goodold_gallery_media_menu_handle() {
+  wp_enqueue_style('media');
+  wp_enqueue_script('gallery-insert', GOG_PLUGIN_URL . '/admin/goodold-gallery-admin.js', 'jquery', false, true);
+  wp_enqueue_style( 'goodold-gallery', GOG_PLUGIN_URL . '/admin/goodold-gallery-admin.css' );
+  return wp_iframe('goodold_gallery_media_process');
+}
+add_action('media_upload_gogallery', 'goodold_gallery_media_menu_handle');
 
 /**
  * Adds custom image link field.
