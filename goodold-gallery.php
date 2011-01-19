@@ -723,7 +723,7 @@ function goodold_gallery_shortcode($attr) {
       $pager = '';
       if ($attr['pager']) {
         $ret .= '    <div class="pager"></div>' . "\n";
-        $pager = 'pager: "#go-gallery-' . $id . ' .pager",';
+        $pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
       }
 
       // SCRIPT
