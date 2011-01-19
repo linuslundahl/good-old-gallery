@@ -48,8 +48,8 @@ function goodold_gallery_shortcode($attr) {
 			// GO-GALLERY ID
 			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery go-gallery-' . $id . '">' . "\n";
 
-			// GALLERY CLASS
-			$ret .= '<div class="gallery">' . "\n";
+			// INNER CLASS
+			$ret .= '<div class="inner">' . "\n";
 
 			// INSERT ATTACHMENTS
 			foreach ( $attachments as $gallery_id => $attachment ) {
@@ -81,7 +81,7 @@ function goodold_gallery_shortcode($attr) {
 				$ret .= '</div>' . "\n";
 			}
 
-			// END GO-GALLERY CLASS
+			// END INNER CLASS
 			$ret .= '</div>' . "\n";
 
 			// NAVIGATION
@@ -110,7 +110,7 @@ function goodold_gallery_shortcode($attr) {
 			// FINISH SCRIPT
 			$ret .= '<script type="text/javascript">' .
 								'jQuery(function($) { ' .
-									'$("#go-gallery-' . $id . '-' . $i . ' .gallery").cycle({' .
+									'$("#go-gallery-' . $id . '-' . $i . ' .inner").cycle({' .
 										rtrim($script, ',') .
 									'});' .
 								'});' .

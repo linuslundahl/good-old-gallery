@@ -30,10 +30,10 @@ function goodold_gallery_media_process() {
 		$options .= "<option value=\"$p->ID\">$p->post_title</option>";
 	}
 ?>
-<div id="good-old-gallery-generator">
+<div id="go-gallery-generator">
 	<h3 class="media-title"><?php echo GOG_PLUGIN_NAME; ?> shortcode generator</h3>
 
-	<div class="postbox">
+	<div class="postbox submitdiv">
 		<h3 style="margin: 0; padding: 10px;">Generator</h3>
 		<div class="inside" style="margin: 10px;">
 			<span class="description">
@@ -163,6 +163,11 @@ function goodold_gallery_remove_media_tabs($tabs) {
 if ( is_admin() && get_post_type($_GET['post_id']) == 'goodoldgallery' ) {
 	add_filter( 'media_upload_tabs', 'goodold_gallery_remove_media_tabs' );
 }
+
+function goodold_gallery_upload_button($title, $type) {
+	return "<a href='" . esc_url( get_upload_iframe_src($type) ) . "' id='add_$type' class='thickbox button' title='$title'>$title</a>";
+}
+
 
 /**
  * Adds Good Old Gallery media button. (Can't get this working properly yet)

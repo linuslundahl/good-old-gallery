@@ -6,11 +6,15 @@
 .describe .url,
 .describe .align,
 .describe .image-size,
-.describe .submit { display: none !important; }
+.describe .submit,
+#normal-sortables { display: none !important; }
 
 #gog_sectionid .inside { padding: 0 8px; }
 #add_image img { vertical-align: text-bottom; }
 
-#good-old-gallery-generator { margin: 1em; }
+#go-gallery-generator { margin: 1em; }
 
-.postbox h3 { cursor: default; }
+.postbox h3,
+h3.hndle { cursor: default !important; }
+
+.go-gallery-admin { margin: 2em 0; }

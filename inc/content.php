@@ -70,19 +70,34 @@ class GoodOldGallery {
 	public function addMetaContent() {
 		$args = func_get_args();
 
-		echo '<h4>Upload</h4>';
-		echo '<div><p>';
+		$edit = FALSE;
+		$button = __( 'Upload images' );
+		if ( $_GET['post'] ) {
+			$button = __( 'Manage gallery' );
+			$edit = TRUE;
+		}
 
-		$out = _media_button( __( 'Add an Image' ), 'images/media-button-image.gif?ver=20100531', 'image' );
-		$context = apply_filters( 'media_buttons_context', __( 'Upload/Manage: %s' ) );
+		echo '<div class="go-gallery-admin">';
+
+		$out = goodold_gallery_upload_button( $button, 'image' );
+		$context = apply_filters( 'media_buttons_context', __( '%s' ) );
 		printf($context, $out);
 
-		echo '</p></div>';
+		if ( !$edit ) {
+			echo ' <span class="description">Click to upload your images.</span>';
+		}
+		else {
+			echo ' <span class="description">Click to manage your images.</span>';
+		}
 
-		if ( $_GET['post'] ) {
-			echo '<h4>Shortcode</h4>';
-			echo '<div><p>Shortcode for this gallery: <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p></div>';
-			echo '<span class="description"><p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the post/page in HTML mode.</p></span>';
+		echo '</div>';
+
+		if ( $edit ) {
+			echo '<p>Shortcode for this gallery: <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p>';
+			echo '<span class="description">';
+			echo '<p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the post/page in HTML mode.</p>';
+			echo '<p>To generate a shortcode with custom variables, click on the \'Add an Image\' icon on a page or a post, then click the \'Good Old Gallery\' tab.</p>';
+			echo '</span>';
 		}
 	}
 
