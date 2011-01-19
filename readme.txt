@@ -10,9 +10,7 @@ Good Old Gallery helps you use galleries on multiple posts and pages.
 
 == Description ==
 
-Good Old Gallery is a gallery plugin that utilizes the built in wordpress gallery functionality, but it allows users to use a gallery on multiple posts by creating a new content type that works as a "gallery wrapper".
-
-It also has support for widgets.
+Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in jQuery Cycle support and Widgets.
 
 Included is jQuery Cycle.
 
