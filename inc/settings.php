@@ -75,6 +75,22 @@ $gog_options['timeout'] = array(
 	"size" => 4
 );
 
+$gog_options['title'] = array(
+	"name" => "Show title",
+	"desc" => "Select if the title for each image should be displayed.",
+	"id" => "title",
+	"type" => "checkbox",
+	"std" => 0
+);
+
+$gog_options['description'] = array(
+	"name" => "Show description",
+	"desc" => "Select if the description for each image should be displayed.",
+	"id" => "description",
+	"type" => "checkbox",
+	"std" => 0
+);
+
 $gog_options['pager'] = array(
 	"name" => "Show pager",
 	"desc" => "Select if the pager should be displayed.",

@@ -33,12 +33,14 @@ class GoodOldGalleryWidget extends WP_Widget {
 		}
 
 		if ( $show ) {
-			$size       = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
-			$navigation = $instance['navigation']   ? ' navigation="true"' : '';
-			$pager      = $instance['pager']        ? ' pager="true"' : '';
-			$fx         = $instance['fx']           ? ' fx="' . $instance['fx'] . '"' : '';
-			$timeout    = $instance['timeout']      ? ' timeout="' . $instance['timeout'] . '"' : '';
-			$speed      = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
+			$size        = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
+			$title       = $instance['title']        ? ' title="true"' : '';
+			$description = $instance['description']  ? ' description="true"' : '';
+			$navigation  = $instance['navigation']   ? ' navigation="true"' : '';
+			$pager       = $instance['pager']        ? ' pager="true"' : '';
+			$fx          = $instance['fx']           ? ' fx="' . $instance['fx'] . '"' : '';
+			$timeout     = $instance['timeout']      ? ' timeout="' . $instance['timeout'] . '"' : '';
+			$speed       = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
 
 			echo $before_widget;
 			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']' );
@@ -48,15 +50,17 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 	// UPDATE WIDGET SETTINGS
 	function update($new_instance, $old_instance) {
-		$instance['title']      = $new_instance['title'];
-		$instance['post-ID']    = $new_instance['post-ID'];
-		$instance['size']       = $new_instance['size'];
-		$instance['fx']         = $new_instance['fx'];
-		$instance['timeout']    = $new_instance['timeout'];
-		$instance['speed']      = $new_instance['speed'];
-		$instance['navigation'] = $new_instance['navigation'];
-		$instance['pager']      = $new_instance['pager'];
-		$instance['pages']      = $new_instance['pages'];
+		$instance['title']       = $new_instance['title'];
+		$instance['post-ID']     = $new_instance['post-ID'];
+		$instance['size']        = $new_instance['size'];
+		$instance['fx']          = $new_instance['fx'];
+		$instance['timeout']     = $new_instance['timeout'];
+		$instance['speed']       = $new_instance['speed'];
+		$instance['title']       = $new_instance['title'];
+		$instance['description'] = $new_instance['description'];
+		$instance['navigation']  = $new_instance['navigation'];
+		$instance['pager']       = $new_instance['pager'];
+		$instance['pages']       = $new_instance['pages'];
 
 		return $instance;
 	}
@@ -124,6 +128,16 @@ class GoodOldGalleryWidget extends WP_Widget {
 			<option value="large"<?php echo $instance['size'] == 'large' ? ' selected="yes"' : ''; ?>>Large</option>
 			<option value="full"<?php echo $instance['size'] == 'full' ? ' selected="yes"' : ''; ?>>Full</option>
 		</select>
+	</p>
+
+	<p>
+		<input id="<?php echo $this->get_field_id('title'); ?>" type="checkbox" name="<?php echo $this->get_field_name('title'); ?>"<?php echo $instance['title'] ? ' checked="checked"' : ''; ?> />
+		<label for="<?php echo $this->get_field_id('title'); ?>" title="Select if the title should be displayed" style="line-height:25px;">Show pager</label>
+	</p>
+
+	<p>
+		<input id="<?php echo $this->get_field_id('description'); ?>" type="checkbox" name="<?php echo $this->get_field_name('description'); ?>"<?php echo $instance['description'] ? ' checked="checked"' : ''; ?> />
+		<label for="<?php echo $this->get_field_id('description'); ?>" title="Select if the description should be displayed" style="line-height:25px;">Show description</label>
 	</p>
 
 	<p>

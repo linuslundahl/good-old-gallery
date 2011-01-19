@@ -11,15 +11,17 @@ function goodold_gallery_shortcode($attr) {
 	$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 
 	extract(shortcode_atts( array(
-		'id'         => null,
-		'size'       => $gog_settings['size']       ? $gog_settings['size']       : 'Full',
-		'fx'         => $gog_settings['fx']         ? $gog_settings['fx']         : 'fade',
-		'speed'      => $gog_settings['speed']      ? $gog_settings['speed']      : 500,
-		'timeout'    => $gog_settings['timeout']    ? $gog_settings['timeout']    : 10000,
-		'navigation' => $gog_settings['navigation'] ? $gog_settings['navigation'] : FALSE,
-		'pager'      => $gog_settings['pager']      ? $gog_settings['pager']      : FALSE,
-		'prev'       => $gog_settings['prev']       ? $gog_settings['prev']       : 'prev',
-		'next'       => $gog_settings['next']       ? $gog_settings['next']       : 'next'
+		'id'          => null,
+		'size'        => $gog_settings['size']        ? $gog_settings['size']        : 'Full',
+		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : 'fade',
+		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']       : 500,
+		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']     : 10000,
+		'title'       => $gog_settings['title']       ? $gog_settings['title']       : FALSE,
+		'description' => $gog_settings['description'] ? $gog_settings['description'] : FALSE,
+		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']  : FALSE,
+		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']       : FALSE,
+		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']        : 'prev',
+		'next'        => $gog_settings['next']        ? $gog_settings['next']        : 'next'
 	), $attr ));
 
 	// Use post_id if no id is set in shortcode.
@@ -55,12 +57,12 @@ function goodold_gallery_shortcode($attr) {
 
 				$ret .= '<div class="image">' . "\n";
 
-				if ( $attachment->post_title || $attachment->post_content ) {
+				if ( ($title || $description) && ($attachment->post_title || $attachment->post_content) ) {
 					$ret .= '<div class="meta">' . "\n";
-					if ( $attachment->post_title ) {
+					if ( $title && $attachment->post_title ) {
 						$ret .= '<span class="title">' . $attachment->post_title . '</span>' . "\n";
 					}
-					if ( $attachment->post_content ) {
+					if ( $description && $attachment->post_content ) {
 						$ret .= '<span class="description">' . $attachment->post_content . '</span>' . "\n";
 					}
 					$ret .= '</div>' . "\n";

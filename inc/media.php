@@ -90,6 +90,16 @@ function goodold_gallery_media_process() {
 				</p>
 
 				<p>
+					<input id="title" type="checkbox" name="title" value="true" />
+					<label for="title" title="Select if the title should be displayed" style="line-height:25px;">Show title</label>
+				</p>
+
+				<p>
+					<input id="description" type="checkbox" name="description" value="true" />
+					<label for="description" title="Select if the description should be displayed" style="line-height:25px;">Show description</label>
+				</p>
+
+				<p>
 					<input id="navigation" type="checkbox" name="navigation" value="true" />
 					<label for="navigation" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
 				</p>
