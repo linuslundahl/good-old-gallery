@@ -159,7 +159,7 @@ function create_goodoldgallery() {
 add_action( 'init', 'create_goodoldgallery' );
 
 
-// ------- SETTINGS PAGE -----------------------------------------------------
+// ------- DEFAULT SETTINGS PAGE ---------------------------------------------
 // ---------------------------------------------------------------------------
 
 // Build form
@@ -249,6 +249,24 @@ $gog_options['navigation'] = array(
   "id" => "navigation",
   "type" => "checkbox",
   "std" => 0
+);
+
+$gog_options['prev'] = array(
+  "name" => "Prev",
+  "desc" => "Text used for prev button",
+  "id" => "next",
+  "type" => "text",
+  "std" => 'prev',
+  "size" => 4
+);
+
+$gog_options['next'] = array(
+  "name" => "Next",
+  "desc" => "Text used for next button",
+  "id" => "prev",
+  "type" => "text",
+  "std" => 'next',
+  "size" => 4
 );
 
 $gog_options['end'] = array(
@@ -418,7 +436,9 @@ function goodold_gallery_shortcode($attr) {
     'speed'      => $gog_settings['speed']      ? $gog_settings['speed']      : 500,
     'timeout'    => $gog_settings['timeout']    ? $gog_settings['timeout']    : 10000,
     'navigation' => $gog_settings['navigation'] ? $gog_settings['navigation'] : FALSE,
-    'pager'      => $gog_settings['pager']      ? $gog_settings['pager']      : FALSE
+    'pager'      => $gog_settings['pager']      ? $gog_settings['pager']      : FALSE,
+    'prev'       => $gog_settings['prev']       ? $gog_settings['prev']       : 'prev',
+    'next'       => $gog_settings['next']       ? $gog_settings['next']       : 'next'
   ), $attr));
 
   // Use post_id if no id is set in shortcode.
@@ -454,19 +474,19 @@ function goodold_gallery_shortcode($attr) {
 
         $ret .= '      <div class="image">' . "\n";
 
-        if ($link) {
-          $ret .= '        <a href="' . $link . '">' . "\n";
-        }
-
         if ($attachment->post_title || $attachment->post_content) {
           $ret .= '          <div class="meta">' . "\n";
           if ($attachment->post_title) {
-            $ret .= '            <h1 class="title">' . $attachment->post_title . '</h1>' . "\n";
+            $ret .= '            <span class="title">' . $attachment->post_title . '</span>' . "\n";
           }
           if ($attachment->post_content) {
             $ret .= '          <span class="description">' . $attachment->post_content . '</span>' . "\n";
           }
           $ret .= '          </div>' . "\n";
+        }
+
+        if ($link) {
+          $ret .= '        <a href="' . $link . '">' . "\n";
         }
 
         $ret .= "          " . wp_get_attachment_image($gallery_id, $size, false) . "\n";
@@ -484,7 +504,7 @@ function goodold_gallery_shortcode($attr) {
       // NAVIGATION
       if ($navigation) {
         $ret .= '    <div class="nav">' . "\n";
-        $ret .= '      <div class="prev">&nbsp;</div><div class="next">&nbsp;</div>' . "\n";
+        $ret .= '      <span class="prev">' . $prev . '</span><span class="next">' . $next . '</span>' . "\n";
         $ret .= '    </div>' . "\n";
         $navigation = 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
                       'next: "#go-gallery-' . $id . '-' . $i . ' .next"';
@@ -564,7 +584,7 @@ class GoodOldGalleryWidget extends WP_Widget {
       $speed      = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
 
       echo $before_widget;
-      echo do_shortcode('[goodold-gallery id="' . $instance['gallery-post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']');
+      echo do_shortcode('[goodold-gallery id="' . $instance['post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']');
       echo $after_widget;
     }
   }
@@ -737,8 +757,8 @@ function goodold_gallery_media_process() {
       </div>
 
       <p>
-        <label for="gallery" title="Select gallery" style="line-height:25px;">Gallery:</label>
-        <select id="gallery" name="Gallery" class="gog-generate">
+        <label for="id" title="Select gallery" style="line-height:25px;">Gallery:</label>
+        <select id="id" name="Gallery">
           <option value="">Select gallery</option>
           <?php echo $options; ?>
         </select>
@@ -746,7 +766,7 @@ function goodold_gallery_media_process() {
 
       <p>
         <label for="fx" title="Animation" style="line-height:25px;">Animation:</label>
-        <select id="fx" name="fx" class="gog-generate">
+        <select id="fx" name="fx">
           <option value="">Select animation</option>
           <option value="none">None (Standard gallery)</option>
           <option value="scrollHorz">Horizontal scroll</option>
@@ -758,17 +778,17 @@ function goodold_gallery_media_process() {
       <div class="cycle-options">
         <p>
           <label for="timeout" title="Cycle animation timeout">Timeout:</label>
-          <input id="timeout" name="timeout" type="text" class="gog-generate" /> <span>ms</span>
+          <input id="timeout" name="timeout" type="text" /> <span>ms</span>
         </p>
 
         <p>
           <label for="speed" title="Speed of animation">Speed:</label>
-          <input id="speed" name="speed" type="text" class="gog-generate" /> <span>ms</span>
+          <input id="speed" name="speed" type="text" /> <span>ms</span>
         </p>
 
         <p>
           <label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
-          <select id="size" name="size" class="gog-generate">
+          <select id="size" name="size">
             <option value="">Select size</option>
             <option value="thumbnail">Thumbnail</option>
             <option value="medium">Medium</option>
@@ -778,12 +798,12 @@ function goodold_gallery_media_process() {
         </p>
 
         <p>
-          <input id="navigation" type="checkbox" name="navigation" class="gog-generate" value="true" />
+          <input id="navigation" type="checkbox" name="navigation" value="true" />
           <label for="navigation" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
         </p>
 
         <p>
-          <input id="pager" type="checkbox" name="pager" class="gog-generate" value="true" />
+          <input id="pager" type="checkbox" name="pager" value="true" />
           <label for="pager" title="Select if a pager should be displayed" style="line-height:25px;">Show pager</label>
         </p>
       </div>
@@ -809,7 +829,7 @@ add_action('media_upload_gogallery', 'goodold_gallery_media_menu_handle');
  */
 function goodold_gallery_image_attachment_fields_to_edit($form_fields, $post) {
   $form_fields["goodold_gallery_image_link"] = array(
-    "label" => __("Custom Link"),
+    "label" => __("Link"),
     "input" => "text",
     "value" => get_post_meta($post->ID, "_goodold_gallery_image_link", true), "helps" => __("To be used with Good Old Gallery slider."),
   );
@@ -835,6 +855,7 @@ add_filter("attachment_fields_to_save", "goodold_gallery_image_attachment_fields
 function goodold_gallery_remove_media_tabs($tabs) {
   unset($tabs['type_url']);
   unset($tabs['library']);
+  unset($tabs['gogallery']);
   return $tabs;
 }
 if (is_admin() && get_post_type($_GET['post_id']) == 'goodoldgallery') {
