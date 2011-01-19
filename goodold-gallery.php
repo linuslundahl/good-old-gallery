@@ -11,7 +11,10 @@
  *
  */
 
+// Globals
 define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename(dirname(__FILE__)));
+$gog_pluginname = "Good Old Gallery";
+$gog_shortname = "gog";
 
 // Register style and js for this plugin
 if (!is_admin()) {
@@ -159,16 +162,10 @@ add_action( 'init', 'create_goodoldgallery' );
 // ------- SETTINGS PAGE -----------------------------------------------------
 // ---------------------------------------------------------------------------
 
-// Setup form
-$gog_pluginname = "Good Old Gallery";
-$gog_shortname = "gog";
-$gog_options = array();
-
 // Build form
+$gog_options = array();
 $gog_options['paragraph-1'] = array(
-  "value" => "sexyCycle for WordPress created and maintained by <a href=\"http://unwise.se/\">Linus Lundahl</a>.<br />
-              <a href=\"http://suprb.com/apps/sexyCycle/\">sexyCycle jQuery plugin</a> created by <a href=\"http://suprb.com/\">Andreas Pihlstr&ouml;m</a>.<br />
-              Contributions by <a href=\"http://thewebpreneur.com/\">Nick O'Neill</a>.<br />",
+  "value" => "Good Old Gallery created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>.",
   "type" => "paragraph"
 );
 
@@ -178,14 +175,8 @@ $gog_options['title-1'] = array(
 );
 
 $gog_options['paragraph-2'] = array(
-  "value" => "You can choose to override the default <strong>[gallery]</strong> shortcode, or you can use the shortcode <strong>[sexy-gallery]</strong>, and still have the regular galleries enabled.
-              Galleries are created the same way <em>(Add an image -> Gallery)</em> even if you use the default <strong>[gallery]</strong> shortcode or the <strong>[sexy-gallery]</strong> shortcode,
-              but pasting a <strong>[sexy-gallery]</strong> shortcode must be done manually in HTML mode.<br /><br />
-              If the default shortcode is overriden, these settings affects <strong>all galleries</strong>
-              in <strong>all posts and pages</strong>, though custom settings can be added with <a href=\"http://wordpress.org/extend/plugins/sexycycle-for-wordpress/installation/\">shortcode variables</a>.<br />
-              Pasting both shortcodes in a single post or page is not recommended, but it works if you don't override the default shortcode.<br /><br />
-              When images are linked to the original image, this plugin works together with plugins such as <a href=\"http://wordpress.org/extend/plugins/shadowbox-js/\">Shadowbox JS</a> and
-              <a href=\"http://wordpress.org/extend/plugins/jquery-lightbox-balupton-edition/\">jQuery Lightbox</a>. It might also work with other similar plugins, but there are no guarantees.",
+  "value" => "These settings are the defaults that will be used by Cycle, settings can be overridden by adding variables to the <code>[goodold-gallery]</code> shortcode.<br />
+              Use the built in generator found under the 'Good Old Gallery' tab, just click the 'Add an Image' button to find the tab.",
   "type" => "paragraph"
 );
 
@@ -194,274 +185,74 @@ $gog_options['title-2'] = array(
   "type" => "title"
 );
 
-$gog_options['start-1'] = array(
+$gog_options['start'] = array(
   "type" => 'start-table'
 );
 
-$gog_options['override'] = array(
-  "name" => "Override default gallery",
-  "desc" => "If checked, all [gallery] shortcode tags will be overridden.",
-  "id" => $gog_shortname . "_override",
-  "type" => "checkbox",
-  "std" => 0
-);
-
-$gog_options['image-size'] = array(
+$gog_options['size'] = array(
   "name" => "Image size",
   "desc" => "Select what image size the galleries should use.",
-  "id" => $gog_shortname . "_img_size",
+  "id" => "size",
   "type" => "select",
   "options" => array(
-    'thumbnail' => 'thumbnail',
-    'medium' => 'medium',
-    'large' => 'large',
-    'full' => 'full'
+    'Thumbnail' => 'thumbnail',
+    'Medium' => 'medium',
+    'Large' => 'large',
+    'Full' => 'full'
   ),
   "std" => 'large'
 );
 
-$gog_options['animation'] = array(
-  "name" => "jQuery Easing animation",
-  "desc" => "Slide animation that should be used.",
-  "id" => $gog_shortname . "_animation",
+$gog_options['fx'] = array(
+  "name" => "Transition animation",
+  "desc" => "Animation that should be used.",
+  "id" => "fx",
   "type" => "select",
   "options" => array(
-    'easeInQuad' => 'easeInQuad',
-    'easeOutQuad' => 'easeOutQuad',
-    'easeInOutQuad' => 'easeInOutQuad',
-    'easeInCubic' => 'easeInCubic',
-    'easeOutCubic' => 'easeOutCubic',
-    'easeInOutCubic' => 'easeInOutCubic',
-    'easeInQuart' => 'easeInQuart',
-    'easeOutQuart' => 'easeOutQuart',
-    'easeInOutQuart' => 'easeInOutQuart',
-    'easeInQuint' => 'easeInQuint',
-    'easeOutQuint' => 'easeOutQuint',
-    'easeInOutQuint' => 'easeInOutQuint',
-    'easeInSine' => 'easeInSine',
-    'easeOutSine' => 'easeOutSine',
-    'easeInOutSine' => 'easeInOutSine',
-    'easeInExpo' => 'easeInExpo',
-    'easeOutExpo' => 'easeOutExpo',
-    'easeInOutExpo' => 'easeInOutExpo',
-    'easeInCirc' => 'easeInCirc',
-    'easeOutCirc' => 'easeOutCirc',
-    'easeInOutCirc' => 'easeInOutCirc',
-    'easeInElastic' => 'easeInElastic',
-    'easeOutElastic' => 'easeOutElastic',
-    'easeInOutElastic' => 'easeInOutElastic',
-    'easeInBack' => 'easeInBack',
-    'easeOutBack' => 'easeOutBack',
-    'easeInOutBack' => 'easeInOutBack',
-    'easeInBounce' => 'easeInBounce',
-    'easeOutBounce' => 'easeOutBounce',
-    'easeInOutBounce' => 'easeInOutBounce'
+     'Fade'                    => 'fade',
+     'Horizontal scroll'       => 'scrollHorz',
+     'Vertical scroll'         => 'scrollVert',
+     'None (Standard gallery)' => 'none'
   ),
-  "std" => 'easeOutExpo'
+  "std" => 'fade'
 );
 
 $gog_options['speed'] = array(
   "name" => "Speed",
-  "desc" => "The speed of the animation. (milliseconds)",
-  "id" => $gog_shortname . "_speed",
+  "desc" => "milliseconds",
+  "id" => "speed",
   "type" => "text",
-  "std" => '400',
+  "std" => '500',
   "size" => 4
 );
 
-$gog_options['interval'] = array(
-  "name" => "Auto cycle speed",
-  "desc" => "Leave empty to disable auto cycling. (milliseconds)",
-  "id" => $gog_shortname . "_interval",
+$gog_options['timeout'] = array(
+  "name" => "Transition speed",
+  "desc" => "milliseconds",
+  "id" => "timeout",
   "type" => "text",
+  "std" => '10000',
   "size" => 4
 );
 
-$gog_options['controls'] = array(
-  "name" => "Type of controls",
+$gog_options['pager'] = array(
+  "name" => "Show pager",
+  "desc" => "Select if the page should be displayed.",
+  "id" => "pager",
+  "type" => "checkbox",
+  "std" => 0
+);
+
+$gog_options['navigation'] = array(
+  "name" => "Show navigation",
   "desc" => "Select if you would like to add PREV and NEXT buttons.",
-  "id" => $gog_shortname . "_controls",
-  "type" => "select",
-  "options" => array(
-    'none' => 0,
-    'Above image' => 'above',
-    'Under image' => 'under',
-    'Before / After image' => 'beforeafter'
-  ),
-  "std" => 0
-);
-
-$gog_options['controls_stop'] = array(
-  "name" => "Use stop button",
-  "desc" => "If checked, a button to stop auto cycling will be added.",
-  "id" => $gog_shortname . "_controls_stop",
+  "id" => "navigation",
   "type" => "checkbox",
   "std" => 0
 );
 
-$gog_options['imgclick'] = array(
-  "name" => "Image click",
-  "desc" => "Select what clicking the gallery image should default to.",
-  "id" => $gog_shortname . "_imgclick",
-  "type" => "select",
-  "options" => array(
-    'Swap to next image' => 0,
-    'Link original image' => 'link',
-    'Do nothing' => 'nothing'
-  ),
-  "std" => 0
-);
-
-$gog_options['prev'] = array(
-  "name" => "PREV title",
-  "desc" => "Choose a different title.",
-  "id" => $gog_shortname . "_prev",
-  "type" => "text",
-  "size" => 4,
-  "std" => 'Prev'
-);
-
-$gog_options['next'] = array(
-  "name" => "NEXT title",
-  "desc" => "Choose a different title.",
-  "id" => $gog_shortname . "_next",
-  "type" => "text",
-  "size" => 4,
-  "std" => 'Next'
-);
-
-$gog_options['stop'] = array(
-  "name" => "STOP title",
-  "desc" => "Choose a different title.",
-  "id" => $gog_shortname . "_stop",
-  "type" => "text",
-  "size" => 4,
-  "std" => 'Stop'
-);
-
-$gog_options['caption'] = array(
-  "name" => "Caption",
-  "desc" => "Choose which field to use as caption.",
-  "id" => $gog_shortname . "_caption",
-  "type" => "select",
-  "options" => array(
-    'none' => 0,
-    'Use caption' => 'caption',
-    'Use description' => 'desc'
-  ),
-  "std" => 0
-);
-
-$gog_options['counter'] = array(
-  "name" => "Slide counter",
-  "desc" => "If checked, slideshow will include a slide counter.",
-  "id" => $gog_shortname ."_counter",
-  "type" => "checkbox",
-  "std" => 0
-);
-
-$gog_options['cycle'] = array(
-  "name" => "Disable cycling",
-  "desc" => "Prevent the gallery from cycling",
-  "id" => $gog_shortname . "_cycle",
-  "type" => "checkbox",
-  "std" => 0
-);
-
-$gog_options['end-1'] = array(
+$gog_options['end'] = array(
   'type' => 'end-table'
-);
-
-$gog_options['title-3'] = array(
-  'name' => 'CSS Classes',
-  'type' => 'title'
-);
-
-$gog_options['paragraph-3'] = array(
-  "value" => "Adding your own CSS classes can come in handy if you for example use a 960 based layout.<br />Add multiple classes separated by a space: <em>grid-2 my-class</em>",
-  "type" => "paragraph"
-);
-
-$gog_options['start-2'] = array(
-  'type' => 'start-table'
-);
-
-$gog_options['class-1'] = array(
-  "name" => "<code>.gallery</code>",
-  "id" => $gog_shortname . "_class_gallery",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['class-2'] = array(
-  "name" => "<code>.gallery-wrapper</code>",
-  "id" => $gog_shortname . "_class_galleryw",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['class-3'] = array(
-  "name" => "<code>.controllers.above</code>",
-  "id" => $gog_shortname . "_class_cabove",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['class-4'] = array(
-  "name" => "<code>.controllers.under</code>",
-  "id" => $gog_shortname . "_class_cunder",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['class-5'] = array(
-  "name" => "<code>.controllers.before</code>",
-  "id" => $gog_shortname . "_class_cbefore",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['class-6'] = array(
-  "name" => "<code>.controllers.after</code>",
-  "id" => $gog_shortname . "_class_cafter",
-  "type" => "text",
-  "size" => 20,
-  "std" => ''
-);
-
-$gog_options['end-2'] = array(
-  'type' => 'end-table'
-);
-
-$gog_options['title-4'] = array(
-  'name' => 'Other',
-  'type' => 'title'
-);
-
-$gog_options['start-3'] = array(
-  'type' => 'start-table'
-);
-
-$gog_options['jquery'] = array(
-  "name" => "Disable jQuery",
-  "desc" => "Don't load latest version of jQuery from Google Libraries API<strong>*</strong>",
-  "id" => $gog_shortname . "_jquery",
-  "type" => "checkbox",
-  "std" => 0
-);
-
-$gog_options['end-3'] = array(
-  'type' => 'end-table'
-);
-
-$gog_options['paragraph-4'] = array(
-  'value' => '<small><strong>*</strong> sexyCycle depends on jQuery 1.4+ and if you disable it from loading here, make sure it\'s loaded elsewhere.</small>',
-  'type' => 'paragraph'
 );
 
 /**
@@ -471,7 +262,6 @@ function goodold_gallery_settings_page() {
   global $gog_pluginname, $gog_shortname, $gog_options;
 
   if ( 'save' == $_REQUEST['action'] ) {
-
     $values = array();
     foreach ($gog_options as $value) {
       if ($value['id']) {
@@ -479,43 +269,17 @@ function goodold_gallery_settings_page() {
       }
     }
 
-    if ($values[$gog_shortname . '_interval']) {
-      // Disable controls if an interval is set
-      $values[$gog_shortname . '_controls'] = '';
-      unset($gog_options['controls']);
-      unset($gog_options['prev']);
-      unset($gog_options['next']);
-      unset($gog_options['imgclick']);
-    }
-    else {
-      // Otherwise disable stop function
-      $values[$gog_shortname . '_controls_stop'] = NULL;
-      unset($gog_options['controls_stop']);
-      unset($gog_options['stop']);
-    }
-
     update_option($gog_shortname . '_settings', $values);
-
-    echo '<div id="message" class="updated fade"><p><strong>' . __('Options saved.') . '</strong></p></div>';
   }
 
-  $gog_settings = get_settings('gog_settings');
+  $gog_settings = get_settings( $gog_shortname . '_settings' );
 
-  if ($gog_settings[$gog_shortname . '_interval']) {
-    // Disable controls if an interval is set
-    unset($gog_options['controls']);
-    unset($gog_options['prev']);
-    unset($gog_options['next']);
-    unset($gog_options['imgclick']);
-  }
-  else {
-    // Otherwise disable stop function
-    unset($gog_options['controls_stop']);
-    unset($gog_options['stop']);
-  }
+  if ( $_REQUEST['save'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options saved.' ) . '</strong></p></div>';
+  if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options restored.' ) . '</strong></p></div>';
 ?>
 
 <div class="wrap">
+
 <h2><?php echo $gog_pluginname; ?> settings</h2>
 
 <form method="post" action="">
@@ -641,17 +405,20 @@ add_action('admin_menu', 'goodold_gallery_create_menu');
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-  global $post;
+  global $post, $gog_shortname;
 
   static $i = 1;
 
+  $gog_settings = get_settings( $gog_shortname . '_settings' );
+
   extract(shortcode_atts(array(
-    'id'      => null,
-    'size'    => 'Full',
-    'fx'      => 'scrollHorz',
-    'speed'   => 300,
-    'timeout' => 10000,
-    'pager'   => FALSE
+    'id'         => null,
+    'size'       => $gog_settings['size']       ? $gog_settings['size']       : 'Full',
+    'fx'         => $gog_settings['fx']         ? $gog_settings['fx']         : 'fade',
+    'speed'      => $gog_settings['speed']      ? $gog_settings['speed']      : 500,
+    'timeout'    => $gog_settings['timeout']    ? $gog_settings['timeout']    : 10000,
+    'navigation' => $gog_settings['navigation'] ? $gog_settings['navigation'] : FALSE,
+    'pager'      => $gog_settings['pager']      ? $gog_settings['pager']      : FALSE
   ), $attr));
 
   // Use post_id if no id is set in shortcode.
@@ -715,13 +482,16 @@ function goodold_gallery_shortcode($attr) {
       $ret .= '    </div>' . "\n";
 
       // NAVIGATION
-      $ret .= '    <div class="nav">' . "\n";
-      $ret .= '      <div class="prev">&nbsp;</div><div class="next">&nbsp;</div>' . "\n";
-      $ret .= '    </div>' . "\n";
+      if ($navigation) {
+        $ret .= '    <div class="nav">' . "\n";
+        $ret .= '      <div class="prev">&nbsp;</div><div class="next">&nbsp;</div>' . "\n";
+        $ret .= '    </div>' . "\n";
+        $navigation = 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
+                      'next: "#go-gallery-' . $id . '-' . $i . ' .next"';
+      }
 
       // PAGER
-      $pager = '';
-      if ($attr['pager']) {
+      if ($pager) {
         $ret .= '    <div class="pager"></div>' . "\n";
         $pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
       }
@@ -733,8 +503,7 @@ function goodold_gallery_shortcode($attr) {
                      'speed: ' . $speed . ',' .
                      'timeout: ' . $timeout . ',' .
                      $pager .
-                     'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
-                     'next: "#go-gallery-' . $id . '-' . $i . ' .next"' .
+                     $navigation .
                      '});' .
                    '});' .
                  '</script>' . "\n";
@@ -768,7 +537,7 @@ class GoodOldGalleryWidget extends WP_Widget {
    $widget_ops = array( 'classname' => 'goodold-gallery-widget', 'description' => __('Widget that displays a selected gallery.', 'GoodOldGalleryWidget'));
 
    /* Create the widget. */
-   $this->WP_Widget( 'GoodOldGalleryWidget', __('Goodold Gallery', 'GoodOldGalleryWidget'), $widget_ops );
+   $this->WP_Widget( 'GoodOldGalleryWidget', __('Good Old Gallery', 'GoodOldGalleryWidget'), $widget_ops );
   }
 
   // PRINT WIDGET
@@ -787,28 +556,30 @@ class GoodOldGalleryWidget extends WP_Widget {
     }
 
     if ($show) {
-      $size    = $instance['gallery-size']    ? ' size="' . $instance['gallery-size'] . '"' : '';
-      $pager   = $instance['gallery-pager']   ? ' pager="true"' : '';
-      $fx      = $instance['gallery-fx']      ? ' fx="' . $instance['gallery-fx'] . '"' : '';
-      $timeout = $instance['gallery-timeout'] ? ' timeout="' . $instance['gallery-timeout'] . '"' : '';
-      $speed   = $instance['gallery-speed']   ? ' speed="' . $instance['gallery-speed'] . '"' : '';
+      $size       = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
+      $navigation = $instance['navigation']   ? ' navigation="true"' : '';
+      $pager      = $instance['pager']        ? ' pager="true"' : '';
+      $fx         = $instance['fx']           ? ' fx="' . $instance['fx'] . '"' : '';
+      $timeout    = $instance['timeout']      ? ' timeout="' . $instance['timeout'] . '"' : '';
+      $speed      = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
 
       echo $before_widget;
-      echo do_shortcode('[goodold-gallery id="' . $instance['gallery-post-ID'] . '"' . $size . $pager . $fx . $timeout . $speed . ']');
+      echo do_shortcode('[goodold-gallery id="' . $instance['gallery-post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']');
       echo $after_widget;
     }
   }
 
   // UPDATE WIDGET SETTINGS
   function update($new_instance, $old_instance) {
-    $instance['title'] = $new_instance['title'];
-    $instance['gallery-post-ID'] = $new_instance['gallery-post-ID'];
-    $instance['gallery-size'] = $new_instance['gallery-size'];
-    $instance['gallery-fx'] = $new_instance['gallery-fx'];
-    $instance['gallery-timeout'] = $new_instance['gallery-timeout'];
-    $instance['gallery-speed'] = $new_instance['gallery-speed'];
-    $instance['gallery-pager'] = $new_instance['gallery-pager'];
-    $instance['gallery-pages'] = $new_instance['gallery-pages'];
+    $instance['title']      = $new_instance['title'];
+    $instance['post-ID']    = $new_instance['post-ID'];
+    $instance['size']       = $new_instance['size'];
+    $instance['fx']         = $new_instance['fx'];
+    $instance['timeout']    = $new_instance['timeout'];
+    $instance['speed']      = $new_instance['speed'];
+    $instance['navigation'] = $new_instance['navigation'];
+    $instance['pager']      = $new_instance['pager'];
+    $instance['pages']      = $new_instance['pages'];
 
     return $instance;
   }
@@ -827,8 +598,8 @@ class GoodOldGalleryWidget extends WP_Widget {
 
     foreach ($posts as $p) {
       $selected = '';
-      if ($instance['gallery-post-ID']) {
-        $selected = $p->ID == $instance['gallery-post-ID'] ? ' selected="yes"' : '';
+      if ($instance['post-ID']) {
+        $selected = $p->ID == $instance['post-ID'] ? ' selected="yes"' : '';
       }
       $options .= "<option value=\"$p->ID\"$selected>$p->post_title</option>";
     }
@@ -842,50 +613,55 @@ class GoodOldGalleryWidget extends WP_Widget {
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-post-ID'); ?>" title="Select gallery" style="line-height:25px;">Gallery:</label>
-    <select id="<?php echo $this->get_field_id('gallery-post-ID'); ?>" name="<?php echo $this->get_field_name('gallery-post-ID'); ?>">
+    <label for="<?php echo $this->get_field_id('post-ID'); ?>" title="Select gallery" style="line-height:25px;">Gallery:</label>
+    <select id="<?php echo $this->get_field_id('post-ID'); ?>" name="<?php echo $this->get_field_name('post-ID'); ?>">
       <?php echo $options; ?>
     </select>
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-fx'); ?>" title="Animation" style="line-height:25px;">Animation:</label>
-    <select id="<?php echo $this->get_field_id('gallery-fx'); ?>" name="<?php echo $this->get_field_name('gallery-fx'); ?>">
-      <option value="scrollHorz"<?php echo $instance['gallery-fx'] == 'scrollHorz' ? ' selected="yes"' : ''; ?>>Horizontal scroll</option>
-      <option value="scrollVert"<?php echo $instance['gallery-fx'] == 'scrollVert' ? ' selected="yes"' : ''; ?>>Vertical scroll</option>
-      <option value="fade"<?php echo $instance['gallery-fx'] == 'fade' ? ' selected="yes"' : ''; ?>>Fade</option>
-      <option value="none"<?php echo $instance['gallery-fx'] == 'none' ? ' selected="yes"' : ''; ?>>None (Standard gallery)</option>
+    <label for="<?php echo $this->get_field_id('fx'); ?>" title="Animation" style="line-height:25px;">Animation:</label>
+    <select id="<?php echo $this->get_field_id('fx'); ?>" name="<?php echo $this->get_field_name('fx'); ?>">
+      <option value="scrollHorz"<?php echo $instance['fx'] == 'scrollHorz' ? ' selected="yes"' : ''; ?>>Horizontal scroll</option>
+      <option value="scrollVert"<?php echo $instance['fx'] == 'scrollVert' ? ' selected="yes"' : ''; ?>>Vertical scroll</option>
+      <option value="fade"<?php echo $instance['fx'] == 'fade' ? ' selected="yes"' : ''; ?>>Fade</option>
+      <option value="none"<?php echo $instance['fx'] == 'none' ? ' selected="yes"' : ''; ?>>None (Standard gallery)</option>
     </select>
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-timeout'); ?>" title="Cycle animation timeout">Timeout:</label>
-    <input id="<?php echo $this->get_field_id('gallery-timeout'); ?>" name="<?php echo $this->get_field_name('gallery-timeout'); ?>" type="text" value="<?php echo $instance['animation']; ?>" /> <span>ms</span>
+    <label for="<?php echo $this->get_field_id('timeout'); ?>" title="Cycle animation timeout">Timeout:</label>
+    <input id="<?php echo $this->get_field_id('timeout'); ?>" name="<?php echo $this->get_field_name('timeout'); ?>" type="text" value="<?php echo $instance['timeout']; ?>" size="5" /> <span>ms</span>
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-speed'); ?>" title="Speed of animation">Speed:</label>
-    <input id="<?php echo $this->get_field_id('gallery-speed'); ?>" name="<?php echo $this->get_field_name('gallery-speed'); ?>" type="text" value="<?php echo $instance['speed']; ?>" /> <span>ms</span>
+    <label for="<?php echo $this->get_field_id('speed'); ?>" title="Speed of animation">Speed:</label>
+    <input id="<?php echo $this->get_field_id('speed'); ?>" name="<?php echo $this->get_field_name('speed'); ?>" type="text" value="<?php echo $instance['speed']; ?>" size="5" /> <span>ms</span>
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-size'); ?>" title="Select gallery size" style="line-height:25px;">Image size:</label>
-    <select id="<?php echo $this->get_field_id('gallery-size'); ?>" name="<?php echo $this->get_field_name('gallery-size'); ?>">
-      <option value="thumbnail"<?php echo $instance['gallery-size'] == 'thumbnail' ? ' selected="yes"' : ''; ?>>Thumbnail</option>
-      <option value="medium"<?php echo $instance['gallery-size'] == 'medium' ? ' selected="yes"' : ''; ?>>Medium</option>
-      <option value="large"<?php echo $instance['gallery-size'] == 'large' ? ' selected="yes"' : ''; ?>>Large</option>
-      <option value="full"<?php echo $instance['gallery-size'] == 'full' ? ' selected="yes"' : ''; ?>>Full</option>
+    <label for="<?php echo $this->get_field_id('size'); ?>" title="Select gallery size" style="line-height:25px;">Image size:</label>
+    <select id="<?php echo $this->get_field_id('size'); ?>" name="<?php echo $this->get_field_name('size'); ?>">
+      <option value="thumbnail"<?php echo $instance['size'] == 'thumbnail' ? ' selected="yes"' : ''; ?>>Thumbnail</option>
+      <option value="medium"<?php echo $instance['size'] == 'medium' ? ' selected="yes"' : ''; ?>>Medium</option>
+      <option value="large"<?php echo $instance['size'] == 'large' ? ' selected="yes"' : ''; ?>>Large</option>
+      <option value="full"<?php echo $instance['size'] == 'full' ? ' selected="yes"' : ''; ?>>Full</option>
     </select>
   </p>
 
   <p>
-    <input id="<?php echo $this->get_field_id('gallery-pager'); ?>" type="checkbox" name="<?php echo $this->get_field_name('gallery-pager'); ?>"<?php echo $instance['gallery-pager'] ? ' checked="checked"' : ''; ?> />
-    <label for="<?php echo $this->get_field_id('gallery-pager'); ?>" title="Select gallery" style="line-height:25px;">Show pager</label>
+    <input id="<?php echo $this->get_field_id('pager'); ?>" type="checkbox" name="<?php echo $this->get_field_name('pager'); ?>"<?php echo $instance['pager'] ? ' checked="checked"' : ''; ?> />
+    <label for="<?php echo $this->get_field_id('pager'); ?>" title="Select if a pager should be displayed" style="line-height:25px;">Show pager</label>
   </p>
 
   <p>
-    <label for="<?php echo $this->get_field_id('gallery-pages'); ?>" title="Title of the widget">Show on:</label>
-    <textarea id="<?php echo $this->get_field_id('gallery-pages'); ?>" name="<?php echo $this->get_field_name('gallery-pages'); ?>" rows=3><?php echo $instance['gallery-pages']; ?></textarea><br />
+    <input id="<?php echo $this->get_field_id('navigation'); ?>" type="checkbox" name="<?php echo $this->get_field_name('navigation'); ?>"<?php echo $instance['navigation'] ? ' checked="checked"' : ''; ?> />
+    <label for="<?php echo $this->get_field_id('navigation'); ?>" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
+  </p>
+
+  <p>
+    <label for="<?php echo $this->get_field_id('pages'); ?>" title="Title of the widget">Show on:</label>
+    <textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows=3><?php echo $instance['pages']; ?></textarea><br />
     <span class="description"><p><?php echo __("Type paths that the gallery should be visible on, separate them with a line break.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?><p></span>
   </p>
 <?php
@@ -1002,8 +778,13 @@ function goodold_gallery_media_process() {
         </p>
 
         <p>
+          <input id="navigation" type="checkbox" name="navigation" class="gog-generate" value="true" />
+          <label for="navigation" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
+        </p>
+
+        <p>
           <input id="pager" type="checkbox" name="pager" class="gog-generate" value="true" />
-          <label for="pager" title="Select gallery" style="line-height:25px;">Show pager</label>
+          <label for="pager" title="Select if a pager should be displayed" style="line-height:25px;">Show pager</label>
         </p>
       </div>
     </div>
