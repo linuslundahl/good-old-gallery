@@ -30,7 +30,7 @@ function goodold_gallery_media_process() {
 		$options .= "<option value=\"$p->ID\">$p->post_title</option>";
 	}
 ?>
-<div id="goodold-gallery-generator">
+<div id="good-old-gallery-generator">
 	<h3 class="media-title"><?php echo GOG_PLUGIN_NAME; ?> shortcode generator</h3>
 
 	<div class="postbox">
@@ -42,9 +42,9 @@ function goodold_gallery_media_process() {
 				</p>
 			</span>
 
-			<div id="goodold-gallery-shortcode">
+			<div id="good-old-gallery-shortcode">
 				<p>
-					<code>[goodold-gallery]</code>
+					<code>[good-old-gallery]</code>
 				</p>
 			</div>
 
@@ -110,8 +110,8 @@ function goodold_gallery_media_process() {
  */
 function goodold_gallery_media_menu_handle() {
 	wp_enqueue_style( 'media' );
-	wp_enqueue_script( 'gallery-insert', GOG_PLUGIN_URL . '/js/goodold-gallery-admin.js', 'jquery', false, true );
-	wp_enqueue_style( 'goodold-gallery', GOG_PLUGIN_URL . '/style/goodold-gallery-admin.css' );
+	wp_enqueue_script( 'gallery-insert', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
+	wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
 	return wp_iframe( 'goodold_gallery_media_process' );
 }
 add_action( 'media_upload_gogallery', 'goodold_gallery_media_menu_handle' );
@@ -162,7 +162,7 @@ function goodold_gallery_media_button($context) {
 
 	$button = ' %s';
 	if (get_post_type() != 'goodoldgallery') {
-		$image = GOG_PLUGIN_URL . '/img/goodold-gallery-small.png';
+		$image = GOG_PLUGIN_URL . '/img/good-old-gallery-small.png';
 		$button .= '<a href="media-upload.php?post_id=' . $post->ID . '&type=image&tab=gogallery" id="add_gogallery" class="thickbox" title="Insert ' . GOG_PLUGIN_NAME . '"><img src="' . $image . '" /></a>';
 	}
 

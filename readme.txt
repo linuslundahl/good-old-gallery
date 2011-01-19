@@ -16,7 +16,7 @@ Included is jQuery Cycle.
 
 == Installation ==
 
-1. Upload `goodold-gallery` to the `/wp-content/plugins/` directory
+1. Upload `good-old-gallery` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to 'Gallery -> Settings' to setup the basic settings.
 4. Upload images on a gallery post, go to a post or page in click the new gallery media icon to insert your gallery.

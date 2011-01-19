@@ -41,8 +41,8 @@ class GoodOldGallery {
 			'menu_position'        => 10,
 			'exclude_from_search'  => true,
 			'supports'             => array('title'),
-			'rewrite'              => array('slug' => 'goodold-gallery', 'with_front' => false),
-			'menu_icon'            => GOG_PLUGIN_URL . '/img/goodold-gallery.png',
+			'rewrite'              => array('slug' => 'good-old-gallery', 'with_front' => false),
+			'menu_icon'            => GOG_PLUGIN_URL . '/img/good-old-gallery.png',
 			'register_meta_box_cb' => array($this, 'addMeta')
 			)
 		);
@@ -81,7 +81,7 @@ class GoodOldGallery {
 
 		if ( $_GET['post'] ) {
 			echo '<h4>Shortcode</h4>';
-			echo '<div><p>Shortcode for this gallery: <code>[goodold-gallery id="' . $_GET['post'] . '"]</code></p></div>';
+			echo '<div><p>Shortcode for this gallery: <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p></div>';
 			echo '<span class="description"><p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the post/page in HTML mode.</p></span>';
 		}
 	}

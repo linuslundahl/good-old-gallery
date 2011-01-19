@@ -18,7 +18,7 @@ var $j = jQuery.noConflict();
 			}
 		});
 
-		$('#goodold-gallery-shortcode code').text('[goodold-gallery' + value + ']')
+		$('#good-old-gallery-shortcode code').text('[good-old-gallery' + value + ']')
 		value = "";
 	};
 

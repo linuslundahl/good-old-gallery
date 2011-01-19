@@ -11,7 +11,7 @@
 class GoodOldGalleryWidget extends WP_Widget {
 	function GoodOldGalleryWidget() {
 		/* Widget settings. */
-		$widget_ops = array('classname' => 'goodold-gallery-widget', 'description' => __( 'Widget that displays a selected gallery.', 'GoodOldGalleryWidget' ));
+		$widget_ops = array('classname' => 'good-old-gallery-widget', 'description' => __( 'Widget that displays a selected gallery.', 'GoodOldGalleryWidget' ));
 
 		/* Create the widget. */
 		$this->WP_Widget( 'GoodOldGalleryWidget', __( GOG_PLUGIN_NAME, 'GoodOldGalleryWidget' ), $widget_ops );
@@ -41,7 +41,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 			$speed      = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
 
 			echo $before_widget;
-			echo do_shortcode( '[goodold-gallery id="' . $instance['post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']' );
+			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']' );
 			echo $after_widget;
 		}
 	}

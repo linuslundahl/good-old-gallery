@@ -15,7 +15,7 @@ $gog_options['title-1'] = array(
 );
 
 $gog_options['paragraph-2'] = array(
-	"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[goodold-gallery]</code> shortcode.<br />" .
+	"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
 						 "Use the built in generator found under the '" . GOG_PLUGIN_NAME . "' tab, just click the 'Add an Image' button to find the tab on the far right.",
 	"type" => "paragraph"
 );

@@ -3,7 +3,7 @@
 /**
  *
  * Plugin Name: Good Old Gallery
- * Plugin URI: http://unwi.se/goodold-gallery
+ * Plugin URI: http://unwi.se/good-old-gallery
  * Description: A plugin that adds gallery functionality to goodold.se.
  * Author: Good Old
  * Version: 0.1-dev
@@ -18,7 +18,7 @@ define('GOG_PLUGIN_SHORT', 'gog');
 
 // Register style and js for this plugin
 if ( !is_admin() ) {
-	wp_enqueue_style( 'goodold-gallery', GOG_PLUGIN_URL . '/style/goodold-gallery.css' );
+	wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery.css' );
 	wp_enqueue_script( 'cycle', GOG_PLUGIN_URL . '/js/jquery.cycle.all.min.js', array('jquery'), '2.81', FALSE );
 }
 
@@ -30,7 +30,7 @@ if ( is_admin() && (get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET[
 
 // Add css and js for admin section
 if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET['post_type'] == 'goodoldgallery') ) {
-	wp_enqueue_style( 'goodold-gallery-admin', GOG_PLUGIN_URL . '/style/goodold-gallery-admin.css' );
+	wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
 }
 
 // Load up different features

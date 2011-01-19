@@ -119,4 +119,4 @@ function goodold_gallery_shortcode($attr) {
 
 	return $ret;
 }
-add_shortcode( 'goodold-gallery', 'goodold_gallery_shortcode' );
+add_shortcode( 'good-old-gallery', 'goodold_gallery_shortcode' );
