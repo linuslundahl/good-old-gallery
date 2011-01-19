@@ -97,15 +97,19 @@ function goodold_gallery_shortcode($attr) {
 				$pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
 			}
 
-			// SCRIPT
+			// BUILD VARIABLES IN SCRIPT
+			$script = 'fx: "' . $fx . '",' .
+								'speed: ' . $speed . ',' .
+								'timeout: ' . $timeout . ',' .
+								$pager .
+								$navigation;
+
+
+			// FINISH SCRIPT
 			$ret .= '<script type="text/javascript">' .
 								'jQuery(function($) { ' .
 									'$("#go-gallery-' . $id . '-' . $i . ' .gallery").cycle({' .
-										'fx: "' . $fx . '",' .
-										'speed: ' . $speed . ',' .
-										'timeout: ' . $timeout . ',' .
-										$pager .
-										$navigation .
+										rtrim($script, ',') .
 									'});' .
 								'});' .
 							'</script>' . "\n";
