@@ -16,6 +16,7 @@ define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__
 define('GOG_PLUGIN_PATH', str_replace(get_bloginfo('url'), '', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) )));
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
+$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 $gog_cycle_settings = array(
 	'theme'       => '',
 	'size'        => 'Full',
@@ -52,6 +53,11 @@ if ( is_admin() && (get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET[
 // Add css and js for admin section
 if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET['post_type'] == 'goodoldgallery') ) {
 	wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
+}
+
+// Add selected theme css
+if ( $gog_settings['theme'] ) {
+	wp_enqueue_style( 'good-old-gallery-theme', GOG_PLUGIN_URL . '/theme/' . $gog_settings['theme'] );
 }
 
 // Add flattr button js

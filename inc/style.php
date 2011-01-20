@@ -26,7 +26,6 @@ function goodold_gallery_get_themes($select = false) {
 	return $themes;
 }
 
-
 /**
  * Gets information about themes.
  * @return Array
@@ -34,6 +33,7 @@ function goodold_gallery_get_themes($select = false) {
 function goodold_gallery_fetch_stylesheets($file = null) {
 	$default_headers = array(
 		'Name' => 'Style Name',
+		'Description' => 'Description',
 		'Version' => 'Version',
 		'Author' => 'Author',
 		'AuthorURI' => 'Author URI',

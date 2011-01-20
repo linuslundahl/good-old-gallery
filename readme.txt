@@ -18,38 +18,51 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 * jQuery Cycle
 * Shortcode generator
 * Widgets
+* Stylesheet theme support
+* Instant on, no need for coding.
+* Plus much more...
 
 == Installation ==
 
 1. Upload `good-old-gallery` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to `Gallery -> Settings` to setup the basic settings.
+3. Go to *Gallery -> Settings* to setup the basic settings.
 4. Upload images on a gallery post, go to a post or page in click the new gallery media icon to insert your gallery.
 5. You now have a new Galleries section underneath Media in the admin menu.
 
 = Uploading =
 
-1. Click on `Add New`.
+1. Click on *Add New*.
 2. Give your gallery an administrative title.
-3. Click on `Upload images`.
+3. Click on *Upload images*.
 4. Upload your images and add Title, Description and Link if needed.
-5. Click on `Save all changes`.
-6. Click on `Publish` to enable your gallery.
+5. Click on *Save all changes*.
+6. Click on *Publish* to enable your gallery.
 
 = Shortcodes =
 
-To use your new gallery in a page/post you use the [good-old-gallery] shortcode, use the generator to build one.
+To use your new gallery in a page/post you use the `[good-old-gallery]` shortcode, use the generator to build one.
 
 1. Go to a page or a post.
-2. Click on the `Add an Image` icon.
-3. Click on the `Good Old Gallery` tab.
+2. Click on the *Add an Image* icon.
+3. Click on the *Good Old Gallery* tab.
 4. Generate your shortcode and copy it, close the pop-up.
 5. Enter HTML mode in the editor.
 6. Paste your shortcode where it should be shown.
 
 = Widgets =
 
-You are also given a new widget called `Good Old Gallery`, use it in regions where a selected gallery always should be shown.
+You are also given a new widget called *Good Old Gallery*, use it in regions where a selected gallery always should be shown.
+
+== Frequently Asked Questions ==
+
+= What's with Good Old? =
+
+This plugin was actually conceived when the company I work for (Good Old) was redoing their site, I made this plugin to help maintain galleries and specifically galleries in widgets.
+
+Then I figured that this plugin is probably something the general WP user could have use for, so I decided to further develop it on my spare time.
+
+And as you've probably figured out by now, the name Good Old comes from the company I work for.
 
 == Screenshots ==
 
@@ -61,5 +74,5 @@ You are also given a new widget called `Good Old Gallery`, use it in regions whe
 
 == Changelog ==
 
-= 1.0
+= 1.0 =
 First version on wordpress.org.

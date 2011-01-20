@@ -3,150 +3,153 @@
 /**
  * Setup settings form on settings page.
  */
-$themes = array('Select theme' => '');
-$themes += goodold_gallery_get_themes( true );
 
 $gog_options = array();
-$gog_options['paragraph-1'] = array(
-	"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
-						 '<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>',
-	"type" => "paragraph"
-);
+if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
+	$themes = array('No theme' => '');
+	$themes += goodold_gallery_get_themes( true );
 
-$gog_options['title-1'] = array(
-	"name" => "Instructions",
-	"type" => "title"
-);
+	$gog_options['paragraph-1'] = array(
+		"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
+							 '<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>',
+		"type" => "paragraph"
+	);
 
-$gog_options['paragraph-2'] = array(
-	"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
-						 "Use the built in generator found under the '" . GOG_PLUGIN_NAME . "' tab, just click the 'Add an Image' button to find the tab on the far right.",
-	"type" => "paragraph"
-);
+	$gog_options['title-1'] = array(
+		"name" => "Instructions",
+		"type" => "title"
+	);
 
-$gog_options['title-2'] = array(
-	"name" => "Gallery Settings",
-	"type" => "title"
-);
+	$gog_options['paragraph-2'] = array(
+		"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
+							 "Use the built in generator found under the '" . GOG_PLUGIN_NAME . "' tab, just click the 'Add an Image' button to find the tab on the far right.",
+		"type" => "paragraph"
+	);
 
-$gog_options['start'] = array(
-	"type" => 'start-table'
-);
+	$gog_options['title-2'] = array(
+		"name" => "Gallery Settings",
+		"type" => "title"
+	);
 
-$gog_options['theme'] = array(
-	"name" => "Theme",
-	"desc" => "Select what theme Cycle galleries should use.",
-	"id" => "size",
-	"type" => "select",
-	"options" => $themes,
-	"std" => $gog_cycle_settings['theme']
-);
+	$gog_options['start'] = array(
+		"type" => 'start-table'
+	);
 
-$gog_options['size'] = array(
-	"name" => "Image size",
-	"desc" => "Select what image size the galleries should use.",
-	"id" => "size",
-	"type" => "select",
-	"options" => array(
-		'Thumbnail' => 'thumbnail',
-		'Medium' => 'medium',
-		'Large' => 'large',
-		'Full' => 'full'
-	),
-	"std" => $gog_cycle_settings['size-select']
-);
+	$gog_options['theme'] = array(
+		"name" => "Theme",
+		"desc" => "Select what theme Cycle galleries should use.",
+		"id" => "theme",
+		"type" => "select",
+		"options" => $themes,
+		"std" => $gog_cycle_settings['theme']
+	);
 
-$gog_options['fx'] = array(
-	"name" => "Transition animation",
-	"desc" => "Animation that should be used.",
-	"id" => "fx",
-	"type" => "select",
-	"options" => array(
-		'Fade'                    => 'fade',
-		'Horizontal scroll'       => 'scrollHorz',
-		'Vertical scroll'         => 'scrollVert',
-		'None (Standard gallery)' => 'none'
-	),
-	"std" => $gog_cycle_settings['fx']
-);
+	$gog_options['size'] = array(
+		"name" => "Image size",
+		"desc" => "Select what image size the galleries should use.",
+		"id" => "size",
+		"type" => "select",
+		"options" => array(
+			'Thumbnail' => 'thumbnail',
+			'Medium' => 'medium',
+			'Large' => 'large',
+			'Full' => 'full'
+		),
+		"std" => $gog_cycle_settings['size-select']
+	);
 
-$gog_options['speed'] = array(
-	"name" => "Speed",
-	"desc" => "milliseconds",
-	"id" => "speed",
-	"type" => "text",
-	"std" => $gog_cycle_settings['speed'],
-	"size" => 4
-);
+	$gog_options['fx'] = array(
+		"name" => "Transition animation",
+		"desc" => "Animation that should be used.",
+		"id" => "fx",
+		"type" => "select",
+		"options" => array(
+			'Fade'                    => 'fade',
+			'Horizontal scroll'       => 'scrollHorz',
+			'Vertical scroll'         => 'scrollVert',
+			'None (Standard gallery)' => 'none'
+		),
+		"std" => $gog_cycle_settings['fx']
+	);
 
-$gog_options['timeout'] = array(
-	"name" => "Transition speed",
-	"desc" => "milliseconds",
-	"id" => "timeout",
-	"type" => "text",
-	"std" => $gog_cycle_settings['timeout'],
-	"size" => 4
-);
+	$gog_options['speed'] = array(
+		"name" => "Speed",
+		"desc" => "milliseconds",
+		"id" => "speed",
+		"type" => "text",
+		"std" => $gog_cycle_settings['speed'],
+		"size" => 4
+	);
 
-$gog_options['title'] = array(
-	"name" => "Show title",
-	"desc" => "Select if the title for each image should be displayed.",
-	"id" => "title",
-	"type" => "checkbox",
-	"std" => $gog_cycle_settings['title']
-);
+	$gog_options['timeout'] = array(
+		"name" => "Transition speed",
+		"desc" => "milliseconds",
+		"id" => "timeout",
+		"type" => "text",
+		"std" => $gog_cycle_settings['timeout'],
+		"size" => 4
+	);
 
-$gog_options['description'] = array(
-	"name" => "Show description",
-	"desc" => "Select if the description for each image should be displayed.",
-	"id" => "description",
-	"type" => "checkbox",
-	"std" => $gog_cycle_settings['description']
-);
+	$gog_options['title'] = array(
+		"name" => "Show title",
+		"desc" => "Select if the title for each image should be displayed.",
+		"id" => "title",
+		"type" => "checkbox",
+		"std" => $gog_cycle_settings['title']
+	);
 
-$gog_options['pager'] = array(
-	"name" => "Show pager",
-	"desc" => "Select if the pager should be displayed.",
-	"id" => "pager",
-	"type" => "checkbox",
-	"std" => $gog_cycle_settings['pager']
-);
+	$gog_options['description'] = array(
+		"name" => "Show description",
+		"desc" => "Select if the description for each image should be displayed.",
+		"id" => "description",
+		"type" => "checkbox",
+		"std" => $gog_cycle_settings['description']
+	);
 
-$gog_options['navigation'] = array(
-	"name" => "Show navigation",
-	"desc" => "Select if you would like to add PREV and NEXT buttons.",
-	"id" => "navigation",
-	"type" => "checkbox",
-	"std" => $gog_cycle_settings['navigation']
-);
+	$gog_options['pager'] = array(
+		"name" => "Show pager",
+		"desc" => "Select if the pager should be displayed.",
+		"id" => "pager",
+		"type" => "checkbox",
+		"std" => $gog_cycle_settings['pager']
+	);
 
-$gog_options['prev'] = array(
-	"name" => "Prev",
-	"desc" => "Text used for prev button",
-	"id" => "next",
-	"type" => "text",
-	"std" => 'prev',
-	"size" => $gog_cycle_settings['prev']
-);
+	$gog_options['navigation'] = array(
+		"name" => "Show navigation",
+		"desc" => "Select if you would like to add PREV and NEXT buttons.",
+		"id" => "navigation",
+		"type" => "checkbox",
+		"std" => $gog_cycle_settings['navigation']
+	);
 
-$gog_options['next'] = array(
-	"name" => "Next",
-	"desc" => "Text used for next button",
-	"id" => "prev",
-	"type" => "text",
-	"std" => 'next',
-	"size" => $gog_cycle_settings['next']
-);
+	$gog_options['prev'] = array(
+		"name" => "Prev",
+		"desc" => "Text used for prev button",
+		"id" => "next",
+		"type" => "text",
+		"std" => 'prev',
+		"size" => $gog_cycle_settings['prev']
+	);
 
-$gog_options['end'] = array(
-	'type' => 'end-table'
-);
+	$gog_options['next'] = array(
+		"name" => "Next",
+		"desc" => "Text used for next button",
+		"id" => "prev",
+		"type" => "text",
+		"std" => 'next',
+		"size" => $gog_cycle_settings['next']
+	);
+
+	$gog_options['end'] = array(
+		'type' => 'end-table'
+	);
+}
 
 /**
  * Generate settings form.
  */
 function goodold_gallery_settings_page() {
-	global $gog_options;
+	global $gog_options, $gog_settings;
 
 	if ( 'save' == $_REQUEST['action'] ) {
 		$values = array();
@@ -157,9 +160,9 @@ function goodold_gallery_settings_page() {
 		}
 
 		update_option( GOG_PLUGIN_SHORT . '_settings', $values );
-	}
 
-	$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
+		$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
+	}
 
 	if ( $_REQUEST['save'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options saved.' ) . '</strong></p></div>';
 	if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options restored.' ) . '</strong></p></div>';

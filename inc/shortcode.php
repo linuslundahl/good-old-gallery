@@ -4,11 +4,9 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-	global $post, $gog_cycle_settings;
+	global $post, $gog_cycle_settings, $gog_settings;
 
 	static $i = 1;
-
-	$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 
 	extract(shortcode_atts( array(
 		'id'          => null,
@@ -85,7 +83,7 @@ function goodold_gallery_shortcode($attr) {
 			$ret .= '</div>' . "\n";
 
 			// NAVIGATION
-			if ( $navigation ) {
+			if ( $navigation = $navigation ? $navigation : '' ) {
 				$ret .= '<div class="nav">' . "\n";
 				$ret .= '<span class="prev">' . $prev . '</span><span class="next">' . $next . '</span>' . "\n";
 				$ret .= '</div>' . "\n";
@@ -93,16 +91,19 @@ function goodold_gallery_shortcode($attr) {
 											'next: "#go-gallery-' . $id . '-' . $i . ' .next"';
 			}
 
+
+
 			// PAGER
-			if ( $pager ) {
+			if ( $pager = $pager ? $pager : '' ) {
 				$ret .= '<div class="pager"></div>' . "\n";
 				$pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
 			}
 
+
 			// BUILD VARIABLES IN SCRIPT
 			$script = 'fx: "' . $fx . '",' .
-								'speed: ' . $speed . ',' .
-								'timeout: ' . $timeout . ',' .
+								'speed: "' . $speed . '",' .
+								'timeout: "' . $timeout . '",' .
 								$pager .
 								$navigation;
 

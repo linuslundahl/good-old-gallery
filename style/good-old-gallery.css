@@ -12,4 +12,5 @@
 .go-gallery .nav .prev, .go-gallery .nav .next { cursor: pointer; margin: 0 10px 0 0; }
 
 .go-gallery .pager { float: right; }
-.go-gallery .pager a { margin: 0 3px 0 0; }
+.go-gallery .pager a,
+#content .go-gallery .pager a { float: left; margin-left: 6px !important; }
