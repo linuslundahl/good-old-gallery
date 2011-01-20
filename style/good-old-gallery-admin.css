@@ -22,3 +22,6 @@ h3.hndle { cursor: default !important; }
 #go-settings-form { position: relative; }
 
 .go-flattr { position: absolute; right: 0; top: 0; }
+
+.goodoldgallery_page_goodoldgallery .submit { float: left; margin-left: 10px; }
+.goodoldgallery_page_goodoldgallery .reset {  margin-left: 30px; }

@@ -158,14 +158,15 @@ function goodold_gallery_settings_page() {
 				$values[$value['id']] = $_REQUEST[$value['id']];
 			}
 		}
-
 		update_option( GOG_PLUGIN_SHORT . '_settings', $values );
-
 		$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 	}
+	else if ( 'reset' == $_REQUEST['action'] ) {
+		delete_option( GOG_PLUGIN_SHORT . '_settings' );
+	}
 
-	if ( $_REQUEST['save'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options saved.' ) . '</strong></p></div>';
-	if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options restored.' ) . '</strong></p></div>';
+	if ( $_REQUEST['save'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Settings saved.' ) . '</strong></p></div>';
+	if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Settings restored.' ) . '</strong></p></div>';
 ?>
 
 <div class="wrap">
@@ -273,10 +274,18 @@ break;
 ?>
 
 	<p class="submit">
-	<input class="button-primary" name="save" type="submit" value="Save changes" />
-	<input type="hidden" name="action" value="save" />
+		<input class="button-primary" name="save" type="submit" value="Save settings" />
+		<input type="hidden" name="action" value="save" />
 	</p>
 	</form>
+
+	<form method="post" action="">
+	<p class="submit reset">
+		<input name="reset" type="submit" value="Reset default settings" />
+		<input type="hidden" name="action" value="reset" />
+	</p>
+	</form>
+
 	</div>
 
 <?php
