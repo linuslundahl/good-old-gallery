@@ -4,7 +4,7 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-	global $post;
+	global $post, $gog_cycle_settings;
 
 	static $i = 1;
 
@@ -12,16 +12,16 @@ function goodold_gallery_shortcode($attr) {
 
 	extract(shortcode_atts( array(
 		'id'          => null,
-		'size'        => $gog_settings['size']        ? $gog_settings['size']        : 'Full',
-		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : 'fade',
-		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']       : 500,
-		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']     : 10000,
-		'title'       => $gog_settings['title']       ? $gog_settings['title']       : FALSE,
-		'description' => $gog_settings['description'] ? $gog_settings['description'] : FALSE,
-		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']  : FALSE,
-		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']       : FALSE,
-		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']        : 'prev',
-		'next'        => $gog_settings['next']        ? $gog_settings['next']        : 'next'
+		'size'        => $gog_settings['size']        ? $gog_settings['size']        : $gog_cycle_settings['size'],
+		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : $gog_cycle_settings['fx'],
+		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']       : $gog_cycle_settings['speed'],
+		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']     : $gog_cycle_settings['timeout'],
+		'title'       => $gog_settings['title']       ? $gog_settings['title']       : $gog_cycle_settings['title'],
+		'description' => $gog_settings['description'] ? $gog_settings['description'] : $gog_cycle_settings['description'],
+		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']  : $gog_cycle_settings['navigation'],
+		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']       : $gog_cycle_settings['pager'],
+		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']        : $gog_cycle_settings['prev'],
+		'next'        => $gog_settings['next']        ? $gog_settings['next']        : $gog_cycle_settings['next']
 	), $attr ));
 
 	// Use post_id if no id is set in shortcode.

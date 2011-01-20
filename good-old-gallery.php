@@ -15,12 +15,25 @@
 define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ));
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
+$gog_cycle_settings = array(
+	'size'        => 'Full',
+	'size-select' => 'full',
+	'fx'          => 'fade',
+	'speed'       => 500,
+	'timeout'     => 10000,
+	'title'       => 0,
+	'description' => 0,
+	'navigation'  => 0,
+	'pager'       => 0,
+	'prev'        => 'prev',
+	'next'        => 'next'
+);
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {
-	echo "\n" . '<!-- This site uses Good Old Gallery, get it from http://unwi.se/good-old-gallery -->' . "\n\n";
+	echo "\n\t" . '<!-- This site uses Good Old Gallery, get it from http://unwi.se/good-old-gallery -->' . "\n\n";
 }
-add_action('wp_head', 'goodold_gallery_add_head_tag');
+add_action( 'wp_head', 'goodold_gallery_add_head_tag' );
 
 // Register style and js for this plugin
 if ( !is_admin() ) {
@@ -37,6 +50,28 @@ if ( is_admin() && (get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET[
 // Add css and js for admin section
 if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get_post_type( $_GET['post'] ) == 'goodoldgallery' || $_GET['post_type'] == 'goodoldgallery') ) {
 	wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
+}
+
+// Add flattr button js
+function goodold_gallery_flattr_button() {
+	echo <<<FLATTR
+
+	<script type="text/javascript">
+	/* <![CDATA[ */
+			(function() {
+				var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+				s.type = 'text/javascript';
+				s.async = true;
+				s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+				t.parentNode.insertBefore(s, t);
+			})();
+	/* ]]> */
+	</script>
+
+FLATTR;
+}
+if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
+	add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 }
 
 // Load up different features

@@ -1,10 +1,10 @@
 === Good Old Gallery ===
 Contributors: linuslundahl
-Donate link:
-Tags: simple, image, gallery, slideshow, jQuery, multiple
+Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
+Tags: simple, image, gallery, slideshow, jQuery, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.0.4
-Stable tag: 0.1-dev
+Stable tag: 1.0
 
 Good Old Gallery helps you use galleries on multiple posts and pages.
 
@@ -23,5 +23,5 @@ Included is jQuery Cycle.
 
 == Changelog ==
 
-= 0.1-dev =
-First dev version.
+= 1.0
+First version on wordpress.org.

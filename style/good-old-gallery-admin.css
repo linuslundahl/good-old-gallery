@@ -18,3 +18,7 @@
 h3.hndle { cursor: default !important; }
 
 .go-gallery-admin { margin: 2em 0; }
+
+#go-settings-form { position: relative; }
+
+.go-flattr { position: absolute; right: 0; top: 0; }

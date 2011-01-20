@@ -5,7 +5,8 @@
  */
 $gog_options = array();
 $gog_options['paragraph-1'] = array(
-	"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>.",
+	"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
+						 '<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>',
 	"type" => "paragraph"
 );
 
@@ -40,7 +41,7 @@ $gog_options['size'] = array(
 		'Large' => 'large',
 		'Full' => 'full'
 	),
-	"std" => 'large'
+	"std" => $gog_cycle_settings['size-select']
 );
 
 $gog_options['fx'] = array(
@@ -54,7 +55,7 @@ $gog_options['fx'] = array(
 		'Vertical scroll'         => 'scrollVert',
 		'None (Standard gallery)' => 'none'
 	),
-	"std" => 'fade'
+	"std" => $gog_cycle_settings['fx']
 );
 
 $gog_options['speed'] = array(
@@ -62,7 +63,7 @@ $gog_options['speed'] = array(
 	"desc" => "milliseconds",
 	"id" => "speed",
 	"type" => "text",
-	"std" => '500',
+	"std" => $gog_cycle_settings['speed'],
 	"size" => 4
 );
 
@@ -71,7 +72,7 @@ $gog_options['timeout'] = array(
 	"desc" => "milliseconds",
 	"id" => "timeout",
 	"type" => "text",
-	"std" => '10000',
+	"std" => $gog_cycle_settings['timeout'],
 	"size" => 4
 );
 
@@ -80,7 +81,7 @@ $gog_options['title'] = array(
 	"desc" => "Select if the title for each image should be displayed.",
 	"id" => "title",
 	"type" => "checkbox",
-	"std" => 0
+	"std" => $gog_cycle_settings['title']
 );
 
 $gog_options['description'] = array(
@@ -88,7 +89,7 @@ $gog_options['description'] = array(
 	"desc" => "Select if the description for each image should be displayed.",
 	"id" => "description",
 	"type" => "checkbox",
-	"std" => 0
+	"std" => $gog_cycle_settings['description']
 );
 
 $gog_options['pager'] = array(
@@ -96,7 +97,7 @@ $gog_options['pager'] = array(
 	"desc" => "Select if the pager should be displayed.",
 	"id" => "pager",
 	"type" => "checkbox",
-	"std" => 0
+	"std" => $gog_cycle_settings['pager']
 );
 
 $gog_options['navigation'] = array(
@@ -104,7 +105,7 @@ $gog_options['navigation'] = array(
 	"desc" => "Select if you would like to add PREV and NEXT buttons.",
 	"id" => "navigation",
 	"type" => "checkbox",
-	"std" => 0
+	"std" => $gog_cycle_settings['navigation']
 );
 
 $gog_options['prev'] = array(
@@ -113,7 +114,7 @@ $gog_options['prev'] = array(
 	"id" => "next",
 	"type" => "text",
 	"std" => 'prev',
-	"size" => 4
+	"size" => $gog_cycle_settings['prev']
 );
 
 $gog_options['next'] = array(
@@ -122,7 +123,7 @@ $gog_options['next'] = array(
 	"id" => "prev",
 	"type" => "text",
 	"std" => 'next',
-	"size" => 4
+	"size" => $gog_cycle_settings['next']
 );
 
 $gog_options['end'] = array(
@@ -156,7 +157,7 @@ function goodold_gallery_settings_page() {
 
 <h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
 
-<form method="post" action="">
+<form id="go-settings-form" method="post" action="">
 
 <?php foreach ( $gog_options as $value ) {
 switch ( $value['type'] ) {
