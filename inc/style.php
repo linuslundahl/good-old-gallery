@@ -7,13 +7,12 @@
 function goodold_gallery_get_themes($select = false) {
 	$path = '..' . GOG_PLUGIN_PATH . '/themes';
 	$folder = opendir($path);
-	$exclude = explode("|", strtolower('.|..'));
 
-	while (false !== ($filename = readdir($folder))) {
-		if ($filename) {
-			if (!in_array(strtolower($filename), $exclude)) {
+	while ( false !== ($filename = readdir($folder)) ) {
+		if ( $filename ) {
+			if ( substr(strtolower($filename), -3) == 'css' ) {
 				$info = goodold_gallery_fetch_stylesheets($path . '/' . $filename);
-				if ($select) {
+				if ( $select ) {
 					$themes[$info['Name']] = $filename;
 				}
 				else {

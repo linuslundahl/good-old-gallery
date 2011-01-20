@@ -6,8 +6,31 @@
 
 $gog_options = array();
 if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
-	$themes = array('No theme' => '');
-	$themes += goodold_gallery_get_themes( true );
+
+	$themes = goodold_gallery_get_themes();
+
+	// Create available themes list
+	$av_themes = '';
+	if ( $themes ) {
+		$av_themes .= '<ul class="available-themes">';
+		foreach ( $themes as $file => $theme ) {
+			$author = filter_var($theme['AuthorURI'], FILTER_VALIDATE_URL) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
+
+			$screenshot = '..' . GOG_PLUGIN_PATH . '/themes/' . substr($file, 0, -4) . '.png';
+			$screenshot = file_exists($screenshot) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
+
+			$av_themes .= '<li class="theme">';
+			$av_themes .= $screenshot;
+			$av_themes .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> <span class="author">' . $author . '</span>';
+			$av_themes .= '<div class="description">' . $theme['Description'] . '</div>';
+			$av_themes .= '</li>';
+		}
+		$av_themes .= '</ul>';
+	}
+
+	// Get themes for select dropdown
+	$theme_options = array('No theme' => '');
+	$theme_options += goodold_gallery_get_themes( true );
 
 	$gog_options['paragraph-1'] = array(
 		"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
@@ -22,7 +45,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 
 	$gog_options['paragraph-2'] = array(
 		"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
-							 "Use the built in generator found under the '" . GOG_PLUGIN_NAME . "' tab, just click the 'Add an Image' button to find the tab on the far right.",
+							 "Use the built in generator found under the <em>" . GOG_PLUGIN_NAME . "</em> tab, just click the <em>Add an Image</em> button to find the tab on the far right.",
 		"type" => "paragraph"
 	);
 
@@ -31,17 +54,32 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 		"type" => "title"
 	);
 
-	$gog_options['start'] = array(
-		"type" => 'start-table'
+	if ($themes) {
+		$gog_options['start-1'] = array(
+			"type" => 'start-table'
+		);
+
+		$gog_options['theme'] = array(
+			"name" => "Theme",
+			"desc" => "Select what theme Cycle galleries should use.",
+			"id" => "theme",
+			"type" => "select",
+			"options" => $theme_options,
+			"std" => $gog_cycle_settings['theme']
+		);
+
+		$gog_options['end-1'] = array(
+			"type" => 'end-table'
+		);
+	}
+
+	$gog_options['markdown-1'] = array(
+		"value" => "$av_themes",
+		"type" => "markdown"
 	);
 
-	$gog_options['theme'] = array(
-		"name" => "Theme",
-		"desc" => "Select what theme Cycle galleries should use.",
-		"id" => "theme",
-		"type" => "select",
-		"options" => $themes,
-		"std" => $gog_cycle_settings['theme']
+	$gog_options['start-2'] = array(
+		"type" => 'start-table'
 	);
 
 	$gog_options['size'] = array(
@@ -67,7 +105,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 			'Fade'                    => 'fade',
 			'Horizontal scroll'       => 'scrollHorz',
 			'Vertical scroll'         => 'scrollVert',
-			'None (Standard gallery)' => 'none'
+			'None (Standard WP gallery)' => 'none'
 		),
 		"std" => $gog_cycle_settings['fx']
 	);
@@ -140,7 +178,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 		"size" => $gog_cycle_settings['next']
 	);
 
-	$gog_options['end'] = array(
+	$gog_options['end-2'] = array(
 		'type' => 'end-table'
 	);
 }
@@ -193,6 +231,12 @@ break;
 case "title":
 ?>
 <h3><?php echo __( $value['name'] ); ?></h3>
+<?php
+break;
+
+case 'markdown':
+?>
+<?php echo $value['value']; ?>
 <?php
 break;
 
@@ -292,6 +336,6 @@ break;
 }
 
 function goodold_gallery_create_menu() {
-	add_submenu_page( 'edit.php?post_type=goodoldgallery', GOG_PLUGIN_NAME . ' Settings', 'Settings', 'manage_options', 'goodoldgallery', 'goodold_gallery_settings_page' );
+	add_submenu_page( 'edit.php?post_type=goodoldgallery', GOG_PLUGIN_NAME . ' settings', 'Settings', 'manage_options', 'goodoldgallery', 'goodold_gallery_settings_page' );
 }
 add_action( 'admin_menu', 'goodold_gallery_create_menu' );

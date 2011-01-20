@@ -21,7 +21,14 @@ h3.hndle { cursor: default !important; }
 
 #go-settings-form { position: relative; }
 
-.go-flattr { position: absolute; right: 0; top: 0; }
+.goodoldgallery_page_goodoldgallery .form-table { margin-bottom: 0; }
+
+.goodoldgallery_page_goodoldgallery .go-flattr { position: absolute; right: 0; top: 0; }
+
+.goodoldgallery_page_goodoldgallery .themes-link,
+.goodoldgallery_page_goodoldgallery .available-themes { margin: 0 0 0 235px; padding: 10px 0; }
+.goodoldgallery_page_goodoldgallery .available-themes .theme { font-weight: bold; }
+.goodoldgallery_page_goodoldgallery .available-themes .theme .description { font-weight: normal; }
 
 .goodoldgallery_page_goodoldgallery .submit { float: left; margin-left: 10px; }
 .goodoldgallery_page_goodoldgallery .reset {  margin-left: 30px; }

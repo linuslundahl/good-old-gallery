@@ -1,8 +1,24 @@
 var $j = jQuery.noConflict();
 
 (function ($) {
-	var getValues, value = "";
+	var showHide, getValues, value = "", link;
 
+	// Show/Hide div
+	showHide = function (div, title, alt, id) {
+		div.hide();
+		link = $('<a />').attr('href', '#').addClass(id).text(title).insertBefore(div);
+		link.click(function (e) {
+			div.slideToggle().toggleClass('open');
+			if (div.hasClass('open')) {
+				link.text(alt);
+			} else {
+				link.text(title);
+			}
+			e.preventDefault();
+		});
+	};
+
+	// Shortcode generator
 	getValues = function () {
 		$('input[type="text"], select').each(function () {
 			var $this = $(this);
@@ -22,13 +38,17 @@ var $j = jQuery.noConflict();
 		value = "";
 	};
 
-	$('input[type="checkbox"], select').each(function () {
+	$('#go-gallery-generator input[type="checkbox"], #go-gallery-generator select').each(function () {
 		var $this = $(this);
 		$this.change(getValues);
 	});
 
-	$('input[type="text"]').each(function () {
+	$('#go-gallery-generator input[type="text"]').each(function () {
 		var $this = $(this);
 		$this.keyup(getValues);
 	});
+
+	// Settings page
+	showHide($('.goodoldgallery_page_goodoldgallery .available-themes'), 'Preview installed themes', 'Hide installed themes', 'themes-link');
+
 }($j));

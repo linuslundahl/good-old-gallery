@@ -57,10 +57,10 @@ if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get
 
 // Add selected theme css
 if ( $gog_settings['theme'] ) {
-	wp_enqueue_style( 'good-old-gallery-theme', GOG_PLUGIN_URL . '/theme/' . $gog_settings['theme'] );
+	wp_enqueue_style( 'good-old-gallery-theme', GOG_PLUGIN_URL . '/themes/' . $gog_settings['theme'] );
 }
 
-// Add flattr button js
+// Add flattr button js and admin js
 function goodold_gallery_flattr_button() {
 	echo <<<FLATTR
 
@@ -79,6 +79,7 @@ function goodold_gallery_flattr_button() {
 FLATTR;
 }
 if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
+	wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 	add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 }
 
