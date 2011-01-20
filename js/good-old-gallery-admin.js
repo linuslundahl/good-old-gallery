@@ -49,6 +49,6 @@ var $j = jQuery.noConflict();
 	});
 
 	// Settings page
-	showHide($('.goodoldgallery_page_goodoldgallery .available-themes'), 'Preview installed themes', 'Hide installed themes', 'themes-link');
+	showHide($('.goodoldgallery_page_goodoldgallery .available-themes'), 'View installed themes', 'Hide installed themes', 'themes-link');
 
 }($j));

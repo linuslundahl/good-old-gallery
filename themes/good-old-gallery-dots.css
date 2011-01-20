@@ -1,10 +1,57 @@
 /**
  *
- * Style Name: Good Old Gallery Small Pager
- * Description: A neat gallery with small pager icons floating on top of the gallery.
+ * Style Name: Good Old Gallery small dots
+ * Description: A neat gallery pager with small dots floating on top of the gallery. Uses CSS3 to achieve this. (titles and descriptions are not styled yet)
  * Author: Linus Lundahl
- * Version: 0.1
+ * Version: 1.0
  * Author URI: http://unwi.se/
  *
  */
 
+.go-gallery { padding: 0 30px; position: relative; }
+
+/** Pager */
+.go-gallery .pager {
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: rgba(0,0,0,.4);
+	left: 20px;
+	padding: 5px 10px;
+	position: absolute;
+	top: 20px;
+	z-index: 999;
+}
+.go-gallery.has-pager .pager {
+	left: 50px;
+}
+.go-gallery .pager a {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: #000;
+	height: 0;
+	overflow: hidden;
+	padding: 6px 0 0 0;
+	width: 6px;
+}
+.go-gallery .pager a.activeSlide { background: #fff;}
+.go-gallery .pager a:first-child { margin: 0; }
+/* end Pager */
+
+/** Navigation */
+.go-gallery .nav .prev,
+.go-gallery .nav .next {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	position: absolute;
+	text-indent: -9999px;
+	top: 0;
+	width: 30px;
+}
+.go-gallery .nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; }
+.go-gallery .nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; }
+.go-gallery .nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
+.go-gallery .nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
+/* end Navigation */

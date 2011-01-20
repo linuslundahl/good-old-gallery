@@ -42,9 +42,21 @@ function goodold_gallery_shortcode($attr) {
 			'post_mime_type'  => 'image',
 		) );
 
+		$classes = "";
+
+		// NAVIGATION CLASS
+		if ( $navigation = $navigation ? $navigation : '' ) {
+			$classes .= " has-nav";
+		}
+
+		// PAGER CLASS
+		if ( $pager = $pager ? $pager : '' ) {
+			$classes .= " has-pager";
+		}
+
 		if ( $attachments ) {
 			// GO-GALLERY ID
-			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery go-gallery-' . $id . '">' . "\n";
+			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery go-gallery-' . $id . $classes . '">' . "\n";
 
 			// INNER CLASS
 			$ret .= '<div class="inner">' . "\n";
@@ -83,18 +95,17 @@ function goodold_gallery_shortcode($attr) {
 			$ret .= '</div>' . "\n";
 
 			// NAVIGATION
-			if ( $navigation = $navigation ? $navigation : '' ) {
+			if ( $navigation ) {
 				$ret .= '<div class="nav">' . "\n";
+				error_log(var_export($prev, TRUE));
 				$ret .= '<span class="prev">' . $prev . '</span><span class="next">' . $next . '</span>' . "\n";
 				$ret .= '</div>' . "\n";
 				$navigation = 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
 											'next: "#go-gallery-' . $id . '-' . $i . ' .next"';
 			}
 
-
-
 			// PAGER
-			if ( $pager = $pager ? $pager : '' ) {
+			if ( $pager ) {
 				$ret .= '<div class="pager"></div>' . "\n";
 				$pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
 			}

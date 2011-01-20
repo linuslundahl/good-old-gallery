@@ -26,17 +26,16 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 
 1. Upload `good-old-gallery` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to *Gallery -> Settings* to setup the basic settings.
-4. Upload images on a gallery post, go to a post or page in click the new gallery media icon to insert your gallery.
-5. You now have a new Galleries section underneath Media in the admin menu.
+3. You now have a new Galleries section underneath Media in the admin menu.
+4. Go to *Galleries -> Settings* to setup the basic settings.
 
 = Uploading =
 
-1. Click on *Add New*.
+1. Click on *Add New* in the Galleries menu.
 2. Give your gallery an administrative title.
 3. Click on *Upload images*.
 4. Upload your images and add Title, Description and Link if needed.
-5. Click on *Save all changes*.
+5. Click on *Save all changes*, close the pop-up.
 6. Click on *Publish* to enable your gallery.
 
 = Shortcodes =
@@ -58,7 +57,7 @@ You are also given a new widget called *Good Old Gallery*, use it in regions whe
 
 = What's with Good Old? =
 
-This plugin was actually conceived when the company I work for (Good Old) was redoing their site, I made this plugin to help maintain galleries and specifically galleries in widgets.
+This plugin was actually conceived when the company I work for [Good Old](http://goodold.se/) was redoing their site, I made this plugin to help maintain galleries and specifically galleries in widgets.
 
 Then I figured that this plugin is probably something the general WP user could have use for, so I decided to further develop it on my spare time.
 

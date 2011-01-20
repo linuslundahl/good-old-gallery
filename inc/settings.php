@@ -21,7 +21,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 
 			$av_themes .= '<li class="theme">';
 			$av_themes .= $screenshot;
-			$av_themes .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> <span class="author">' . $author . '</span>';
+			$av_themes .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> by <span class="author">' . $author . '</span>';
 			$av_themes .= '<div class="description">' . $theme['Description'] . '</div>';
 			$av_themes .= '</li>';
 		}
@@ -163,7 +163,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 	$gog_options['prev'] = array(
 		"name" => "Prev",
 		"desc" => "Text used for prev button",
-		"id" => "next",
+		"id" => "prev",
 		"type" => "text",
 		"std" => 'prev',
 		"size" => $gog_cycle_settings['prev']
@@ -172,7 +172,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 	$gog_options['next'] = array(
 		"name" => "Next",
 		"desc" => "Text used for next button",
-		"id" => "prev",
+		"id" => "next",
 		"type" => "text",
 		"std" => 'next',
 		"size" => $gog_cycle_settings['next']
