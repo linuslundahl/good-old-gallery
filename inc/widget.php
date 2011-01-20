@@ -89,20 +89,20 @@ class GoodOldGalleryWidget extends WP_Widget {
 ?>
 	<p>
 		<label for="<?php echo $this->get_field_id('title'); ?>" title="Title of the widget">Title:</label>
-		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
-		<span class="description"><p><?php echo __("The title is only used in the administration."); ?></p></span>
+		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /><br />
+		<span class="description"><?php echo __("The title is only used in the administration."); ?></span>
 	</p>
 
 	<p>
 		<label for="<?php echo $this->get_field_id('post-ID'); ?>" title="Select gallery" style="line-height:25px;">Gallery:</label>
-		<select id="<?php echo $this->get_field_id('post-ID'); ?>" name="<?php echo $this->get_field_name('post-ID'); ?>">
+		<select id="<?php echo $this->get_field_id('post-ID'); ?>" name="<?php echo $this->get_field_name('post-ID'); ?>" style="width: 150px;">
 			<?php echo $options; ?>
 		</select>
 	</p>
 
 	<p>
-		<label for="<?php echo $this->get_field_id('fx'); ?>" title="Animation" style="line-height:25px;">Animation:</label>
-		<select id="<?php echo $this->get_field_id('fx'); ?>" name="<?php echo $this->get_field_name('fx'); ?>">
+		<label for="<?php echo $this->get_field_id('fx'); ?>" title="Animation" style="line-height:25px;">Fx:</label>
+		<select id="<?php echo $this->get_field_id('fx'); ?>" name="<?php echo $this->get_field_name('fx'); ?>" style="width: 150px;">
 			<option value="scrollHorz"<?php echo $instance['fx'] == 'scrollHorz' ? ' selected="yes"' : ''; ?>>Horizontal scroll</option>
 			<option value="scrollVert"<?php echo $instance['fx'] == 'scrollVert' ? ' selected="yes"' : ''; ?>>Vertical scroll</option>
 			<option value="fade"<?php echo $instance['fx'] == 'fade' ? ' selected="yes"' : ''; ?>>Fade</option>
@@ -151,9 +151,9 @@ class GoodOldGalleryWidget extends WP_Widget {
 	</p>
 
 	<p>
-		<label for="<?php echo $this->get_field_id('pages'); ?>" title="Title of the widget">Show on:</label>
-		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows=3><?php echo $instance['pages']; ?></textarea><br />
-		<span class="description"><p><?php echo __("Type paths that the gallery should be visible on, separate them with a line break.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?><p></span>
+		<label for="<?php echo $this->get_field_id('pages'); ?>" title="Title of the widget">Show on:</label><br />
+		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="28"><?php echo $instance['pages']; ?></textarea><br />
+		<span class="description"><?php echo __("Type paths that the gallery should be visible on, separate them with a line break. Leave empty to show in all places.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?></span>
 	</p>
 <?php
 	}

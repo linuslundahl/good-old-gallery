@@ -49,7 +49,7 @@ function goodold_gallery_media_process() {
 		<div class="inside" style="margin: 10px;">
 			<span class="description">
 				<p>
-					Copy and paste the full generated shortcode into your post/page in HTML mode.
+					Copy and paste the full generated shortcode into your page/post in HTML mode.
 				</p>
 			</span>
 

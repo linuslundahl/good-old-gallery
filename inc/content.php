@@ -95,7 +95,7 @@ class GoodOldGallery {
 		if ( $edit ) {
 			echo '<p>Shortcode for this gallery: <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p>';
 			echo '<span class="description">';
-			echo '<p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the post/page in HTML mode.</p>';
+			echo '<p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the page/post in HTML mode.</p>';
 			echo '<p>To generate a shortcode with custom variables, click on the \'Add an Image\' icon on a page or a post, then click the \'Good Old Gallery\' tab.</p>';
 			echo '</span>';
 		}
