@@ -13,9 +13,11 @@
 
 // Globals
 define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ));
+define('GOG_PLUGIN_PATH', str_replace(get_bloginfo('url'), '', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) )));
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
 $gog_cycle_settings = array(
+	'theme'       => '',
 	'size'        => 'Full',
 	'size-select' => 'full',
 	'fx'          => 'fade',
@@ -75,6 +77,7 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 }
 
 // Load up different features
+require_once('inc/style.php');
 require_once('inc/content.php');
 require_once('inc/widget.php');
 require_once('inc/settings.php');

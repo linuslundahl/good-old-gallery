@@ -3,6 +3,9 @@
 /**
  * Setup settings form on settings page.
  */
+$themes = array('Select theme' => '');
+$themes += goodold_gallery_get_themes( true );
+
 $gog_options = array();
 $gog_options['paragraph-1'] = array(
 	"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
@@ -28,6 +31,15 @@ $gog_options['title-2'] = array(
 
 $gog_options['start'] = array(
 	"type" => 'start-table'
+);
+
+$gog_options['theme'] = array(
+	"name" => "Theme",
+	"desc" => "Select what theme Cycle galleries should use.",
+	"id" => "size",
+	"type" => "select",
+	"options" => $themes,
+	"std" => $gog_cycle_settings['theme']
 );
 
 $gog_options['size'] = array(
@@ -217,7 +229,7 @@ case 'select':
 	<tr valign="top">
 		<th scope="row"><label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label></th>
 		<td>
-			<select style="width:140px;" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>">
+			<select style="width:200px;" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>">
 <?php foreach ($value['options'] as $key => $item) { ?>
 <?php
 	$selected = '';
