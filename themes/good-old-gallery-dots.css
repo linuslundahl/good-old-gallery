@@ -1,9 +1,10 @@
 /**
  *
  * Style Name: Good Old Gallery small dots
+ * Short Name: gog-dots
  * Description: A neat gallery pager with small dots floating on top of the gallery. Uses CSS3 to achieve this. (titles and descriptions are not styled yet)
  * Author: Linus Lundahl
- * Version: 1.0
+ * Version: 1.01
  * Author URI: http://unwi.se/
  *
  */
@@ -32,6 +33,7 @@
 	background: #000;
 	height: 0;
 	overflow: hidden;
+	outline: none;
 	padding: 6px 0 0 0;
 	width: 6px;
 }

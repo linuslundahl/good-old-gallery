@@ -3,34 +3,10 @@
 /**
  * Setup settings form on settings page.
  */
+function goodold_gallery_setup_settings( $load_all = true ) {
+	global $gog_cycle_settings;
 
-$gog_options = array();
-if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
-
-	$themes = goodold_gallery_get_themes();
-
-	// Create available themes list
-	$av_themes = '';
-	if ( $themes ) {
-		$av_themes .= '<ul class="available-themes">';
-		foreach ( $themes as $file => $theme ) {
-			$author = filter_var($theme['AuthorURI'], FILTER_VALIDATE_URL) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
-
-			$screenshot = '..' . GOG_PLUGIN_PATH . '/themes/' . substr($file, 0, -4) . '.png';
-			$screenshot = file_exists($screenshot) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
-
-			$av_themes .= '<li class="theme">';
-			$av_themes .= $screenshot;
-			$av_themes .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> by <span class="author">' . $author . '</span>';
-			$av_themes .= '<div class="description">' . $theme['Description'] . '</div>';
-			$av_themes .= '</li>';
-		}
-		$av_themes .= '</ul>';
-	}
-
-	// Get themes for select dropdown
-	$theme_options = array('No theme' => '');
-	$theme_options += goodold_gallery_get_themes( true );
+	$gog_options = array();
 
 	$gog_options['paragraph-1'] = array(
 		"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
@@ -45,16 +21,26 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 
 	$gog_options['paragraph-2'] = array(
 		"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
-							 "Use the built in generator found under the <em>" . GOG_PLUGIN_NAME . "</em> tab, just click the <em>Add an Image</em> button to find the tab on the far right.",
+		           "Use the built in generator found under the <em>" . GOG_PLUGIN_NAME . "</em> tab, just click the <em>Add an Image</em> button to find the tab on the far right.",
 		"type" => "paragraph"
 	);
+
+	$gog_options['tip'] = array(
+		"value" => "<div class=\"tip\"><strong>Tip!</strong> You can use " . GOG_PLUGIN_NAME . " with regular galleries that you have uploaded on a page/post, just don't enter any id in the shortcode and it will look for a gallery attached to the current page/post.</div>",
+		"type" => "markdown"
+	);
+
 
 	$gog_options['title-2'] = array(
 		"name" => "Gallery Settings",
 		"type" => "title"
 	);
 
-	if ($themes) {
+	// Get themes for select dropdown
+	$theme_options = array('No theme' => '');
+	$theme_options += goodold_gallery_get_themes( true );
+
+	if ($theme_options) {
 		$gog_options['start-1'] = array(
 			"type" => 'start-table'
 		);
@@ -73,10 +59,12 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 		);
 	}
 
-	$gog_options['markdown-1'] = array(
-		"value" => "$av_themes",
-		"type" => "markdown"
-	);
+	if ( $load_all ) {
+		$gog_options['markdown-1'] = array(
+			"value" => goodold_gallery_settings_themes(),
+			"type" => "markdown"
+		);
+	}
 
 	$gog_options['start-2'] = array(
 		"type" => 'start-table'
@@ -181,13 +169,65 @@ if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
 	$gog_options['end-2'] = array(
 		'type' => 'end-table'
 	);
+
+	return $gog_options;
+}
+
+/**
+ * Build themes function for settings page
+ */
+function goodold_gallery_settings_themes() {
+	global $gog_settings;
+
+	$themes = goodold_gallery_get_themes();
+
+	$ret = '';
+	if ( $themes ) {
+		$ret .= '<ul class="available-themes">';
+		foreach ( $themes as $file => $theme ) {
+			$author = filter_var($theme['AuthorURI'], FILTER_VALIDATE_URL) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
+
+			$screenshot = '..' . GOG_PLUGIN_PATH . '/themes/' . substr($file, 0, -4) . '.png';
+			$screenshot = file_exists($screenshot) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
+
+			// $id = substr($file, 0, -4);
+
+			// $active = '';
+			// if ( is_array($gog_settings['active_themes']) ) {
+			// 	$active = in_array($file, $gog_settings['active_themes']) ? ' checked="checked"' : '';
+			// }
+
+			// $disabled = '';
+			// $id_addon = '';
+			// if ( $gog_settings['theme'] == $file ) {
+			// 	$disabled = ' disabled="disabled" checked="checked"';
+			// 	$id_addon = '-disabled';
+			// 	$active = '';
+			// }
+
+			$ret .= '<li class="theme">';
+			$ret .= $screenshot;
+			$ret .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> by <span class="author">' . $author . '</span>';
+			$ret .= '<div class="description">' . $theme['Description'] . '</div>';
+			// $ret .= '<input type="checkbox" value="' . $file . '" id="' . $id . $id_addon . '" name="active_themes' . $id_addon . '[]"' . $active . $disabled . '/> <label for="' . $id . $id_addon . '">Active</label>';
+			// if ( $disabled ) {
+			// 	$ret .= '<input type="hidden" value="' . $file . '" name ="active_themes[]" />';
+			// }
+			$ret .= '</li>';
+		}
+		$ret .= '</ul>';
+	}
+
+	return $ret;
 }
 
 /**
  * Generate settings form.
  */
 function goodold_gallery_settings_page() {
-	global $gog_options, $gog_settings;
+	global $gog_settings;
+
+	$gog_options = goodold_gallery_setup_settings( false );
 
 	if ( 'save' == $_REQUEST['action'] ) {
 		$values = array();
@@ -196,6 +236,9 @@ function goodold_gallery_settings_page() {
 				$values[$value['id']] = $_REQUEST[$value['id']];
 			}
 		}
+		// Save active themes too
+		// $values['active_themes'] = $_REQUEST['active_themes'];
+
 		update_option( GOG_PLUGIN_SHORT . '_settings', $values );
 		$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 	}
@@ -205,6 +248,9 @@ function goodold_gallery_settings_page() {
 
 	if ( $_REQUEST['save'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Settings saved.' ) . '</strong></p></div>';
 	if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>' . __( 'Settings restored.' ) . '</strong></p></div>';
+
+	$gog_options = goodold_gallery_setup_settings();
+
 ?>
 
 <div class="wrap">
@@ -305,10 +351,8 @@ $checked = $gog_settings[$value['id']] ? 'checked="checked"' : '';
 	<tr valign="top">
 		<th scope="row"><?php echo $value['name']; ?></th>
 		<td>
-			<label for="<?php echo $value['id']; ?>">
-				<input type="checkbox" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" value="1" <?php echo $checked; ?> />
-				<?php echo $value['desc']; ?>
-			</label>
+			<input type="checkbox" name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>" value="1" <?php echo $checked; ?> />
+			<label for="<?php echo $value['id']; ?>"><?php echo $value['desc']; ?></label>
 		</td>
 	</tr>
 <?php

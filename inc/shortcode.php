@@ -97,7 +97,6 @@ function goodold_gallery_shortcode($attr) {
 			// NAVIGATION
 			if ( $navigation ) {
 				$ret .= '<div class="nav">' . "\n";
-				error_log(var_export($prev, TRUE));
 				$ret .= '<span class="prev">' . $prev . '</span><span class="next">' . $next . '</span>' . "\n";
 				$ret .= '</div>' . "\n";
 				$navigation = 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .

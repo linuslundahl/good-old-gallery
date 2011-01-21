@@ -21,9 +21,22 @@ h3.hndle { cursor: default !important; }
 
 #go-settings-form { position: relative; }
 
+.goodoldgallery_page_goodoldgallery code { white-space: nowrap; }
+
 .goodoldgallery_page_goodoldgallery .form-table { margin-bottom: 0; }
 
 .goodoldgallery_page_goodoldgallery .go-flattr { position: absolute; right: 0; top: 0; }
+
+.goodoldgallery_page_goodoldgallery .tip {
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background: #f1f1f1;
+	border: 1px solid #e3e3e3;
+	margin: 1em 0;
+	padding: 10px;
+	max-width: 700px;
+}
 
 .goodoldgallery_page_goodoldgallery .themes-link,
 .goodoldgallery_page_goodoldgallery .available-themes { margin: 0 0 0 235px; padding: 10px 0; width: 400px; }
