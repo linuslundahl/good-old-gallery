@@ -5,18 +5,33 @@
  * @return Array
  */
 function goodold_gallery_get_themes($select = false) {
-	$path = '..' . GOG_PLUGIN_PATH . '/themes';
-	$folder = opendir($path);
+	$themes = array();
+	$url = get_bloginfo( 'url' );
+	$theme_path = get_stylesheet_directory();
+	$theme_url = get_bloginfo( 'template_url' );
 
-	while ( false !== ($filename = readdir($folder)) ) {
-		if ( $filename ) {
-			if ( substr(strtolower($filename), -3) == 'css' ) {
-				$info = goodold_gallery_fetch_stylesheets($path . '/' . $filename);
-				if ( $select ) {
-					$themes[$info['Name']] = $filename;
-				}
-				else {
-					$themes[$filename] = $info;
+	$paths = array(
+		GOG_PLUGIN_DIR . '/themes' => GOG_PLUGIN_URL . '/themes',
+		'../wp-content/gog-themes' => $url . '/wp-content/gog-themes',
+		$theme_path . '/gog-themes' => $theme_url . '/gog-themes'
+	);
+
+	foreach ( $paths as $path => $url ) {
+		if ( is_dir($path) ) {
+			$folder = opendir($path);
+
+			while ( false !== ($filename = readdir($folder)) ) {
+				if ( $filename ) {
+					if ( substr(strtolower($filename), -3) == 'css' ) {
+						$info = goodold_gallery_fetch_stylesheets($path . '/' . $filename);
+						if ( $select ) {
+							$themes[$info['Name']] = $filename;
+						}
+						else {
+							$info['path'] = array('path' => $path, 'url' => $url);
+							$themes[$filename] = $info;
+						}
+					}
 				}
 			}
 		}

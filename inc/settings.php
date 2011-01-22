@@ -8,10 +8,10 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 
 	$gog_options = array();
 
-	$gog_options['paragraph-1'] = array(
-		"value" => GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>." .
+	$gog_options['header'] = array(
+		"value" => "<p>" . GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>.</p>" .
 							 '<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>',
-		"type" => "paragraph"
+		"type" => "markdown"
 	);
 
 	$gog_options['title-1'] = array(
@@ -19,9 +19,10 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 		"type" => "title"
 	);
 
-	$gog_options['paragraph-2'] = array(
+	$gog_options['instructions'] = array(
 		"value" => "These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the <code>[good-old-gallery]</code> shortcode.<br />" .
-		           "Use the built in generator found under the <em>" . GOG_PLUGIN_NAME . "</em> tab, just click the <em>Add an Image</em> button to find the tab on the far right.",
+		           "Use the built in generator found under the <em>" . GOG_PLUGIN_NAME . "</em> tab, just click the <em>Add an Image</em> button to find the tab on the far right.<br /><br />" .
+		           'More help can be found at <a href="http://wordpress.org/extend/plugins/good-old-gallery/installation/">wordpress.org</a>',
 		"type" => "paragraph"
 	);
 
@@ -187,32 +188,16 @@ function goodold_gallery_settings_themes() {
 		foreach ( $themes as $file => $theme ) {
 			$author = filter_var($theme['AuthorURI'], FILTER_VALIDATE_URL) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
 
-			$screenshot = '..' . GOG_PLUGIN_PATH . '/themes/' . substr($file, 0, -4) . '.png';
-			$screenshot = file_exists($screenshot) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
-
-			// $id = substr($file, 0, -4);
-
-			// $active = '';
-			// if ( is_array($gog_settings['active_themes']) ) {
-			// 	$active = in_array($file, $gog_settings['active_themes']) ? ' checked="checked"' : '';
-			// }
-
-			// $disabled = '';
-			// $id_addon = '';
-			// if ( $gog_settings['theme'] == $file ) {
-			// 	$disabled = ' disabled="disabled" checked="checked"';
-			// 	$id_addon = '-disabled';
-			// 	$active = '';
-			// }
+			$scr_check = $theme['path']['path'] . '/' . substr($file, 0, -4) . '.png';
+			$screenshot = $theme['path']['url'] . '/' . substr($file, 0, -4) . '.png';
+			$screenshot = file_exists($scr_check) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
 
 			$ret .= '<li class="theme">';
 			$ret .= $screenshot;
-			$ret .= '<span class="title">' . $theme['Name'] . '</span> <span class="version">' . $theme['Version'] . '</span> by <span class="author">' . $author . '</span>';
-			$ret .= '<div class="description">' . $theme['Description'] . '</div>';
-			// $ret .= '<input type="checkbox" value="' . $file . '" id="' . $id . $id_addon . '" name="active_themes' . $id_addon . '[]"' . $active . $disabled . '/> <label for="' . $id . $id_addon . '">Active</label>';
-			// if ( $disabled ) {
-			// 	$ret .= '<input type="hidden" value="' . $file . '" name ="active_themes[]" />';
-			// }
+			$ret .= '<span class="title">' . $theme['Name'] . '</span>';
+			$ret .= $theme['Version'] ? ' <span class="version">' . $theme['Version'] . '</span>' : '';
+			$ret .= $author ? ' by <span class="author">' . $author . '</span>' : '';
+			$ret .= $theme['Description'] ? '<div class="description">' . $theme['Description'] . '</div>' : '';
 			$ret .= '</li>';
 		}
 		$ret .= '</ul>';
@@ -232,12 +217,16 @@ function goodold_gallery_settings_page() {
 	if ( 'save' == $_REQUEST['action'] ) {
 		$values = array();
 		foreach ( $gog_options as $value ) {
-			if ( $value['id'] ) {
+			// Special case for selected theme
+			if ( $value['id'] == 'theme' ) {
+				$theme = goodold_gallery_get_themes();
+				$theme = $theme[$_REQUEST[$value['id']]];
+				$values[$value['id']] = array( 'file' => $_REQUEST[$value['id']], 'url' => $theme['path']['url'], 'class' => $theme['Shortname'], 'id' => $_REQUEST[$value['id']] );
+			}
+			else if ( $value['id'] ) {
 				$values[$value['id']] = $_REQUEST[$value['id']];
 			}
 		}
-		// Save active themes too
-		// $values['active_themes'] = $_REQUEST['active_themes'];
 
 		update_option( GOG_PLUGIN_SHORT . '_settings', $values );
 		$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
@@ -328,6 +317,9 @@ case 'select':
 <?php
 	$selected = '';
 	$saved = $gog_settings[$value['id']];
+	if ( is_array($saved) ) {
+		$saved = $saved['id'];
+	}
 	if ( $saved && ( $saved === $item ) ) {
 		$selected = ' selected="selected"';
 	} elseif ( !$saved && ( $saved === $item ) ) {

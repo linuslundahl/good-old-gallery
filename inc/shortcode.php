@@ -10,6 +10,7 @@ function goodold_gallery_shortcode($attr) {
 
 	extract(shortcode_atts( array(
 		'id'          => null,
+		'theme'       => $gog_settings['theme']       ? $gog_settings['theme']       : $gog_cycle_settings['theme'],
 		'size'        => $gog_settings['size']        ? $gog_settings['size']        : $gog_cycle_settings['size'],
 		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : $gog_cycle_settings['fx'],
 		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']       : $gog_cycle_settings['speed'],
