@@ -361,7 +361,7 @@ break;
 
 	<form method="post" action="">
 	<p class="submit reset">
-		<input name="reset" type="submit" value="Reset default settings" />
+		<input name="reset" type="submit" value="Restore default settings" />
 		<input type="hidden" name="action" value="reset" />
 	</p>
 	</form>

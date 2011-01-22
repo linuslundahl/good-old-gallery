@@ -1,7 +1,7 @@
 var $j = jQuery.noConflict();
 
 (function ($) {
-	var showHide, getValues, value = "", link;
+	var showHide, getValues, value = "", link, confirm = 1;
 
 	// Show/Hide div
 	showHide = function (div, title, alt, id) {
@@ -51,4 +51,13 @@ var $j = jQuery.noConflict();
 	// Settings page
 	showHide($('.goodoldgallery_page_goodoldgallery .available-themes'), 'View installed themes', 'Hide installed themes', 'themes-link');
 
+  // Restore settings confirm
+  $('input[name="reset"]').click(function (e) {
+    var $this = $(this);
+    if (confirm === 1) {
+      confirm++;
+      $this.val('Are you sure?').addClass('confirm');
+      e.preventDefault();
+    }
+  });
 }($j));
