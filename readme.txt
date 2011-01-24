@@ -62,7 +62,7 @@ The structure of a theme is:
 |- my-theme.css (this is the only required file) 
 |- my-theme.png (must be a png) `
 
-Fill in the file headers in the css, only *Style Name* is required, but the more you fill in the better. 
+Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better. 
 
 Now add some css to style your Good Old Galleries.
 

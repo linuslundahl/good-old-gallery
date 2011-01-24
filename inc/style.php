@@ -6,13 +6,12 @@
  */
 function goodold_gallery_get_themes($select = false) {
 	$themes = array();
-	$url = get_bloginfo( 'url' );
 	$theme_path = get_stylesheet_directory();
 	$theme_url = get_bloginfo( 'template_url' );
 
 	$paths = array(
 		GOG_PLUGIN_DIR . '/themes' => GOG_PLUGIN_URL . '/themes',
-		'../wp-content/gog-themes' => $url . '/wp-content/gog-themes',
+		WP_CONTENT_DIR . '/gog-themes' => WP_CONTENT_URL . '/gog-themes',
 		$theme_path . '/gog-themes' => $theme_url . '/gog-themes'
 	);
 
@@ -47,7 +46,7 @@ function goodold_gallery_get_themes($select = false) {
 function goodold_gallery_fetch_stylesheets($file = null) {
 	$default_headers = array(
 		'Name' => 'Style Name',
-		'Shortname' => 'Short Name',
+		'Class' => 'Class',
 		'Description' => 'Description',
 		'Version' => 'Version',
 		'Author' => 'Author',

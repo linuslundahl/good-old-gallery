@@ -55,6 +55,14 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 			"std" => $gog_cycle_settings['theme']
 		);
 
+		$gog_options['themes'] = array(
+			"name" => "Activate all themes",
+			"desc" => "If selected, you will be able to choose theme in the shortcode.",
+			"id" => "themes",
+			"type" => "checkbox",
+			"std" => $gog_cycle_settings['themes']
+		);
+
 		$gog_options['end-1'] = array(
 			"type" => 'end-table'
 		);
@@ -221,7 +229,15 @@ function goodold_gallery_settings_page() {
 			if ( $value['id'] == 'theme' ) {
 				$theme = goodold_gallery_get_themes();
 				$theme = $theme[$_REQUEST[$value['id']]];
-				$values[$value['id']] = array( 'file' => $_REQUEST[$value['id']], 'url' => $theme['path']['url'], 'class' => $theme['Shortname'], 'id' => $_REQUEST[$value['id']] );
+				$values[$value['id']] = array( 'file' => $_REQUEST[$value['id']], 'url' => $theme['path']['url'], 'class' => $theme['Class'], 'id' => $_REQUEST[$value['id']] );
+			}
+			else if ( $value['id'] == 'themes' ) {
+				$themes = goodold_gallery_get_themes();
+				if ( $value['id'] ) {
+					foreach ( $themes as $file => $theme ) {
+						$values[$value['id']][$file] = array( 'path' => $theme['path']['path'], 'url' => $theme['path']['url'], 'class' => $theme['Class'] );
+					}
+				}
 			}
 			else if ( $value['id'] ) {
 				$values[$value['id']] = $_REQUEST[$value['id']];
