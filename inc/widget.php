@@ -34,7 +34,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 		if ( $show ) {
 			$size        = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
-			$theme       = $instance['theme']        ? ' theme="' . $instance['size'] . '"' : '';
+			$theme       = $instance['theme']        ? ' theme="' . $instance['theme'] . '"' : '';
 			$title       = $instance['gtitle']       ? ' title="true"' : '';
 			$description = $instance['description']  ? ' description="true"' : '';
 			$navigation  = $instance['navigation']   ? ' navigation="true"' : '';

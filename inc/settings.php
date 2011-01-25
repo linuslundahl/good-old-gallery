@@ -57,7 +57,7 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 
 		$gog_options['themes'] = array(
 			"name" => "Activate all themes",
-			"desc" => "If selected, you will be able to choose theme in the shortcode. <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php' . "\">Rebuild cache</a> *",
+			"desc" => "If selected, you will be able to choose theme in the shortcode. *",
 			"id" => "themes",
 			"type" => "checkbox",
 			"std" => $gog_cycle_settings['themes']
@@ -69,7 +69,7 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 	}
 
 	$gog_options['cache-help'] = array(
-		"value" => "* To use all themes you need to rebuild the css cache, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.",
+		"value" => "* To use all themes you need to <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php' . "\">rebuild the css cache</a>, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.",
 		"type" => "help"
 	);
 

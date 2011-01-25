@@ -51,20 +51,22 @@ To use your new gallery in a page/post you use the `[good-old-gallery]` shortcod
 
 = Themes =
 
-You can make your own themes, just create a `gog-themes` directory in either `wp-content` or your active themes directory, and the plugin will automatically find any themes located there. 
+You can make your own themes, just create a `gog-themes` directory in either `wp-content` or your active themes directory, and the plugin will automatically find any themes located there.
 
-Creating a theme is rather simple, just start out with one of the themes found in the `themes` catalog in `good-old-gallery`. 
+Creating a theme is rather simple, just start out with one of the themes found in the `themes` catalog in `good-old-gallery`.
 
 The structure of a theme is:
 
 `gog-themes 
 |- my-theme/ (folder with resources)
 |- my-theme.css (this is the only required file) 
-|- my-theme.png (must be a png) `
+|- my-theme.png (must be a png)`
 
-Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better. 
+Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better.
 
 Now add some css to style your Good Old Galleries.
+
+If you enable all themes on the settings page and build the css cache, you can use `[good-old-gallery theme="theme-class"]` to use per gallery themes.
 
 = Widgets =
 
@@ -92,6 +94,7 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 = 1.1 =
 * Add your own themes in `wp-content/gog-themes` or `wp-content/themes/[active-theme]/gog-themes`, see [Installation](http://wordpress.org/extend/plugins/good-old-gallery/installation/) for more info.
+* Fixed issue with title in widgets.
 
 = 1.0 =
 * First version on wordpress.org.

@@ -45,8 +45,12 @@ function goodold_gallery_shortcode($attr) {
 
 		$classes = "";
 
-		if ( $gog_settings['themes'] ) {
+		// Add theme class
+		if ( $theme ) {
 			$classes .= ' ' . $theme;
+		}
+		else if ( empty($theme) && $gog_settings['theme'] ) {
+			$classes .= ' ' . $gog_settings['theme']['class'];
 		}
 
 		// NAVIGATION CLASS
