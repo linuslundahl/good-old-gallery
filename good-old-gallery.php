@@ -6,7 +6,7 @@
  * Plugin URI: http://unwi.se/good-old-gallery
  * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in jQuery Cycle support and Widgets.
  * Author: Linus Lundahl
- * Version: 1.0
+ * Version: 1.1
  * Author URI: http://unwi.se/
  *
  */

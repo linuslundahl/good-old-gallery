@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, cycle, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.0.4
-Stable tag: 1.0
+Stable tag: 1.1
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery Cycle for sliding and fading transitions.
 
@@ -14,11 +14,12 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 
 = Main features =
 
-* Uses built in WP gallery functionality
-* [jQuery Cycle](jquery.malsup.com/cycle/)
-* Shortcode generator
-* Widgets
-* Stylesheet theme support
+* Uses built in WP gallery functionality.
+* [jQuery Cycle](jquery.malsup.com/cycle/).
+* Shortcode generator.
+* Widgets.
+* Stylesheet theme support, per gallery.
+* Create your own themes.
 * Instant on, no need for coding.
 * Plus much more...
 
