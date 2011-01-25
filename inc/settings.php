@@ -57,7 +57,7 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 
 		$gog_options['themes'] = array(
 			"name" => "Activate all themes",
-			"desc" => "If selected, you will be able to choose theme in the shortcode.",
+			"desc" => "If selected, you will be able to choose theme in the shortcode. <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php' . "\">Rebuild cache</a> *",
 			"id" => "themes",
 			"type" => "checkbox",
 			"std" => $gog_cycle_settings['themes']
@@ -67,6 +67,11 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 			"type" => 'end-table'
 		);
 	}
+
+	$gog_options['cache-help'] = array(
+		"value" => "* To use all themes you need to rebuild the css cache, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.",
+		"type" => "help"
+	);
 
 	if ( $load_all ) {
 		$gog_options['markdown-1'] = array(
@@ -226,7 +231,7 @@ function goodold_gallery_settings_page() {
 		$values = array();
 		foreach ( $gog_options as $value ) {
 			// Special case for selected theme
-			if ( $value['id'] == 'theme' ) {
+			if ( $value['id'] == 'theme' && !empty($values[$value['id']]) ) {
 				$theme = goodold_gallery_get_themes();
 				$theme = $theme[$_REQUEST[$value['id']]];
 				$values[$value['id']] = array( 'file' => $_REQUEST[$value['id']], 'url' => $theme['path']['url'], 'class' => $theme['Class'], 'id' => $_REQUEST[$value['id']] );
@@ -235,7 +240,7 @@ function goodold_gallery_settings_page() {
 				$themes = goodold_gallery_get_themes();
 				if ( $value['id'] ) {
 					foreach ( $themes as $file => $theme ) {
-						$values[$value['id']][$file] = array( 'path' => $theme['path']['path'], 'url' => $theme['path']['url'], 'class' => $theme['Class'] );
+						$values[$value['id']][$theme['Class']] = $theme['Name'];
 					}
 				}
 			}
@@ -288,6 +293,12 @@ break;
 case 'markdown':
 ?>
 <?php echo $value['value']; ?>
+<?php
+break;
+
+case 'help':
+?>
+<div class="help"><?php echo $value['value']; ?></div>
 <?php
 break;
 

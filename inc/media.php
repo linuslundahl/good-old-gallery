@@ -24,7 +24,7 @@ add_filter( 'media_upload_tabs', 'goodold_gallery_media_tab' );
  * Good Old Gallery tab page.
  */
 function goodold_gallery_media_process() {
-	global $wpdb;
+	global $wpdb, $gog_settings;
 
 	media_upload_header();
 
@@ -36,9 +36,16 @@ function goodold_gallery_media_process() {
 
 	$options = !$posts ? "<option value=\"\">No galleries found</option>" : "";
 
+	$gallery_options = '';
 	foreach ( $posts as $p ) {
 		$selected = '';
-		$options .= "<option value=\"$p->ID\">$p->post_title</option>";
+		$gallery_options .= "<option value=\"$p->ID\">$p->post_title</option>";
+	}
+
+	// Build dropdown with themes
+	$theme_options = '';
+	foreach ( $gog_settings['themes'] as $class => $name ) {
+		$theme_options .= "<option value=\"$class\">$name</option>";
 	}
 ?>
 <div id="go-gallery-generator">
@@ -59,13 +66,25 @@ function goodold_gallery_media_process() {
 				</p>
 			</div>
 
+<?php if ($gallery_options): ?>
 			<p>
 				<label for="id" title="Select gallery" style="line-height:25px;">Gallery:</label>
 				<select id="id" name="Gallery">
 					<option value="">Select gallery</option>
-					<?php echo $options; ?>
+					<?php echo $gallery_options; ?>
 				</select>
 			</p>
+<?php endif; ?>
+
+<?php if ($theme_options): ?>
+			<p>
+				<label for="id" title="Select theme" style="line-height:25px;">Theme:</label>
+				<select id="theme" name="Theme">
+					<option value="">Select theme</option>
+					<?php echo $theme_options; ?>
+				</select>
+			</p>
+<?php endif; ?>
 
 			<p>
 				<label for="fx" title="Animation" style="line-height:25px;">Animation:</label>

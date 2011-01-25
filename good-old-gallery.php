@@ -16,6 +16,7 @@ define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__
 define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ));
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
+$upload_url = wp_upload_dir();
 $gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 $gog_cycle_settings = array(
 	'theme'       => array(),
@@ -56,8 +57,8 @@ if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get
 }
 
 // Add minified css of all themes or the selected theme css
-if ( !is_admin() && $gog_settings['themes'] ) {
-	wp_enqueue_style( 'good-old-gallery-themes', GOG_PLUGIN_URL . '/themes/good-old-gallery-themes.php' );
+if ( !is_admin() && ($gog_settings['themes'] && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
+	wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 }
 else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['themes'])) ) {
 	wp_enqueue_style( 'good-old-gallery-theme', $gog_settings['theme']['url'] . '/' . $gog_settings['theme']['file'] );

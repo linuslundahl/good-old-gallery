@@ -34,7 +34,8 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 		if ( $show ) {
 			$size        = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
-			$title       = $instance['title']        ? ' title="true"' : '';
+			$theme       = $instance['theme']        ? ' theme="' . $instance['size'] . '"' : '';
+			$title       = $instance['gtitle']       ? ' title="true"' : '';
 			$description = $instance['description']  ? ' description="true"' : '';
 			$navigation  = $instance['navigation']   ? ' navigation="true"' : '';
 			$pager       = $instance['pager']        ? ' pager="true"' : '';
@@ -43,7 +44,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 			$speed       = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
 
 			echo $before_widget;
-			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $size . $navigation . $pager . $fx . $timeout . $speed . ']' );
+			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $navigation . $pager . $fx . $timeout . $speed . $title . $description . ']' );
 			echo $after_widget;
 		}
 	}
@@ -52,11 +53,12 @@ class GoodOldGalleryWidget extends WP_Widget {
 	function update($new_instance, $old_instance) {
 		$instance['title']       = $new_instance['title'];
 		$instance['post-ID']     = $new_instance['post-ID'];
+		$instance['theme']       = $new_instance['theme'];
 		$instance['size']        = $new_instance['size'];
 		$instance['fx']          = $new_instance['fx'];
 		$instance['timeout']     = $new_instance['timeout'];
 		$instance['speed']       = $new_instance['speed'];
-		$instance['title']       = $new_instance['title'];
+		$instance['gtitle']       = $new_instance['gtitle'];
 		$instance['description'] = $new_instance['description'];
 		$instance['navigation']  = $new_instance['navigation'];
 		$instance['pager']       = $new_instance['pager'];
@@ -67,7 +69,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 	// WIDGET SETTINGS FORM
 	function form($instance) {
-		global $wpdb;
+		global $wpdb, $gog_settings;
 
 		// Build dropdown with galleries
 		$posts = $wpdb->get_results($wpdb->prepare("
@@ -75,14 +77,28 @@ class GoodOldGalleryWidget extends WP_Widget {
 				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
 		));
 
-		$options = !$posts ? "<option value=\"\">No galleries found</option>" : "";
-
+	if (!$posts) {
+?>
+	<p>No galleries found.</p>
+<?php
+	}
+	else {
 		foreach ($posts as $p) {
 			$selected = '';
 			if ($instance['post-ID']) {
 				$selected = $p->ID == $instance['post-ID'] ? ' selected="yes"' : '';
 			}
-			$options .= "<option value=\"$p->ID\"$selected>$p->post_title</option>";
+			$gallery_options .= "<option value=\"$p->ID\"$selected>$p->post_title</option>";
+		}
+
+		// Build dropdown with themes
+		$theme_options = '';
+		foreach ( $gog_settings['themes'] as $class => $name ) {
+			$selected = '';
+			if ($instance['theme']) {
+				$selected = $class == $instance['theme'] ? ' selected="yes"' : '';
+			}
+			$theme_options .= "<option value=\"$class\"$selected>$name</option>";
 		}
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
@@ -96,9 +112,19 @@ class GoodOldGalleryWidget extends WP_Widget {
 	<p>
 		<label for="<?php echo $this->get_field_id('post-ID'); ?>" title="Select gallery" style="line-height:25px;">Gallery:</label>
 		<select id="<?php echo $this->get_field_id('post-ID'); ?>" name="<?php echo $this->get_field_name('post-ID'); ?>" style="width: 150px;">
-			<?php echo $options; ?>
+			<?php echo $gallery_options; ?>
 		</select>
 	</p>
+
+<?php if ($theme_options): ?>
+	<p>
+		<label for="<?php echo $this->get_field_id('theme'); ?>" title="Select theme" style="line-height:25px;">Theme:</label>
+		<select id="<?php echo $this->get_field_id('theme'); ?>" name="<?php echo $this->get_field_name('theme'); ?>" style="width: 150px;">
+			<option value="">Select theme</option>
+			<?php echo $theme_options; ?>
+		</select>
+	</p>
+<?php endif; ?>
 
 	<p>
 		<label for="<?php echo $this->get_field_id('fx'); ?>" title="Animation" style="line-height:25px;">Fx:</label>
@@ -131,8 +157,8 @@ class GoodOldGalleryWidget extends WP_Widget {
 	</p>
 
 	<p>
-		<input id="<?php echo $this->get_field_id('title'); ?>" type="checkbox" name="<?php echo $this->get_field_name('title'); ?>"<?php echo $instance['title'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('title'); ?>" title="Select if the title should be displayed" style="line-height:25px;">Show pager</label>
+		<input id="<?php echo $this->get_field_id('gtitle'); ?>" type="checkbox" name="<?php echo $this->get_field_name('gtitle'); ?>"<?php echo $instance['gtitle'] ? ' checked="checked"' : ''; ?> />
+		<label for="<?php echo $this->get_field_id('gtitle'); ?>" title="Select if the title should be displayed" style="line-height:25px;">Show title</label>
 	</p>
 
 	<p>
@@ -152,10 +178,11 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 	<p>
 		<label for="<?php echo $this->get_field_id('pages'); ?>" title="Title of the widget">Show on:</label><br />
-		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="28"><?php echo $instance['pages']; ?></textarea><br />
+		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="24"><?php echo $instance['pages']; ?></textarea><br />
 		<span class="description"><?php echo __("Type paths that the gallery should be visible on, separate them with a line break. Leave empty to show in all places.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?></span>
 	</p>
 <?php
+	}
 	}
 }
 add_action( 'widgets_init', create_function('', 'return register_widget("GoodOldGalleryWidget");') );

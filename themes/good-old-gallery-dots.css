@@ -9,10 +9,10 @@
  *
  */
 
-.go-gallery { padding: 0 30px; position: relative; }
+.go-gallery.gog-dots { padding: 0 30px; position: relative; }
 
 /** Pager */
-.go-gallery .pager {
+.go-gallery.gog-dots .pager {
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
@@ -26,7 +26,7 @@
 .go-gallery.has-pager .pager {
 	left: 50px;
 }
-.go-gallery .pager a {
+.go-gallery.gog-dots .pager a {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -37,13 +37,13 @@
 	padding: 6px 0 0 0;
 	width: 6px;
 }
-.go-gallery .pager a.activeSlide { background: #fff;}
-.go-gallery .pager a:first-child { margin: 0; }
+.go-gallery.gog-dots .pager a.activeSlide { background: #fff;}
+.go-gallery.gog-dots .pager a:first-child { margin: 0; }
 /* end Pager */
 
 /** Navigation */
-.go-gallery .nav .prev,
-.go-gallery .nav .next {
+.go-gallery.gog-dots .nav .prev,
+.go-gallery.gog-dots .nav .next {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
@@ -52,8 +52,8 @@
 	top: 0;
 	width: 30px;
 }
-.go-gallery .nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; }
-.go-gallery .nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; }
-.go-gallery .nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
-.go-gallery .nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
+.go-gallery.gog-dots .nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; }
+.go-gallery.gog-dots .nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; }
+.go-gallery.gog-dots .nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
+.go-gallery.gog-dots .nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
 /* end Navigation */

@@ -38,6 +38,8 @@ h3.hndle { cursor: default !important; }
 	max-width: 700px;
 }
 
+.goodoldgallery_page_goodoldgallery div.help { font-size: 10px; margin: 0 0 0 235px; padding: 0 0 10px 0; width: 400px; }
+
 .goodoldgallery_page_goodoldgallery .themes-link,
 .goodoldgallery_page_goodoldgallery .available-themes { margin: 0 0 0 235px; padding: 10px 0; width: 400px; }
 .goodoldgallery_page_goodoldgallery .available-themes .theme { font-weight: bold; }
