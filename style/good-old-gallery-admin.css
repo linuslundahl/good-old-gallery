@@ -6,7 +6,7 @@
 .describe .url,
 .describe .align,
 .describe .image-size,
-.describe .submit,
+.describe .wp-post-thumbnail,
 #normal-sortables { display: none !important; }
 
 #gog_sectionid .inside { padding: 0 8px; }
