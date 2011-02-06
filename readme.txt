@@ -15,7 +15,7 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 = Main features =
 
 * Uses built in WP gallery functionality.
-* [jQuery Cycle](jquery.malsup.com/cycle/).
+* [jQuery Cycle](http://jquery.malsup.com/cycle/).
 * Shortcode generator.
 * Widgets.
 * Stylesheet theme support, per gallery.
