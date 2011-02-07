@@ -39,10 +39,11 @@ ob_start("compress");
 			include($theme['path']['path'] . '/' . $file);
 		}
 	}
-ob_end_flush();
+$content = compress(ob_get_contents());
+ob_end_clean();
 
 $upload_url = wp_upload_dir();
-file_put_contents($upload_url['basedir'] . '/good-old-gallery-themes.css', ob_get_contents());
+file_put_contents($upload_url['basedir'] . '/good-old-gallery-themes.css', $content);
 
 // Redirect back to settings
 header('Location: /wp-admin/edit.php?post_type=goodoldgallery&page=goodoldgallery');
