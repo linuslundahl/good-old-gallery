@@ -10,6 +10,9 @@ function goodold_gallery_shortcode($attr) {
 
 	extract(shortcode_atts( array(
 		'id'          => null,
+		'order'       => 'ASC',
+		'orderby'     => 'menu_order ID',
+		'exclude'     => array(),
 		'theme'       => $gog_settings['theme']       ? $gog_settings['theme']       : $gog_cycle_settings['theme'],
 		'size'        => $gog_settings['size']        ? $gog_settings['size']        : $gog_cycle_settings['size'],
 		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : $gog_cycle_settings['fx'],
@@ -41,6 +44,9 @@ function goodold_gallery_shortcode($attr) {
 			'post_status'     => 'inherit',
 			'post_type'       => 'attachment',
 			'post_mime_type'  => 'image',
+			'order'           => $order,
+			'orderby'         => $orderby,
+			'exclude'         => $exclude
 		) );
 
 		$classes = "";
