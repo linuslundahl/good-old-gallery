@@ -6,7 +6,7 @@
  * Plugin URI: http://unwi.se/good-old-gallery
  * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in jQuery Cycle support and Widgets.
  * Author: Linus Lundahl
- * Version: 1.11
+ * Version: 1.12
  * Author URI: http://unwi.se/
  *
  */
@@ -19,7 +19,7 @@ define('GOG_PLUGIN_SHORT', 'gog');
 $upload_url = wp_upload_dir();
 $gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
 $gog_cycle_settings = array(
-	'theme'       => array(),
+	'theme'       => array('active' => null, 'available' => null),
 	'size'        => 'Full',
 	'size-select' => 'full',
 	'fx'          => 'fade',
@@ -57,10 +57,10 @@ if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get
 }
 
 // Add minified css of all themes or the selected theme css
-if ( !is_admin() && ($gog_settings['themes'] && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
+if ( !is_admin() && ($gog_settings['themes']['active'] && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
 	wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 }
-else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['themes'])) ) {
+else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['themes']['active'])) ) {
 	wp_enqueue_style( 'good-old-gallery-theme', $gog_settings['theme']['url'] . '/' . $gog_settings['theme']['file'] );
 }
 

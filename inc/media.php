@@ -44,8 +44,10 @@ function goodold_gallery_media_process() {
 
 	// Build dropdown with themes
 	$theme_options = '';
-	foreach ( $gog_settings['themes'] as $class => $name ) {
-		$theme_options .= "<option value=\"$class\">$name</option>";
+	if ($gog_settings['themes']['active']) {
+		foreach ( $gog_settings['themes']['available'] as $class => $name ) {
+			$theme_options .= "<option value=\"$class\">$name</option>";
+		}
 	}
 ?>
 <div id="go-gallery-generator">

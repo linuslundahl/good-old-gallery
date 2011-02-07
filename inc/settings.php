@@ -4,9 +4,16 @@
  * Setup settings form on settings page.
  */
 function goodold_gallery_setup_settings( $load_all = true ) {
-	global $gog_cycle_settings;
+	global $gog_settings, $gog_cycle_settings;
 
 	$gog_options = array();
+
+	$themes_active = FALSE;
+	$themes_extra = "";
+	if ($gog_settings['themes']['active']) {
+		$themes_active = TRUE;
+		$themes_extra = " *";
+	}
 
 	$gog_options['header'] = array(
 		"value" => "<p>" . GOG_PLUGIN_NAME . " created and maintained by <a href=\"http://unwi.se/\">Linus Lundahl</a>.</p>" .
@@ -57,10 +64,10 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 
 		$gog_options['themes'] = array(
 			"name" => "Activate all themes",
-			"desc" => "If selected, you will be able to choose theme in the shortcode. *",
+			"desc" => "If selected, you will be able to choose theme in the shortcode." . $themes_extra,
 			"id" => "themes",
 			"type" => "checkbox",
-			"std" => $gog_cycle_settings['themes']
+			"std" => $gog_cycle_settings['themes']['active']
 		);
 
 		$gog_options['end-1'] = array(
@@ -68,10 +75,12 @@ function goodold_gallery_setup_settings( $load_all = true ) {
 		);
 	}
 
-	$gog_options['cache-help'] = array(
-		"value" => "* To use all themes you need to <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php' . "\">rebuild the css cache</a>, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.",
-		"type" => "help"
-	);
+	if ($themes_active) {
+		$gog_options['cache-help'] = array(
+			"value" => "* To use all themes you need to <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php' . "\">rebuild the css cache</a>, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.",
+			"type" => "help"
+		);
+	}
 
 	if ( $load_all ) {
 		$gog_options['markdown-1'] = array(
@@ -239,8 +248,9 @@ function goodold_gallery_settings_page() {
 			else if ( $value['id'] == 'themes' ) {
 				$themes = goodold_gallery_get_themes();
 				if ( $value['id'] ) {
+					$values[$value['id']]['active'] = $_REQUEST[$value['id']];
 					foreach ( $themes as $file => $theme ) {
-						$values[$value['id']][$theme['Class']] = $theme['Name'];
+						$values[$value['id']]['available'][$theme['Class']] = $theme['Name'];
 					}
 				}
 			}
@@ -366,6 +376,9 @@ break;
 
 case "checkbox":
 $checked = $gog_settings[$value['id']] ? 'checked="checked"' : '';
+if ($value['id'] == 'themes') {
+	$checked = $gog_settings[$value['id']]['active'] ? 'checked="checked"' : '';
+}
 ?>
 	<tr valign="top">
 		<th scope="row"><?php echo $value['name']; ?></th>

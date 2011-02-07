@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, cycle, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.0.4
-Stable tag: 1.11
+Stable tag: 1.12
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery Cycle for sliding and fading transitions.
 
@@ -93,6 +93,9 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 == Changelog ==
 
+= 1.12 =
+* Fixes an issue with "activate all themes".
+
 = 1.11 =
 * Added missing cache.php file.
 * Remove button on images in galleries is back.
@@ -105,6 +108,9 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 * First version on wordpress.org.
 
 == Upgrade Notice ==
+
+= 1.12 =
+Once again you need to *re-save the settings page.*
 
 = 1.1 =
 The new theme system allows you to add your own themes. *When upgrading you need to re-save the settings on the settings page.*

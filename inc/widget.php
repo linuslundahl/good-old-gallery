@@ -93,12 +93,14 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 		// Build dropdown with themes
 		$theme_options = '';
-		foreach ( $gog_settings['themes'] as $class => $name ) {
-			$selected = '';
-			if ($instance['theme']) {
-				$selected = $class == $instance['theme'] ? ' selected="yes"' : '';
+		if ($gog_settings['themes']['active']) {
+			foreach ( $gog_settings['themes']['available'] as $class => $name ) {
+				$selected = '';
+				if ($instance['theme']) {
+					$selected = $class == $instance['theme'] ? ' selected="yes"' : '';
+				}
+				$theme_options .= "<option value=\"$class\"$selected>$name</option>";
 			}
-			$theme_options .= "<option value=\"$class\"$selected>$name</option>";
 		}
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
