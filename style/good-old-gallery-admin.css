@@ -19,15 +19,17 @@ h3.hndle { cursor: default !important; }
 
 .go-gallery-admin { margin: 2em 0; }
 
-#go-settings-form { position: relative; }
+#screen-meta { z-index: 999; }
 
-.goodoldgallery_page_goodoldgallery code { white-space: nowrap; }
+.wrap { position: relative; }
 
-.goodoldgallery_page_goodoldgallery .form-table { margin-bottom: 0; }
+code { white-space: nowrap; }
 
-.goodoldgallery_page_goodoldgallery .go-flattr { position: absolute; right: 0; top: 0; }
+.form-table { margin-bottom: 0; }
 
-.goodoldgallery_page_goodoldgallery .tip {
+.go-flattr { position: absolute; right: 20px; top: 30px; }
+
+.tip {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
@@ -38,13 +40,14 @@ h3.hndle { cursor: default !important; }
 	max-width: 700px;
 }
 
-.goodoldgallery_page_goodoldgallery div.help { font-size: 10px; margin: 0 0 0 235px; padding: 0 0 10px 0; width: 400px; }
+div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 
-.goodoldgallery_page_goodoldgallery .themes-link,
-.goodoldgallery_page_goodoldgallery .available-themes { margin: 0 0 0 235px; padding: 10px 0; width: 400px; }
-.goodoldgallery_page_goodoldgallery .available-themes .theme { font-weight: bold; }
-.goodoldgallery_page_goodoldgallery .available-themes .theme img { border: 5px solid #eee; margin: 0 0 5px 0; }
-.goodoldgallery_page_goodoldgallery .available-themes .theme .description { font-weight: normal; }
+.themes-link,
+.themes-available { clear: both; font-size: 10px; margin: 0; overflow: hidden; padding: 10px 0; }
+.themes-available .theme { border: 5px solid #eee; font-weight: bold; float: left; margin: 0 10px 10px 0; width: 300px; }
+.themes-available .theme .screenshot { border-bottom: 5px solid #eee; }
+.themes-available .theme .information { padding: 5px; }
+.themes-available .theme .description { font-weight: normal; }
 
-.goodoldgallery_page_goodoldgallery .submit { float: left; margin-left: 10px; }
-.goodoldgallery_page_goodoldgallery .reset { margin-left: 30px; }
+.submit { float: left; margin-left: 10px; }
+.reset { margin-left: 30px; }

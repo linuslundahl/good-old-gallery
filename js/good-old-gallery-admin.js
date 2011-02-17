@@ -49,15 +49,15 @@ var $j = jQuery.noConflict();
 	});
 
 	// Settings page
-	showHide($('.goodoldgallery_page_goodoldgallery .available-themes'), 'View installed themes', 'Hide installed themes', 'themes-link');
+	showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
 
-  // Restore settings confirm
-  $('input[name="reset"]').click(function (e) {
-    var $this = $(this);
-    if (confirm === 1) {
-      confirm++;
-      $this.val('Are you sure?').addClass('confirm');
-      e.preventDefault();
-    }
-  });
+	// Restore settings confirm
+	$('input[name="reset"]').click(function (e) {
+		var $this = $(this);
+		if (confirm === 1) {
+			confirm++;
+			$this.val('Are you sure?').addClass('confirm');
+			e.preventDefault();
+		}
+	});
 }($j));

@@ -35,7 +35,7 @@ header('Content-type: text/css');
 
 ob_start("compress");
 	foreach ( $themes as $file => $theme ) {
-		if (file_exists(include($theme['path']['path'] . '/' . $file))) { 
+		if (file_exists(include($theme['path']['path'] . '/' . $file))) {
 			include($theme['path']['path'] . '/' . $file);
 		}
 	}
@@ -46,4 +46,6 @@ $upload_url = wp_upload_dir();
 file_put_contents($upload_url['basedir'] . '/good-old-gallery-themes.css', $content);
 
 // Redirect back to settings
-header('Location: /wp-admin/edit.php?post_type=goodoldgallery&page=goodoldgallery');
+if ( isset($_GET['redirect']) ) {
+	header('Location: /wp-admin/edit.php?post_type=goodoldgallery&page=gog_themes');
+}

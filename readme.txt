@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, cycle, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.0.4
-Stable tag: 1.12
+Stable tag: 1.2
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery Cycle for sliding and fading transitions.
 
@@ -92,6 +92,9 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 5. Widget settings
 
 == Changelog ==
+
+= 1.12 =
+* Theme settings is now on a separate page.
 
 = 1.12 =
 * Fixes an issue with "activate all themes".

@@ -6,7 +6,7 @@
  * Plugin URI: http://unwi.se/good-old-gallery
  * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in jQuery Cycle support and Widgets.
  * Author: Linus Lundahl
- * Version: 1.12
+ * Version: 1.2
  * Author URI: http://unwi.se/
  *
  */
@@ -17,9 +17,9 @@ define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
 $upload_url = wp_upload_dir();
-$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
-$gog_cycle_settings = array(
-	'theme'       => array('active' => null, 'available' => null),
+
+// Setup default plugin settings and themes
+$gog_default_settings = array(
 	'size'        => 'Full',
 	'size-select' => 'full',
 	'fx'          => 'fade',
@@ -32,6 +32,16 @@ $gog_cycle_settings = array(
 	'prev'        => 'prev',
 	'next'        => 'next'
 );
+$gog_default_themes = array(
+	'default' => 0,
+	'themes' => array(
+		'active' => 0,
+	)
+);
+
+// Load plugin settings and themes
+$gog_settings = get_settings( GOG_PLUGIN_SHORT . '_settings' );
+$gog_themes = get_settings( GOG_PLUGIN_SHORT . '_themes' );
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {
@@ -57,10 +67,10 @@ if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get
 }
 
 // Add minified css of all themes or the selected theme css
-if ( !is_admin() && ($gog_settings['themes']['active'] && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
+if ( !is_admin() && (!empty($gog_settings['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
 	wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 }
-else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['themes']['active'])) ) {
+else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['all'])) ) {
 	wp_enqueue_style( 'good-old-gallery-theme', $gog_settings['theme']['url'] . '/' . $gog_settings['theme']['file'] );
 }
 
@@ -82,18 +92,22 @@ function goodold_gallery_flattr_button() {
 
 FLATTR;
 }
-if ( is_admin() && $_GET['page'] == 'goodoldgallery' ) {
+if ( $_GET['post_type'] == 'goodoldgallery' && ($_GET['page'] == 'gog_settings' || $_GET['page'] == 'gog_themes')) {
 	wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 	add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 }
 
 // Load up different features
+require_once('inc/forms.php');
 require_once('inc/style.php');
 require_once('inc/content.php');
 require_once('inc/widget.php');
-require_once('inc/settings.php');
 require_once('inc/shortcode.php');
 require_once('inc/media.php');
+
+// Add pages
+require_once('inc/page-settings.php');
+require_once('inc/page-themes.php');
 
 /**
  * Returns an array of valid paths
