@@ -48,6 +48,3 @@ div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 .themes-available .theme .screenshot { border-bottom: 5px solid #eee; }
 .themes-available .theme .information { padding: 5px; }
 .themes-available .theme .description { font-weight: normal; }
-
-.submit { float: left; margin-left: 10px; }
-.reset { margin-left: 30px; }
