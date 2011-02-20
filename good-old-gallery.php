@@ -67,11 +67,11 @@ if ( is_admin() && (get_post_type( $_GET['post_id'] ) == 'goodoldgallery' || get
 }
 
 // Add minified css of all themes or the selected theme css
-if ( !is_admin() && (!empty($gog_settings['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
+if ( !is_admin() && (!empty($gog_themes['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
 	wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 }
-else if ( !is_admin() && ($gog_settings['theme'] && empty($gog_settings['all'])) ) {
-	wp_enqueue_style( 'good-old-gallery-theme', $gog_settings['theme']['url'] . '/' . $gog_settings['theme']['file'] );
+else if ( !is_admin() && ($gog_themes['default'] && empty($gog_themes['all'])) ) {
+	wp_enqueue_style( 'good-old-gallery-theme', $gog_themes['theme']['url'] . '/' . $gog_themes['default'] );
 }
 
 // Add flattr button js and admin js

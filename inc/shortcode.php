@@ -4,7 +4,7 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-	global $post, $gog_default_settings, $gog_settings;
+	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes;
 
 	static $i = 1;
 
@@ -13,17 +13,17 @@ function goodold_gallery_shortcode($attr) {
 		'order'       => 'ASC',
 		'orderby'     => 'menu_order ID',
 		'exclude'     => array(),
-		'theme'       => $gog_settings['theme']       ? $gog_settings['theme']       : $gog_default_settings['theme'],
-		'size'        => $gog_settings['size']        ? $gog_settings['size']        : $gog_default_settings['size'],
-		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']          : $gog_default_settings['fx'],
-		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']       : $gog_default_settings['speed'],
-		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']     : $gog_default_settings['timeout'],
-		'title'       => $gog_settings['title']       ? $gog_settings['title']       : $gog_default_settings['title'],
-		'description' => $gog_settings['description'] ? $gog_settings['description'] : $gog_default_settings['description'],
-		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']  : $gog_default_settings['navigation'],
-		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']       : $gog_default_settings['pager'],
-		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']        : $gog_default_settings['prev'],
-		'next'        => $gog_settings['next']        ? $gog_settings['next']        : $gog_default_settings['next']
+		'theme'       => $gog_themes['default']       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
+		'size'        => $gog_settings['size']        ? $gog_settings['size']         : $gog_default_settings['size'],
+		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']           : $gog_default_settings['fx'],
+		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']        : $gog_default_settings['speed'],
+		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']      : $gog_default_settings['timeout'],
+		'title'       => $gog_settings['title']       ? $gog_settings['title']        : $gog_default_settings['title'],
+		'description' => $gog_settings['description'] ? $gog_settings['description']  : $gog_default_settings['description'],
+		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']   : $gog_default_settings['navigation'],
+		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']        : $gog_default_settings['pager'],
+		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']         : $gog_default_settings['prev'],
+		'next'        => $gog_settings['next']        ? $gog_settings['next']         : $gog_default_settings['next']
 	), $attr ));
 
 	// Use post_id if no id is set in shortcode.
@@ -55,8 +55,8 @@ function goodold_gallery_shortcode($attr) {
 		if ( $theme ) {
 			$classes .= ' ' . $theme;
 		}
-		else if ( empty($theme) && $gog_settings['theme'] ) {
-			$classes .= ' ' . $gog_settings['theme']['class'];
+		else if ( empty($theme) && $gog_themes['default'] ) {
+			$classes .= ' ' . $gog_theme['theme']['class'];
 		}
 
 		// NAVIGATION CLASS

@@ -24,7 +24,7 @@ function goodold_gallery_get_themes($select = false) {
 					if ( substr(strtolower($filename), -3) == 'css' ) {
 						$info = goodold_gallery_fetch_stylesheets($path . '/' . $filename);
 						if ( $select ) {
-							$themes[$info['Class']] = $info['Name'];
+							$themes[$filename] = $info['Name'];
 						}
 						else {
 							$info['path'] = array('path' => $path, 'url' => $url);

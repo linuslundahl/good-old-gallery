@@ -127,5 +127,10 @@ function goodold_gallery_themes_page() {
 }
 
 function goodold_gallery_themes_validate($input) {
+	if ($input['default']) {
+		$theme = goodold_gallery_get_themes();
+		$theme = $theme[$input['default']];
+		$input['theme'] = array( 'url' => $theme['path']['url'], 'class' => $theme['Class'], 'id' => substr($input['default'], 0, -4) );
+	}
 	return $input;
 }
