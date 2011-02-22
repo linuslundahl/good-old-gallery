@@ -32,14 +32,14 @@ function goodold_gallery_themes_init(){
 	}
 
 	// Get themes for select dropdown
-	$theme_options = array('' => 'No theme');
+	$theme_options = array('' => __( 'No theme' ));
 	$theme_options += goodold_gallery_get_themes( true );
 
 	if ($theme_options) {
-		add_settings_section( GOG_PLUGIN_SHORT . '_themes', 'Themes', 'goodold_gallery_themes_header', __FILE__ );
-		add_settings_field( 'default', '<label for="default">Theme</label>', 'goodold_gallery_setting_dropdown', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'default', 'items' => $theme_options, 'desc' => 'Select the default Cycle gallery theme.', 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['default']) );
-		add_settings_field( 'themes', 'Activate all themes', 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'all', 'label' => 'If selected, you will be able to choose theme in the shortcode.' . $themes_extra, 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['all']) );
-		add_settings_section( 'themes_available', 'Themes available', 'goodold_gallery_themes_available', __FILE__ );
+		add_settings_section( GOG_PLUGIN_SHORT . '_themes', __( 'Themes' ), 'goodold_gallery_themes_header', __FILE__ );
+		add_settings_field( 'default', '<label for="default">' . __( 'Theme' ) . '</label>', 'goodold_gallery_setting_dropdown', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'default', 'items' => $theme_options, 'desc' => __( 'Select the default Cycle gallery theme.' ), 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['default']) );
+		add_settings_field( 'themes', __( 'Activate all themes' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'all', 'label' => __( 'If selected, you will be able to choose theme in the shortcode.' ) . $themes_extra, 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['all']) );
+		add_settings_section( 'themes_available', __( 'Themes available' ), 'goodold_gallery_themes_available', __FILE__ );
 		if ($themes_active) {
 			add_settings_section( 'themes_cache', 'Themes cache', 'goodold_gallery_themes_cache', __FILE__ );
 		}
@@ -99,11 +99,11 @@ function goodold_gallery_themes_cache() {
 	if ( file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
 		$upload_dir = explode('/', $upload_url['basedir']);
 		$count = count($upload_dir);
-		echo '<p>Cache location: <code>' . $upload_dir[$count-2] . '/' . $upload_dir[$count-1] . '/good-old-gallery-themes.css</code></p>';
-		echo '<p>Cache last updated: ' . date('H:i, Y-m-d', filemtime($upload_url['basedir'] . '/good-old-gallery-themes.css')) . '</p>';
+		echo '<p>' . __('Cache location: ') . '<code>' . $upload_dir[$count-2] . '/' . $upload_dir[$count-1] . '/good-old-gallery-themes.css</code></p>';
+		echo '<p>' . __('Cache last updated: ') . date('H:i, Y-m-d', filemtime($upload_url['basedir'] . '/good-old-gallery-themes.css')) . '</p>';
 	}
 
-	echo "<p>* To use all themes you need to <a href=\"" . GOG_PLUGIN_URL . '/inc/cache.php?redirect' . "\">rebuild the css cache</a>, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes.</p>";
+	echo "<p>" . sprintf(__("* To use all themes you need to %s, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes."), '<a href="' . GOG_PLUGIN_URL . '/inc/cache.php">' . __( 'rebuild the css cache' ) . '</a>') . "</p>";
 }
 /**
  * Print settings page

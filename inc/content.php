@@ -4,8 +4,8 @@
  * The GoodOldGallery class.
  *
  * @category Good Old Gallery Wordpress Plugin
- * @package  Good Old Gallery
- * @author   Linus Lundahl
+ * @package	 Good Old Gallery
+ * @author	 Linus Lundahl
  *
  */
 class GoodOldGallery {
@@ -17,32 +17,32 @@ class GoodOldGallery {
 		register_post_type( 'goodoldgallery',
 			array(
 				'labels' => array(
-					'name'               => _x( 'Galleries', 'gallery type general name' ),
-					'singular_name'      => _x( 'Gallery', 'gallery type singular name' ),
-					'add_new'            => __( 'Add New' ),
-					'add_new_item'       => __( 'Add New Gallery' ),
-					'edit_item'          => __( 'Edit Gallery' ),
-					'new_item'           => __( 'New Gallery' ),
-					'view_item'          => __( 'View Gallery' ),
-					'search_items'       => __( 'Search Galleries' ),
-					'not_found'          => __( 'No Galleries found' ),
+					'name'							 => _x( 'Galleries', 'gallery type general name' ),
+					'singular_name'			 => _x( 'Gallery', 'gallery type singular name' ),
+					'add_new'						 => __( 'Add New' ),
+					'add_new_item'			 => __( 'Add New Gallery' ),
+					'edit_item'					 => __( 'Edit Gallery' ),
+					'new_item'					 => __( 'New Gallery' ),
+					'view_item'					 => __( 'View Gallery' ),
+					'search_items'			 => __( 'Search Galleries' ),
+					'not_found'					 => __( 'No Galleries found' ),
 					'not_found_in_trash' => __( 'No Galleries found in Trash' ),
-					'parent_item_colon'  => ''
+					'parent_item_colon'	 => ''
 				),
-			'public'               => false,
-			'description'          => __( 'A Gallery that is used to display sliders on the Good Old site.' ),
-			'publicly_queryable'   => false,
-			'show_ui'              => true,
-			'show_in_nav_menus'    => false,
-			'query_var'            => 'goodoldgallery',
-			'rewrite'              => true,
-			'capability_type'      => 'post',
-			'hierarchical'         => false,
-			'menu_position'        => 10,
-			'exclude_from_search'  => true,
-			'supports'             => array('title'),
-			'rewrite'              => array('slug' => 'good-old-gallery', 'with_front' => false),
-			'menu_icon'            => GOG_PLUGIN_URL . '/img/good-old-gallery.png',
+			'public'							 => false,
+			'description'					 => __( 'A Gallery that is used to display sliders on the Good Old site.' ),
+			'publicly_queryable'	 => false,
+			'show_ui'							 => true,
+			'show_in_nav_menus'		 => false,
+			'query_var'						 => 'goodoldgallery',
+			'rewrite'							 => true,
+			'capability_type'			 => 'post',
+			'hierarchical'				 => false,
+			'menu_position'				 => 10,
+			'exclude_from_search'	 => true,
+			'supports'						 => array('title'),
+			'rewrite'							 => array('slug' => 'good-old-gallery', 'with_front' => false),
+			'menu_icon'						 => GOG_PLUGIN_URL . '/img/good-old-gallery.png',
 			'register_meta_box_cb' => array($this, 'addMeta')
 			)
 		);
@@ -84,20 +84,28 @@ class GoodOldGallery {
 		printf($context, $out);
 
 		if ( !$edit ) {
-			echo ' <span class="description">Click to upload your images.</span>';
+			echo ' <span class="description">' . __( 'Click to upload your images.' ) . '</span>';
 		}
 		else {
-			echo ' <span class="description">Click to manage your images.</span>';
+			echo ' <span class="description">' . __( 'Click to manage your images.' ) . '</span>';
 		}
 
 		echo '</div>';
 
 		if ( $edit ) {
-			echo '<p>Shortcode for this gallery: <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p>';
+			echo '<p>' . __( 'Shortcode for this gallery' ) . ': <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p>';
 			echo '<span class="description">';
-			echo '<p>Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the page/post in HTML mode.</p>';
-			echo '<p>To generate a shortcode with custom variables, click on the \'Add an Image\' icon on a page or a post, then click the \'Good Old Gallery\' tab.</p>';
+			echo '<p>' . __( 'Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the page/post in HTML mode.' ) . '</p>';
+			echo '<p>' . __( "To generate a shortcode with custom variables, click on the 'Add an Image' icon on a page or a post, then click the 'Good Old Gallery' tab." ) . '</p>';
 			echo '</span>';
+			$attachments = get_children( array(
+				'post_parent'			=> $_GET['post']
+			) );
+
+		foreach ( $attachments as $gallery_id => $attachment ) {
+			echo wp_get_attachment_image($gallery_id, 'thumbnail', false) . "\n";
+			echo __( 'Attachment ID: ' ) . $attachment->ID;
+		}
 		}
 	}
 

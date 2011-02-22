@@ -58,7 +58,7 @@ function goodold_gallery_media_process() {
 		<div class="inside" style="margin: 10px;">
 			<span class="description">
 				<p>
-					Copy and paste the full generated shortcode into your page/post in HTML mode.
+					<?php echo __( 'Copy and paste the full generated shortcode into your page/post in HTML mode.' ); ?>
 				</p>
 			</span>
 
@@ -70,9 +70,9 @@ function goodold_gallery_media_process() {
 
 <?php if ($gallery_options): ?>
 			<p>
-				<label for="id" title="Select gallery" style="line-height:25px;">Gallery:</label>
+				<label for="id" title="<?php echo __( 'Select gallery' ); ?>" style="line-height:25px;"><?php echo __( 'Gallery' ); ?>:</label>
 				<select id="id" name="Gallery">
-					<option value="">Select gallery</option>
+					<option value=""><?php echo __( 'Select gallery' ); ?></option>
 					<?php echo $gallery_options; ?>
 				</select>
 			</p>
@@ -80,7 +80,7 @@ function goodold_gallery_media_process() {
 
 <?php if ($theme_options): ?>
 			<p>
-				<label for="id" title="Select theme" style="line-height:25px;">Theme:</label>
+				<label for="id" title="<?php echo __( 'Select theme' ); ?>" style="line-height:25px;"><?php echo __( 'Theme' ); ?>:</label>
 				<select id="theme" name="Theme">
 					<option value="">Select theme</option>
 					<?php echo $theme_options; ?>
@@ -89,56 +89,56 @@ function goodold_gallery_media_process() {
 <?php endif; ?>
 
 			<p>
-				<label for="fx" title="Animation" style="line-height:25px;">Animation:</label>
+				<label for="fx" title="<?php echo __( 'Animation' ); ?>" style="line-height:25px;"><?php echo __( 'Animation' ); ?>:</label>
 				<select id="fx" name="fx">
-					<option value="">Select animation</option>
-					<option value="none">None (Standard gallery)</option>
-					<option value="scrollHorz">Horizontal scroll</option>
-					<option value="scrollVert">Vertical scroll</option>
-					<option value="fade">Fade</option>
+					<option value=""><?php echo __( 'Select animation' ); ?></option>
+					<option value="none"><?php echo __( 'None (Standard gallery)' ); ?></option>
+					<option value="scrollHorz"><?php echo __( 'Horizontal scroll' ); ?></option>
+					<option value="scrollVert"><?php echo __( 'Vertical scroll' ); ?></option>
+					<option value="fade"><?php echo __( 'Fade' ); ?></option>
 				</select>
 			</p>
 
 			<div class="cycle-options">
 				<p>
-					<label for="timeout" title="Cycle animation timeout">Timeout:</label>
+					<label for="timeout" title="<?php echo __( 'Cycle animation timeout' ); ?>"><?php echo __( 'Timeout' ); ?>:</label>
 					<input id="timeout" name="timeout" type="text" /> <span>ms</span>
 				</p>
 
 				<p>
-					<label for="speed" title="Speed of animation">Speed:</label>
+					<label for="speed" title="<?php echo __( 'Speed of animation' ); ?>"><?php echo __( 'Speed' ); ?>:</label>
 					<input id="speed" name="speed" type="text" /> <span>ms</span>
 				</p>
 
 				<p>
-					<label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
+					<label for="size" title="<?php echo __( 'Select gallery size' ); ?>" style="line-height:25px;"><?php echo __( 'Image size' ); ?>:</label>
 					<select id="size" name="size">
 						<option value="">Select size</option>
-						<option value="thumbnail">Thumbnail</option>
-						<option value="medium">Medium</option>
-						<option value="large">Large</option>
-						<option value="full">Full</option>
+						<option value="thumbnail"><?php echo __( 'Thumbnail' ); ?></option>
+						<option value="medium"><?php echo __( 'Medium' ); ?></option>
+						<option value="large"><?php echo __( 'Large' ); ?></option>
+						<option value="full"><?php echo __( 'Full' ); ?></option>
 					</select>
 				</p>
 
 				<p>
 					<input id="title" type="checkbox" name="title" value="true" />
-					<label for="title" title="Select if the title should be displayed" style="line-height:25px;">Show title</label>
+					<label for="title" title="<?php echo __( 'Select if the title should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show title' ); ?></label>
 				</p>
 
 				<p>
 					<input id="description" type="checkbox" name="description" value="true" />
-					<label for="description" title="Select if the description should be displayed" style="line-height:25px;">Show description</label>
+					<label for="description" title="<?php echo __( 'Select if the description should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show description' ); ?></label>
 				</p>
 
 				<p>
 					<input id="navigation" type="checkbox" name="navigation" value="true" />
-					<label for="navigation" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
+					<label for="navigation" title="<?php echo __( 'Select if a navigation should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show navigation' ); ?></label>
 				</p>
 
 				<p>
 					<input id="pager" type="checkbox" name="pager" value="true" />
-					<label for="pager" title="Select if a pager should be displayed" style="line-height:25px;">Show pager</label>
+					<label for="pager" title="<?php echo __( 'Select if a pager should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show pager' ); ?></label>
 				</p>
 			</div>
 		</div>

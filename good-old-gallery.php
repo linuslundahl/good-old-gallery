@@ -92,7 +92,7 @@ function goodold_gallery_flattr_button() {
 
 FLATTR;
 }
-if ( $_GET['post_type'] == 'goodoldgallery' && ($_GET['page'] == 'gog_settings' || $_GET['page'] == 'gog_themes')) {
+if ( $_GET['post_type'] == 'goodoldgallery' && ($_GET['page'] == 'gog_settings' || $_GET['page'] == 'gog_themes') ) {
 	wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 	add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 }
