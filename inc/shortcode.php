@@ -23,7 +23,8 @@ function goodold_gallery_shortcode($attr) {
 		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']   : $gog_default_settings['navigation'],
 		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']        : $gog_default_settings['pager'],
 		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']         : $gog_default_settings['prev'],
-		'next'        => $gog_settings['next']        ? $gog_settings['next']         : $gog_default_settings['next']
+		'next'        => $gog_settings['next']        ? $gog_settings['next']         : $gog_default_settings['next'],
+		'extra'       => array()
 	), $attr ));
 
 	// Use post_id if no id is set in shortcode.
@@ -132,12 +133,20 @@ function goodold_gallery_shortcode($attr) {
 								$pager .
 								$navigation;
 
+			// ADD EXTRA PARAMETERS
+			if ( $extra ) {
+				$extra = explode(',', $extra);
+				foreach ( $extra as $item ) {
+					$item = explode(':', $item);
+					$script .= $item[0] . ': "' . $item[1] . '", ';
+				}
+			}
 
 			// FINISH SCRIPT
 			$ret .= '<script type="text/javascript">' .
 								'jQuery(function($) { ' .
 									'$("#go-gallery-' . $id . '-' . $i . ' .inner").cycle({' .
-										rtrim($script, ',') .
+										rtrim($script, ', ') .
 									'});' .
 								'});' .
 							'</script>' . "\n";
