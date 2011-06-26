@@ -42,9 +42,10 @@ class GoodOldGalleryWidget extends WP_Widget {
 			$fx          = $instance['fx']           ? ' fx="' . $instance['fx'] . '"' : '';
 			$timeout     = $instance['timeout']      ? ' timeout="' . $instance['timeout'] . '"' : '';
 			$speed       = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
+			$extra       = $instance['extra']        ? ' extra="' . $instance['extra'] . '"' : '';
 
 			echo $before_widget;
-			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $navigation . $pager . $fx . $timeout . $speed . $title . $description . ']' );
+			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $navigation . $pager . $fx . $timeout . $speed . $title . $description . $extra . ']' );
 			echo $after_widget;
 		}
 	}
@@ -58,11 +59,12 @@ class GoodOldGalleryWidget extends WP_Widget {
 		$instance['fx']          = $new_instance['fx'];
 		$instance['timeout']     = $new_instance['timeout'];
 		$instance['speed']       = $new_instance['speed'];
-		$instance['gtitle']       = $new_instance['gtitle'];
+		$instance['gtitle']      = $new_instance['gtitle'];
 		$instance['description'] = $new_instance['description'];
 		$instance['navigation']  = $new_instance['navigation'];
 		$instance['pager']       = $new_instance['pager'];
 		$instance['pages']       = $new_instance['pages'];
+		$instance['extra']       = $new_instance['extra'];
 
 		return $instance;
 	}
@@ -182,6 +184,12 @@ class GoodOldGalleryWidget extends WP_Widget {
 		<label for="<?php echo $this->get_field_id('pages'); ?>" title="<?php echo __( 'Title of the widget' ); ?>"><?php echo __( 'Show on' ); ?>:</label><br />
 		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="24"><?php echo $instance['pages']; ?></textarea><br />
 		<span class="description"><?php echo __("Type paths that the gallery should be visible on, separate them with a line break. Leave empty to show in all places.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?></span>
+	</p>
+
+	<p>
+		<label for="<?php echo $this->get_field_id('extra'); ?>" title="<?php echo __( 'Extra options' ); ?>"><?php echo __( 'Extra options' ); ?>:</label><br />
+		<input id="<?php echo $this->get_field_id('extra'); ?>" name="<?php echo $this->get_field_name('extra'); ?>" type="text" value="<?php echo $instance['extra']; ?>" size="36" /><br />
+		<span class="description"><?php echo __("Read the <a href=\"http://jquery.malsup.com/cycle/options.html\">documentation</a> but use with caution!<br />Example: fit:true,delay:-9000"); ?></span>
 	</p>
 <?php
 	}
