@@ -49,10 +49,34 @@ function goodold_gallery_add_head_tag() {
 }
 add_action( 'wp_head', 'goodold_gallery_add_head_tag' );
 
-// Register style and js for this plugin
-if ( !is_admin() ) {
-	wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery.css' );
-	wp_enqueue_script( 'cycle', GOG_PLUGIN_URL . '/js/jquery.cycle.all.min.js', array('jquery'), '2.81', FALSE );
+// Check if the shortcode has been loaded
+function goodold_gallery_check_for_shortcode( $posts ) {
+	if ( empty($posts) )
+		return $posts;
+
+	$found = false;
+
+	foreach ( $posts as $post ) {
+		if ( stripos($post->post_content, '[good-old-gallery') ) {
+			$found = true;
+			break;
+		}
+	}
+
+	if ( $found ) {
+		goodold_gallery_load_scripts();
+	}
+
+	return $posts;
+}
+add_action('the_posts', 'goodold_gallery_check_for_shortcode');
+
+// Function that registers styles and js for this plugin
+function goodold_gallery_load_scripts() {
+	if ( !is_admin() ) {
+		wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery.css' );
+		wp_enqueue_script( 'cycle', GOG_PLUGIN_URL . '/js/jquery.cycle.all.min.js', array('jquery'), '2.81', FALSE );
+	}
 }
 
 // Load up media upload when administering gallery content
