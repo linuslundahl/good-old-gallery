@@ -50,26 +50,32 @@ function goodold_gallery_add_head_tag() {
 add_action( 'wp_head', 'goodold_gallery_add_head_tag' );
 
 // Check if the shortcode has been loaded
-function goodold_gallery_check_for_shortcode( $posts ) {
-	if ( empty($posts) )
-		return $posts;
+$is_loaded = FALSE;
+if ( is_active_widget( FALSE, FALSE, 'goodoldgallerywidget', TRUE ) ) {
+	goodold_gallery_load_scripts();
+	$is_loaded = TRUE;
+}
 
-	$found = false;
-
-	foreach ( $posts as $post ) {
-		if ( stripos($post->post_content, '[good-old-gallery') ) {
-			$found = true;
-			break;
+if ( !$is_loaded ) {
+function goodold_gallery_check_post_for_shortcode( $posts ) {
+	$found = FALSE;
+	if ( !empty($posts) ) {
+		foreach ( $posts as $post ) {
+			if ( stripos($post->post_content, '[good-old-gallery') ) {
+				$found = TRUE;
+				break;
+			}
 		}
-	}
 
-	if ( $found ) {
-		goodold_gallery_load_scripts();
+		if ( $found ) {
+			goodold_gallery_load_scripts();
+		}
 	}
 
 	return $posts;
 }
-add_action('the_posts', 'goodold_gallery_check_for_shortcode');
+add_action('the_posts', 'goodold_gallery_check_post_for_shortcode');
+}
 
 // Function that registers styles and js for this plugin
 function goodold_gallery_load_scripts() {
