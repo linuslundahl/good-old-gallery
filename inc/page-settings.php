@@ -59,7 +59,6 @@ function goodold_gallery_settings_page() {
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"><br></div>
 		<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
-		<?php goodold_gallery_error_handling(); // Needed, because for some reason add_settings_error() isn't registered when a settings page is added outside of options-general.php ?>
 		<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
 		<p><?php echo sprintf(__( 'These settings are the defaults that will be used by Cycle (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.' ), '<code>[good-old-gallery]</code>'); ?><br />
 		<?php echo sprintf(__( 'Use the built in generator found under the %s tab, just click the %s button to find the tab on the far right.' ), '<em>' . GOG_PLUGIN_NAME . '</em>', '<em>' . __( 'Add an Image' ) . '</em>'); ?><br /><br />

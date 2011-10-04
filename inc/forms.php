@@ -1,13 +1,12 @@
 <?php
 
-function goodold_gallery_error_handling() {
-	if ( isset( $_GET['settings-updated'] ) && isset( $_GET['page'] ) ) {
-		$value = __('Settings saved.');
-		echo "<div id='setting-error-settings_updated' class='updated settings-error'>";
-		echo "<p><strong>$value</strong></p>";
-		echo "</div>";
-	}
+/**
+ * Register errors and notices
+ */
+function goodold_gallery_notices() {
+	settings_errors();
 }
+add_action( 'admin_notices', 'goodold_gallery_notices' );
 
 function goodold_gallery_setting_dropdown($args) {
 	extract($args);

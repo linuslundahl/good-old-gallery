@@ -113,7 +113,6 @@ function goodold_gallery_themes_page() {
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"><br></div>
 		<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
-		<?php goodold_gallery_error_handling(); // Needed, because for some reason add_settings_error() isn't registered when a settings page is added outside of options-general.php ?>
 		<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
 		<form action="options.php" method="post" id="go-settings-form">
 		<?php settings_fields( GOG_PLUGIN_SHORT . '_themes' ); ?>
