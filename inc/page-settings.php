@@ -20,22 +20,106 @@ function goodold_gallery_default_settings() {
  * Register form fields.
  */
 function goodold_gallery_settings_init(){
-	global $gog_settings;
+	global $gog_settings, $gog_default_settings;
 
 	register_setting( GOG_PLUGIN_SHORT . '_settings', GOG_PLUGIN_SHORT . '_settings', 'goodold_gallery_settings_validate' );
 
-	add_settings_section( GOG_PLUGIN_SHORT . '_settings', 'Settings', 'goodold_gallery_settings_header', __FILE__ );
+	// Setup form
+	$form = array(
+		// Section
+		'settings' => array(
+			'title'    => 'Settings',
+			'callback' => 'settings_header',
+			'fields'   => array(
+				'size' => array(
+					'title' => 'Size',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							'thumbnail' => 'Thumbnail',
+							'medium' => 'Medium',
+							'large' => 'Large',
+							'full' => 'Full',
+						),
+						'desc' => 'Select what image size the galleries should use.',
+					),
+				),
+				'fx' => array(
+					'title' => 'Transition animation',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							'fade' => 'Fade',
+							'scrollHorz' => 'Horizontal scroll',
+							'scrollVert' => 'Vertical scroll',
+							'none' => 'None (Standard WP gallery)',
+						),
+						'desc' => 'Animation that should be used.',
+					),
+				),
+				'timeout' => array(
+					'title' => 'Transition speed',
+					'type'  => 'text',
+					'args'  => array(
+						'size' => 4,
+					),
+				),
+				'speed' => array(
+					'title' => 'Animation speed',
+					'type'  => 'text',
+					'args'  => array(
+						'size' => 4,
+					),
+				),
+				'title' => array(
+					'title' => 'Show title',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'Select if the title for each image should be displayed.',
+					),
+				),
+				'description' => array(
+					'title' => 'Show description',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'Select if the description for each image should be displayed.',
+					),
+				),
+				'pager' => array(
+					'title' => 'Show pager',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'Select if the pager should be displayed.',
+					),
+				),
+				'navigation' => array(
+					'title' => 'Show navigation',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'Select if you would like to add PREV and NEXT buttons.',
+					),
+				),
+				'prev' => array(
+					'title' => 'Prev',
+					'type'  => 'text',
+					'args'  => array(
+						'desc' => 'Text used for PREV button.',
+						'size' => 4,
+					),
+				),
+				'next' => array(
+					'title' => 'Next',
+					'type'  => 'text',
+					'args'  => array(
+						'desc' => 'Text used for NEXT button.',
+						'size' => 4,
+					),
+				),
+			),
+		),
+	);
 
-	add_settings_field( 'size', '<label for="size">' . __( 'Size' ) . '</label>', 'goodold_gallery_setting_dropdown', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'size', 'items' => array('thumbnail' => __( 'Thumbnail' ), 'medium' => __( 'Medium' ), 'large' => __( 'Large' ), 'full' => __( 'Full' )), 'desc' => __( 'Select what image size the galleries should use.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['size']) );
-	add_settings_field( 'fx', '<label for="fx">' . __( 'Transition animation' ) . '</label>', 'goodold_gallery_setting_dropdown', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'fx', 'items' => array('fade' => __( 'Fade' ), 'scrollHorz' => __( 'Horizontal scroll' ), 'scrollVert' => __( 'Vertical scroll' ), 'none' => __( 'None (Standard WP gallery)' )), 'desc' => __( 'Animation that should be used.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['fx']) );
-	add_settings_field( 'timeout', '<label for="timeout">' . __( 'Transition speed' ) .'</label>', 'goodold_gallery_setting_text', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'timeout', 'desc' => 'milliseconds', 'size' => 4, 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['timeout']) );
-	add_settings_field( 'speed', '<label for="speed">' . __( 'Animation speed' ) . '</label>', 'goodold_gallery_setting_text', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'speed', 'desc' => __( 'milliseconds' ), 'size' => 4, 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['speed']) );
-	add_settings_field( 'title', __( 'Show title' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'title', 'label' => __( 'Select if the title for each image should be displayed.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['title']) );
-	add_settings_field( 'description', __( 'Show description' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'description', 'label' => __( 'Select if the description for each image should be displayed.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['description']) );
-	add_settings_field( 'pager', __( 'Show pager' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'pager', 'label' => __( 'Select if the pager should be displayed.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['pager']) );
-	add_settings_field( 'navigation', __( 'Show navigation' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'navigation', 'label' => __( 'Select if you would like to add PREV and NEXT buttons.' ), 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['navigation']) );
-	add_settings_field( 'prev', '<label for="prev">' . __( 'Prev' ) . '</label>', 'goodold_gallery_setting_text', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'prev', 'desc' => __( 'Text used for prev button.' ), 'size' => 4, 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['prev']) );
-	add_settings_field( 'next', '<label for="next">' . __( 'Next' ) . '</label>', 'goodold_gallery_setting_text', __FILE__, GOG_PLUGIN_SHORT . '_settings', array('id' => 'next', 'desc' => __( 'Text used for next button.' ), 'size' => 4, 'name' => GOG_PLUGIN_SHORT . '_settings', 'default' => $gog_settings['next']) );
+	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings, $gog_default_settings);
 }
 
 /**
@@ -69,7 +153,7 @@ function goodold_gallery_settings_page() {
 		<?php settings_fields( GOG_PLUGIN_SHORT . '_settings' ); ?>
 		<?php do_settings_sections( __FILE__ ); ?>
 		<p class="submit">
-			<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" />
+			<?php submit_button( __( 'Save Settings' ), 'primary', GOG_PLUGIN_SHORT . '_settings[save]', false ); ?>
 		</p>
 		</form>
 	</div>

@@ -20,30 +20,61 @@ function goodold_gallery_default_themes() {
  * Register form fields.
  */
 function goodold_gallery_themes_init(){
-	global $gog_themes;
+	global $gog_themes, $gog_default_themes;
 
 	register_setting( GOG_PLUGIN_SHORT . '_themes', GOG_PLUGIN_SHORT . '_themes', 'goodold_gallery_themes_validate' );
 
 	$themes_active = FALSE;
 	$themes_extra = "";
-	if ($gog_themes['all']) {
+	if ($gog_themes['themes']) {
 		$themes_active = TRUE;
 		$themes_extra = " *";
 	}
 
 	// Get themes for select dropdown
-	$theme_options = array('' => __( 'No theme' ));
+	$theme_options = array(NULL => __( 'No theme' ));
 	$theme_options += goodold_gallery_get_themes( true );
 
-	if ($theme_options) {
-		add_settings_section( GOG_PLUGIN_SHORT . '_themes', __( 'Themes' ), 'goodold_gallery_themes_header', __FILE__ );
-		add_settings_field( 'default', '<label for="default">' . __( 'Theme' ) . '</label>', 'goodold_gallery_setting_dropdown', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'default', 'items' => $theme_options, 'desc' => __( 'Select the default Cycle gallery theme.' ), 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['default']) );
-		add_settings_field( 'themes', __( 'Activate all themes' ), 'goodold_gallery_setting_checkbox', __FILE__, GOG_PLUGIN_SHORT . '_themes', array('id' => 'all', 'label' => __( 'If selected, you will be able to choose theme in the shortcode.' ) . $themes_extra, 'name' => GOG_PLUGIN_SHORT . '_themes', 'default' => $gog_themes['all']) );
-		add_settings_section( 'themes_available', __( 'Themes available' ), 'goodold_gallery_themes_available', __FILE__ );
-		if ($themes_active) {
-			add_settings_section( 'themes_cache', 'Themes cache', 'goodold_gallery_themes_cache', __FILE__ );
-		}
+	// Setup form
+	$form = array(
+		// Section
+		'themes' => array(
+			'title'    => 'Themes',
+			'callback' => 'themes_header',
+			'fields'   => array(
+				'default' => array(
+					'title' => 'Theme',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => $theme_options,
+						'desc' => 'Select the default Cycle gallery theme.',
+					),
+				),
+				'themes' => array(
+					'title' => 'Activate all themes',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'If selected, you will be able to choose theme in the shortcode.' . $themes_extra,
+					),
+				),
+			),
+		),
+		'themes_available' => array(
+			'title'    => 'Themes available',
+			'callback' => 'themes_available',
+			'fields'   => array(),
+		),
+	);
+
+	if ($themes_active) {
+		$form['themes_cache'] = array(
+			'title'    => 'Themes cache',
+			'callback' => 'themes_cache',
+			'fields'   => array(),
+		);
 	}
+
+	goodold_gallery_parse_form( $form, 'themes', __FILE__, $gog_themes, $gog_default_themes );
 }
 
 /**
@@ -114,11 +145,11 @@ function goodold_gallery_themes_page() {
 		<div class="icon32" id="icon-options-general"><br></div>
 		<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
 		<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
-		<form action="options.php" method="post" id="go-settings-form">
+		<form action="options.php" method="post" id="go-themes-form">
 		<?php settings_fields( GOG_PLUGIN_SHORT . '_themes' ); ?>
 		<?php do_settings_sections( __FILE__ ); ?>
 		<p class="submit">
-			<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" />
+			<?php submit_button( __( 'Save Settings' ), 'primary', GOG_PLUGIN_SHORT . '_themes[save]', false ); ?>
 		</p>
 		</form>
 	</div>

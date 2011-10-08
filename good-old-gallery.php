@@ -20,8 +20,7 @@ $upload_url = wp_upload_dir();
 
 // Setup default plugin settings and themes
 $gog_default_settings = array(
-	'size'        => 'Full',
-	'size-select' => 'full',
+	'size'        => 'full',
 	'fx'          => 'fade',
 	'speed'       => 500,
 	'timeout'     => 10000,
@@ -33,10 +32,8 @@ $gog_default_settings = array(
 	'next'        => 'next'
 );
 $gog_default_themes = array(
-	'default' => 0,
-	'themes' => array(
-		'active' => 0,
-	)
+	'default' => NULL,
+	'themes' => NULL
 );
 
 // Load plugin settings and themes
