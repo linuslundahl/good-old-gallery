@@ -1,21 +1,21 @@
 === Good Old Gallery ===
 Contributors: linuslundahl
 Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
-Tags: simple, image, gallery, slideshow, jQuery, cycle, slide, sliding, fade, fading, multiple, widget
+Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
-Tested up to: 3.0.4
-Stable tag: 1.13
+Tested up to: 3.3
+Stable tag: 2.0
 
-Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery Cycle for sliding and fading transitions.
+Good Old Gallery helps you use galleries on multiple pages and posts, it also uses Flexslider for sliding and fading transitions.
 
 == Description ==
 
-Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in jQuery Cycle support and Widgets.
+Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider support and Widgets.
 
 = Main features =
 
 * Uses built in WP gallery functionality.
-* [jQuery Cycle](http://jquery.malsup.com/cycle/).
+* [Flexslider](http://flex.madebymufffin.com/).
 * Shortcode generator.
 * Widgets.
 * Stylesheet theme support, per gallery.
@@ -93,6 +93,11 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 == Changelog ==
 
+= 2.0 =
+* Changed from jQuery Cycle to Flexslider
+* Works with WordPress 3.3
+* Checks posts and widgets for Good Old Galleries, if none are found no JS or CSS is added.
+
 = 1.13 =
 * Theme settings is now on a separate page.
 
@@ -112,8 +117,14 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 == Upgrade Notice ==
 
+= 2.0 =
+!! WARNING !!  
+This update changes the shortcode markup since Flexslider is now used instead of jQuery Cycle, *if this breaks anything on your installation stay on version 1.12.*  
+Once the plugin is updated please *re-save the settings page.*
+
 = 1.12 =
 Once again you need to *re-save the settings page.*
 
 = 1.1 =
-The new theme system allows you to add your own themes. *When upgrading you need to re-save the settings on the settings page.*
+The new theme system allows you to add your own themes.  
+*When upgrading you need to re-save the settings on the settings page.*

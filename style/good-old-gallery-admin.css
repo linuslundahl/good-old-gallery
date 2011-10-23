@@ -23,8 +23,6 @@ h3.hndle { cursor: default !important; }
 
 .wrap { position: relative; }
 
-code { white-space: nowrap; }
-
 .form-table { margin-bottom: 0; }
 
 .go-flattr { position: absolute; right: 20px; top: 30px; }

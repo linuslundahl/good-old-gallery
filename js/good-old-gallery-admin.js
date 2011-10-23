@@ -1,7 +1,7 @@
 var $j = jQuery.noConflict();
 
 (function ($) {
-	var showHide, getValues, value = "", link, confirm = 1;
+	var $this, showHide, getValues, value = "", link, confirm = 1;
 
 	// Show/Hide div
 	showHide = function (div, title, alt, id) {
@@ -39,12 +39,12 @@ var $j = jQuery.noConflict();
 	};
 
 	$('#go-gallery-generator input[type="checkbox"], #go-gallery-generator select').each(function () {
-		var $this = $(this);
+		$this = $(this);
 		$this.change(getValues);
 	});
 
 	$('#go-gallery-generator input[type="text"]').each(function () {
-		var $this = $(this);
+		$this = $(this);
 		$this.keyup(getValues);
 	});
 

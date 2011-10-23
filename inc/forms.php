@@ -61,7 +61,7 @@ function goodold_gallery_input_dropdown($args) {
 		echo "<option value=\"$key\"$selected>" . __( $item ) . "</option>";
 	}
 	echo "</select>";
-	echo $desc ? '<span class="description"> ' . __( $desc ) . '</span>' : '';
+	echo isset($desc) ? '<span class="description"> ' . __( $desc ) . '</span>' : '';
 }
 
 function goodold_gallery_input_textarea($args) {
@@ -73,10 +73,10 @@ function goodold_gallery_input_textarea($args) {
 function goodold_gallery_input_text($args) {
 	extract($args);
 
-	$size = $size ? $size : 40;
+	$size = isset($size) ? $size : 40;
 
 	echo "<input id=\"$id\" name=\"$name\" size=\"$size\" type=\"text\" value=\"{$default}\" />";
-	echo $desc ? '<span class="description"> ' . __( $desc ) . '</span>' : '';
+	echo isset($desc) ? '<span class="description"> ' . __( $desc ) . '</span>' : '';
 }
 
 function goodold_gallery_input_password($args) {
@@ -90,7 +90,7 @@ function goodold_gallery_input_checkbox($args) {
 
 	$checked = $default ? ' checked="checked"' : '';
 	echo "<input id=\"$id\" name=\"$name\" type=\"checkbox\"$checked />";
-	echo $label ? '<label for="' . $id . '"> ' . __ ( $label ) . '</label>' : '';
+	echo isset($label) ? '<label for="' . $id . '"> ' . __ ( $label ) . '</label>' : '';
 }
 
 function goodold_gallery_input_radio($args) {

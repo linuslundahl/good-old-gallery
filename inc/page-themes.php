@@ -47,7 +47,7 @@ function goodold_gallery_themes_init(){
 					'type'  => 'dropdown',
 					'args'  => array(
 						'items' => $theme_options,
-						'desc' => 'Select the default Cycle gallery theme.',
+						'desc' => 'Select the default Flexslider gallery theme.',
 					),
 				),
 				'themes' => array(

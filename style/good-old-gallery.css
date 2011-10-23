@@ -1,15 +1,24 @@
-.go-gallery, .good-old-gallery-widget { display: inline-block; padding: 0; overflow: hidden; }
+.go-gallery-container,
+.go-gallery-container .go-gallery { clear: both; float: left; }
+.go-gallery-container .slides { float: left; width: 100%; }
 
-.go-gallery .inside { margin: 0; position: relative; }
+.go-gallery-container ul,
+.go-gallery-container ol,
+.go-gallery-container li { list-style: none; margin: 0; padding: 0; }
 
-.go-gallery .title { font-size: 1em; font-weight: bold; margin: 0 5px 0 0; }
-.go-gallery .description { font-size: .8em; font-style: italic; }
+.go-gallery-container .flex-direction-nav,
+.go-gallery-container .flex-pauseplay { float: left; }
+.go-gallery-container .flex-direction-nav li { float: left; }
+.go-gallery-container .flex-direction-nav li .prev,
+.go-gallery-container .flex-direction-nav li .next { margin: 0 10px 0 0; }
 
-.go-gallery img,
-.go-gallery a { border: none; display: block; margin: 0; padding: 0; }
+.go-gallery-container .flex-control-nav { float: right; }
+.go-gallery-container .flex-control-nav li { float: left; margin-left: 6px; }
+.go-gallery-container .flex-control-nav li a,
+.go-gallery-container .flex-pauseplay span { cursor: pointer; }
 
-.go-gallery .nav { float: left; }
-.go-gallery .nav .prev, .go-gallery .nav .next { cursor: pointer; margin: 0 10px 0 0; }
+.go-gallery-container .title { font-size: 1em; font-weight: bold; margin: 0 5px 0 0; }
+.go-gallery-container .description { font-size: .8em; font-style: italic; }
 
-.go-gallery .pager { float: right; }
-.go-gallery .pager a  { float: left; margin-left: 6px; }
+.go-gallery-container img,
+.go-gallery-container a { border: none; display: block; margin: 0; padding: 0; }

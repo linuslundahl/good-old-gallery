@@ -8,24 +8,63 @@ function goodold_gallery_shortcode($attr) {
 
 	static $i = 1;
 
-	extract(shortcode_atts( array(
-		'id'          => null,
-		'order'       => 'ASC',
-		'orderby'     => 'menu_order ID',
-		'exclude'     => array(),
-		'theme'       => $gog_themes['default']       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
-		'size'        => $gog_settings['size']        ? $gog_settings['size']         : $gog_default_settings['size'],
-		'fx'          => $gog_settings['fx']          ? $gog_settings['fx']           : $gog_default_settings['fx'],
-		'speed'       => $gog_settings['speed']       ? $gog_settings['speed']        : $gog_default_settings['speed'],
-		'timeout'     => $gog_settings['timeout']     ? $gog_settings['timeout']      : $gog_default_settings['timeout'],
-		'title'       => $gog_settings['title']       ? $gog_settings['title']        : $gog_default_settings['title'],
-		'description' => $gog_settings['description'] ? $gog_settings['description']  : $gog_default_settings['description'],
-		'navigation'  => $gog_settings['navigation']  ? $gog_settings['navigation']   : $gog_default_settings['navigation'],
-		'pager'       => $gog_settings['pager']       ? $gog_settings['pager']        : $gog_default_settings['pager'],
-		'prev'        => $gog_settings['prev']        ? $gog_settings['prev']         : $gog_default_settings['prev'],
-		'next'        => $gog_settings['next']        ? $gog_settings['next']         : $gog_default_settings['next'],
-		'extra'       => array()
-	), $attr ));
+	// Build Flexslider default settings
+	$flex = array(
+		'animation'         => 'animation',
+		'slideshow'         => 'slideshow',
+		'slideshowspeed'    => 'slideshowSpeed',
+		'animationduration' => 'animationDuration',
+		'directionnav'      => 'directionNav',
+		'controlnav'        => 'controlNav',
+		'keyboardnav'       => 'keyboardNav',
+		'touchswipe'        => 'touchSwipe',
+		'prevtext'          => 'prevText',
+		'nexttext'          => 'nextText',
+		'pauseplay'         => 'pausePlay',
+		'pausetext'         => 'pauseText',
+		'playtext'          => 'playText',
+		'randomize'         => 'randomize',
+		'slidetostart'      => 'slideToStart',
+		'animationloop'     => 'animationLoop',
+		'pauseonaction'     => 'pauseOnAction',
+		'pauseonhover'      => 'pauseOnHover',
+	);
+
+	foreach( $flex as $setting ) {
+		$settings[strtolower($setting)] = array(
+			'key' => $setting,
+			'val' => $gog_settings[$setting] ? $gog_settings[$setting] : $gog_default_settings[$setting],
+		);
+	}
+
+	// Get settings from shortcode
+	$attr = shortcode_atts( array(
+		'id'                => null,
+		'order'             => 'ASC',
+		'orderby'           => 'menu_order ID',
+		'exclude'           => array(),
+		'theme'             => $gog_themes['default']             ? $gog_themes['theme']['class']      : $gog_default_themes['default'],
+		'size'              => $gog_settings['size']              ? $gog_settings['size']              : $gog_default_settings['size'],
+		'title'             => $gog_settings['title']             ? $gog_settings['title']             : $gog_default_settings['title'],
+		'description'       => $gog_settings['description']       ? $gog_settings['description']       : $gog_default_settings['description'],
+	) + $settings, $attr );
+
+	// Setup Flexslider settings array
+	$settings = array_slice($attr, 8);
+	foreach( $settings as $key => $setting ) {
+		$settings[$key] = array(
+			'key' => $flex[$key],
+			'val' => is_array($setting) ? $setting['val'] : $setting,
+		);
+	}
+
+	$settings['controlscontainer'] = array(
+		'key' => 'controlsContainer',
+		'val' => "#go-gallery-" . $id . '-' . $i,
+	);
+
+	// Extract GOG settings to vars
+	extract(array_slice($attr, 0, 7));
 
 	// Use post_id if no id is set in shortcode.
 	$id = ( !$id && $post->ID ) ? $post->ID : $id;
@@ -60,99 +99,90 @@ function goodold_gallery_shortcode($attr) {
 			$classes .= ' ' . $gog_theme['theme']['class'];
 		}
 
-		// NAVIGATION CLASS
-		if ( $navigation = $navigation ? $navigation : '' ) {
+		// Navigation class
+		if ( $settings['directionNav'] ) {
 			$classes .= " has-nav";
 		}
 
-		// PAGER CLASS
-		if ( $pager = $pager ? $pager : '' ) {
+		// Pager class
+		if ( $settings['controlNav'] ) {
 			$classes .= " has-pager";
 		}
 
 		if ( $attachments ) {
-			// GO-GALLERY ID
-			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery go-gallery-' . $id . $classes . '">' . "\n";
 
-			// INNER CLASS
-			$ret .= '<div class="inner">' . "\n";
-
-			// INSERT ATTACHMENTS
+			// Generate images
+			$images = '';
+			$width = 0;
 			foreach ( $attachments as $gallery_id => $attachment ) {
 				$link = get_post_meta($attachment->ID, "_goodold_gallery_image_link", true);
 
-				$ret .= '<div class="image">' . "\n";
+				$images .= '<li>' . "\n";
 
-				if ( ($title || $description) && ($attachment->post_title || $attachment->post_content) ) {
-					$ret .= '<div class="meta">' . "\n";
+				if ( ( $title && $attachment->post_title ) || ( $description && $attachment->post_content ) ) {
+					$images .= '<div class="meta">' . "\n";
 					if ( $title && $attachment->post_title ) {
-						$ret .= '<span class="title">' . $attachment->post_title . '</span>' . "\n";
+						$images .= '<span class="title">' . $attachment->post_title . '</span>' . "\n";
 					}
 					if ( $description && $attachment->post_content ) {
-						$ret .= '<span class="description">' . $attachment->post_content . '</span>' . "\n";
+						$images .= '<span class="description">' . $attachment->post_content . '</span>' . "\n";
 					}
-					$ret .= '</div>' . "\n";
+					$images .= '</div>' . "\n";
 				}
 
 				if ( $link ) {
-					$ret .= '<a href="' . $link . '">' . "\n";
+					$images .= '<a href="' . $link . '">' . "\n";
 				}
 
-				$ret .= wp_get_attachment_image($gallery_id, $size, false) . "\n";
+				$images .= wp_get_attachment_image( $gallery_id, $size, false ) . "\n";
+
+				$img_data = wp_get_attachment_image_src( $gallery_id, $size, false );
+				$width = $width < $img_data[1] ? $img_data[1] : $width;
 
 				if ( $link ) {
-					$ret .= '</a>' . "\n";
+					$images .= '</a>' . "\n";
 				}
 
-				$ret .= '</div>' . "\n";
+				$images .= '</li>' . "\n";
 			}
 
-			// END INNER CLASS
+			// Begin gallery div and ul
+			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '">' . "\n";
+			$ret .= '<div class="go-gallery go-gallery-' . $id . '" style="width: ' . $width . 'px;">';
+			$ret .= '<ul class="slides">' . "\n";
+
+			// Insert images
+			$ret .= $images;
+
+			// End gallery ul
+			$ret .= '</ul>' . "\n";
 			$ret .= '</div>' . "\n";
 
-			// NAVIGATION
-			if ( $navigation ) {
-				$ret .= '<div class="nav">' . "\n";
-				$ret .= '<span class="prev">' . $prev . '</span><span class="next">' . $next . '</span>' . "\n";
-				$ret .= '</div>' . "\n";
-				$navigation = 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
-											'next: "#go-gallery-' . $id . '-' . $i . ' .next"';
-			}
-
-			// PAGER
-			if ( $pager ) {
-				$ret .= '<div class="pager"></div>' . "\n";
-				$pager = 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
-			}
-
-
-			// BUILD VARIABLES IN SCRIPT
-			$script = 'fx: "' . $fx . '",' .
-								'speed: "' . $speed . '",' .
-								'timeout: "' . $timeout . '",' .
-								$pager .
-								$navigation;
-
-			// ADD EXTRA PARAMETERS
-			if ( $extra ) {
-				$extra = explode(',', $extra);
-				foreach ( $extra as $item ) {
-					$item = explode(':', $item);
-					$script .= $item[0] . ': "' . $item[1] . '", ';
+			// Build script
+			$script = '';
+			foreach( $settings as $key => $setting ) {
+				if ( !empty( $setting ) ) {
+					$script .= $setting['key'];
+					if ( is_bool( $setting['val'] ) ) {
+						$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
+					}
+					else if ( is_numeric( $setting['val'] ) ) {
+						$script .= ': ' . $setting['val'] . ', ';
+					}
+					else if ( $setting['val'] == "on" ) {
+						$script .= ': true, ';
+					}
+					else {
+						$script .= ': "' . $setting['val'] . '", ';
+					}
 				}
 			}
 
-			// FINISH SCRIPT
-			$ret .= '<script type="text/javascript">' .
-								'jQuery(function($) { ' .
-									'$("#go-gallery-' . $id . '-' . $i . ' .inner").cycle({' .
-										rtrim($script, ', ') .
-									'});' .
-								'});' .
-							'</script>' . "\n";
+			// Finish script
+			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' .go-gallery").flexslider({' . rtrim($script, ', ') . '}); });</script>';
 
-			// END GO-GALLERY ID
-			$ret .= '  </div>' . "\n";
+			// End gallery div
+			$ret .= '</div>' . "\n";
 		}
 	}
 

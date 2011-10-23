@@ -33,38 +33,36 @@ class GoodOldGalleryWidget extends WP_Widget {
 		}
 
 		if ( $show ) {
-			$size        = $instance['size']         ? ' size="' . $instance['size'] . '"' : '';
-			$theme       = $instance['theme']        ? ' theme="' . $instance['theme'] . '"' : '';
-			$title       = $instance['gtitle']       ? ' title="true"' : '';
-			$description = $instance['description']  ? ' description="true"' : '';
-			$navigation  = $instance['navigation']   ? ' navigation="true"' : '';
-			$pager       = $instance['pager']        ? ' pager="true"' : '';
-			$fx          = $instance['fx']           ? ' fx="' . $instance['fx'] . '"' : '';
-			$timeout     = $instance['timeout']      ? ' timeout="' . $instance['timeout'] . '"' : '';
-			$speed       = $instance['speed']        ? ' speed="' . $instance['speed'] . '"' : '';
-			$extra       = $instance['extra']        ? ' extra="' . $instance['extra'] . '"' : '';
+			$size        = $instance['size']              ? ' size="' . $instance['size'] . '"' : '';
+			$theme       = $instance['theme']             ? ' theme="' . $instance['theme'] . '"' : '';
+			$title       = $instance['gtitle']            ? ' title=1' : ' title=0';
+			$description = $instance['description']       ? ' description=1' : ' description=0';
+			$navigation  = $instance['directionnav']      ? ' directionnav=1' : ' directionnav=0';
+			$pager       = $instance['controlnav']        ? ' controlnav=1' : ' controlnav=0';
+			$animation   = $instance['animation']         ? ' animation="' . $instance['animation'] . '"' : '';
+			$animDur     = $instance['animationduration'] ? ' animationduration="' . $instance['animationduration'] . '"' : '';
+			$sSpeed      = $instance['slideshowspeed']    ? ' slideshowspeed="' . $instance['slideshowspeed'] . '"' : '';
 
 			echo $before_widget;
-			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $navigation . $pager . $fx . $timeout . $speed . $title . $description . $extra . ']' );
+			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $title . $description . $navigation . $pager . $animation . $animDur . $sSpeed . ']' );
 			echo $after_widget;
 		}
 	}
 
 	// UPDATE WIDGET SETTINGS
 	function update($new_instance, $old_instance) {
-		$instance['title']       = $new_instance['title'];
-		$instance['post-ID']     = $new_instance['post-ID'];
-		$instance['theme']       = $new_instance['theme'];
-		$instance['size']        = $new_instance['size'];
-		$instance['fx']          = $new_instance['fx'];
-		$instance['timeout']     = $new_instance['timeout'];
-		$instance['speed']       = $new_instance['speed'];
-		$instance['gtitle']      = $new_instance['gtitle'];
-		$instance['description'] = $new_instance['description'];
-		$instance['navigation']  = $new_instance['navigation'];
-		$instance['pager']       = $new_instance['pager'];
-		$instance['pages']       = $new_instance['pages'];
-		$instance['extra']       = $new_instance['extra'];
+		$instance['title']             = $new_instance['title'];
+		$instance['post-ID']           = $new_instance['post-ID'];
+		$instance['theme']             = $new_instance['theme'];
+		$instance['size']              = $new_instance['size'];
+		$instance['animation']         = $new_instance['animation'];
+		$instance['animationduration'] = $new_instance['animationduration'];
+		$instance['slideshowspeed']    = $new_instance['slideshowspeed'];
+		$instance['gtitle']            = $new_instance['gtitle'];
+		$instance['description']       = $new_instance['description'];
+		$instance['directionnav']      = $new_instance['directionnav'];
+		$instance['controlnav']        = $new_instance['controlnav'];
+		$instance['pages']             = $new_instance['pages'];
 
 		return $instance;
 	}
@@ -131,23 +129,22 @@ class GoodOldGalleryWidget extends WP_Widget {
 <?php endif; ?>
 
 	<p>
-		<label for="<?php echo $this->get_field_id('fx'); ?>" title="<?php echo __( 'Animation' ); ?>" style="line-height:25px;"><?php echo __( 'Fx' ); ?>:</label>
-		<select id="<?php echo $this->get_field_id('fx'); ?>" name="<?php echo $this->get_field_name('fx'); ?>" style="width: 150px;">
-			<option value="scrollHorz"<?php echo $instance['fx'] == 'scrollHorz' ? ' selected="yes"' : ''; ?>><?php echo __( 'Horizontal scroll' ); ?></option>
-			<option value="scrollVert"<?php echo $instance['fx'] == 'scrollVert' ? ' selected="yes"' : ''; ?>><?php echo __( 'Vertical scroll' ); ?></option>
-			<option value="fade"<?php echo $instance['fx'] == 'fade' ? ' selected="yes"' : ''; ?>><?php echo __( 'Fade' ); ?></option>
-			<option value="none"<?php echo $instance['fx'] == 'none' ? ' selected="yes"' : ''; ?>><?php echo __( 'None (Standard gallery)' ); ?></option>
+		<label for="<?php echo $this->get_field_id('animation'); ?>" title="<?php echo __( 'Animation' ); ?>" style="line-height:25px;"><?php echo __( 'Animation' ); ?>:</label>
+		<select id="<?php echo $this->get_field_id('animation'); ?>" name="<?php echo $this->get_field_name('animation'); ?>" style="width: 150px;">
+			<option value="slide"<?php echo $instance['animation'] == 'slide' ? ' selected="yes"' : ''; ?>><?php echo __( 'Slide' ); ?></option>
+			<option value="fade"<?php echo $instance['animation'] == 'fade' ? ' selected="yes"' : ''; ?>><?php echo __( 'Fade' ); ?></option>
+			<option value="none"<?php echo $instance['animation'] == 'none' ? ' selected="yes"' : ''; ?>><?php echo __( 'None (Standard gallery)' ); ?></option>
 		</select>
 	</p>
 
 	<p>
-		<label for="<?php echo $this->get_field_id('timeout'); ?>" title="<?php echo __( 'Cycle animation timeout' ); ?>"><?php echo __( 'Timeout' ); ?>:</label>
-		<input id="<?php echo $this->get_field_id('timeout'); ?>" name="<?php echo $this->get_field_name('timeout'); ?>" type="text" value="<?php echo $instance['timeout']; ?>" size="5" /> <span>ms</span>
+		<label for="<?php echo $this->get_field_id('animationduration'); ?>" title="<?php echo __( 'Animation speed' ); ?>"><?php echo __( 'Animation speed' ); ?>:</label>
+		<input id="<?php echo $this->get_field_id('animationduration'); ?>" name="<?php echo $this->get_field_name('animationduration'); ?>" type="text" value="<?php echo $instance['animationduration']; ?>" size="5" /> <span>ms</span>
 	</p>
 
 	<p>
-		<label for="<?php echo $this->get_field_id('speed'); ?>" title="<?php echo __( 'Speed of animation' ); ?>"><?php echo __( 'Speed' ); ?>:</label>
-		<input id="<?php echo $this->get_field_id('speed'); ?>" name="<?php echo $this->get_field_name('speed'); ?>" type="text" value="<?php echo $instance['speed']; ?>" size="5" /> <span>ms</span>
+		<label for="<?php echo $this->get_field_id('slideshowspeed'); ?>" title="<?php echo __( 'Speed of animation' ); ?>"><?php echo __( 'Speed' ); ?>:</label>
+		<input id="<?php echo $this->get_field_id('slideshowspeed'); ?>" name="<?php echo $this->get_field_name('slideshowspeed'); ?>" type="text" value="<?php echo $instance['slideshowspeed']; ?>" size="5" /> <span>ms</span>
 	</p>
 
 	<p>
@@ -171,25 +168,19 @@ class GoodOldGalleryWidget extends WP_Widget {
 	</p>
 
 	<p>
-		<input id="<?php echo $this->get_field_id('pager'); ?>" type="checkbox" name="<?php echo $this->get_field_name('pager'); ?>"<?php echo $instance['pager'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('pager'); ?>" title="<?php echo __( 'Select if a pager should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show pager' ); ?></label>
+		<input id="<?php echo $this->get_field_id('controlnav'); ?>" type="checkbox" name="<?php echo $this->get_field_name('controlnav'); ?>"<?php echo $instance['controlnav'] ? ' checked="checked"' : ''; ?> />
+		<label for="<?php echo $this->get_field_id('controlnav'); ?>" title="<?php echo __( 'Select if a controlnav should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show pager' ); ?></label>
 	</p>
 
 	<p>
-		<input id="<?php echo $this->get_field_id('navigation'); ?>" type="checkbox" name="<?php echo $this->get_field_name('navigation'); ?>"<?php echo $instance['navigation'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('navigation'); ?>" title="<?php echo __( 'Select if a navigation should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show navigation' ); ?></label>
+		<input id="<?php echo $this->get_field_id('directionnav'); ?>" type="checkbox" name="<?php echo $this->get_field_name('directionnav'); ?>"<?php echo $instance['directionnav'] ? ' checked="checked"' : ''; ?> />
+		<label for="<?php echo $this->get_field_id('directionnav'); ?>" title="<?php echo __( 'Select if a directionnav should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show navigation' ); ?></label>
 	</p>
 
 	<p>
 		<label for="<?php echo $this->get_field_id('pages'); ?>" title="<?php echo __( 'Title of the widget' ); ?>"><?php echo __( 'Show on' ); ?>:</label><br />
 		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="24"><?php echo $instance['pages']; ?></textarea><br />
 		<span class="description"><?php echo __("Type paths that the gallery should be visible on, separate them with a line break. Leave empty to show in all places.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?></span>
-	</p>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('extra'); ?>" title="<?php echo __( 'Extra options' ); ?>"><?php echo __( 'Extra options' ); ?>:</label><br />
-		<input id="<?php echo $this->get_field_id('extra'); ?>" name="<?php echo $this->get_field_name('extra'); ?>" type="text" value="<?php echo $instance['extra']; ?>" size="36" /><br />
-		<span class="description"><?php echo __("Read the <a href=\"http://jquery.malsup.com/cycle/options.html\">documentation</a> but use with caution!<br />Example: fit:true,delay:-9000"); ?></span>
 	</p>
 <?php
 	}

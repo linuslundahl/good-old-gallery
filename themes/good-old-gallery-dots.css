@@ -9,26 +9,27 @@
  *
  */
 
-.go-gallery.gog-dots { padding: 0 30px; position: relative; }
+.go-gallery-container.gog-dots { padding: 0 30px; position: relative; }
+.go-gallery-container.gog-dots .slides li { position: relative; }
 
 /** Pager */
-.go-gallery.gog-dots .pager {
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
+.go-gallery-container.gog-dots .flex-control-nav {
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
 	border-radius: 8px;
-	background: rgba(0,0,0,.4);
-	left: 20px;
+	background: rgba(128,128,128,.7);
+	left: 50px;
 	padding: 5px 10px;
 	position: absolute;
 	top: 20px;
 	z-index: 999;
 }
-.go-gallery.has-pager .pager {
+.go-gallery.has-pager .flex-control-nav {
 	left: 50px;
 }
-.go-gallery.gog-dots .pager a {
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
+.go-gallery-container.gog-dots .flex-control-nav a {
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
 	border-radius: 3px;
 	background: #000;
 	height: 0;
@@ -37,13 +38,13 @@
 	padding: 6px 0 0 0;
 	width: 6px;
 }
-.go-gallery.gog-dots .pager a.activeSlide { background: #fff;}
-.go-gallery.gog-dots .pager a:first-child { margin: 0; }
+.go-gallery-container.gog-dots .flex-control-nav a.active { background: #fff;}
+.go-gallery-container.gog-dots .flex-control-nav li:first-child { margin: 0; }
 /* end Pager */
 
 /** Navigation */
-.go-gallery.gog-dots .nav .prev,
-.go-gallery.gog-dots .nav .next {
+.go-gallery-container.gog-dots .flex-direction-nav .prev,
+.go-gallery-container.gog-dots .flex-direction-nav .next {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
@@ -52,8 +53,37 @@
 	top: 0;
 	width: 30px;
 }
-.go-gallery.gog-dots .nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; }
-.go-gallery.gog-dots .nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; }
-.go-gallery.gog-dots .nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
-.go-gallery.gog-dots .nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
+.go-gallery-container.gog-dots .flex-direction-nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; }
+.go-gallery-container.gog-dots .flex-direction-nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; }
+.go-gallery-container.gog-dots .flex-direction-nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
+.go-gallery-container.gog-dots .flex-direction-nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
 /* end Navigation */
+
+/** Play/Pause */
+.go-gallery-container.gog-dots .flex-pauseplay {
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: rgba(128,128,128,.7);
+	color: #fff;
+	font: normal 400 10px/100% HelveticaNeue, "Helvetica Neue", Helvetica, Tahoma, Geneva, Arial, sans-serif;
+	letter-spacing: 1px;
+	padding: 5px 10px;
+	position: absolute;
+	right: 50px;
+	text-transform: uppercase;
+	top: 20px;
+	z-index: 999;
+}
+/* End Play/Pause */
+
+/** Title & Description */
+.go-gallery-container.gog-dots .meta {
+	bottom: 0;
+	height: auto;
+	left: 0;
+	position: absolute;
+	text-indent: 10px;
+	width: 100%;
+}
+/* End Title & Description */
