@@ -100,12 +100,12 @@ function goodold_gallery_shortcode($attr) {
 		}
 
 		// Navigation class
-		if ( $settings['directionNav'] ) {
+		if ( $settings['directionnav']['val'] === 'on' || $settings['directionnav']['val'] == 1 ) {
 			$classes .= " has-nav";
 		}
 
 		// Pager class
-		if ( $settings['controlNav'] ) {
+		if ( $settings['controlnav']['val'] === 'on' || $settings['controlnav']['val'] == 1 ) {
 			$classes .= " has-pager";
 		}
 

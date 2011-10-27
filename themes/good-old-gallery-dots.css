@@ -9,7 +9,8 @@
  *
  */
 
-.go-gallery-container.gog-dots { padding: 0 30px; position: relative; }
+.go-gallery-container.gog-dots { padding: 0; position: relative; }
+.go-gallery-container.gog-dots.has-pager { padding: 0 30px; position: relative; }
 .go-gallery-container.gog-dots .slides li { position: relative; }
 
 /** Pager */

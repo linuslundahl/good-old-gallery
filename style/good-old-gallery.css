@@ -1,6 +1,8 @@
 .go-gallery-container,
 .go-gallery-container .go-gallery { clear: both; float: left; }
 .go-gallery-container .slides { float: left; width: 100%; }
+#main .good-old-gallery-widget ul.slides,
+.good-old-gallery-widget ul.slides { margin: 0; }
 
 .go-gallery-container ul,
 .go-gallery-container ol,
