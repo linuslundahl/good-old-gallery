@@ -90,7 +90,7 @@ function goodold_gallery_check_post_for_shortcode( $posts ) {
 	$found = FALSE;
 	if ( !empty($posts) ) {
 		foreach ( $posts as $post ) {
-			if ( stripos($post->post_content, '[good-old-gallery') ) {
+			if ( stripos($post->post_content, '[good-old-gallery') !== FALSE ) {
 				$found = TRUE;
 				break;
 			}
