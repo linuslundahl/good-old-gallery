@@ -1,8 +1,14 @@
 <?php
 
 /** @ignore */
-require_once('../wp-load.php');
-require_once('includes/admin.php');
+if ($_SERVER['PHP_SELF'] == '/wp-admin/network/plugins.php') {
+  require_once('../../wp-load.php');
+  require_once('../includes/admin.php');
+}
+else {
+  require_once('../wp-load.php');
+  require_once('includes/admin.php');
+}
 
 /**
  * Adds Good Old Gallery media tab.
