@@ -198,7 +198,7 @@ function goodold_gallery_settings_init(){
 		),
 	);
 
-	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings, $gog_default_settings);
+	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings, $gog_default_settings );
 }
 
 /**

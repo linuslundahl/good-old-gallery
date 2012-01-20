@@ -22,7 +22,7 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
 		if ( !empty($section['fields']) && is_array($section['fields']) ) {
 			foreach ( $section['fields'] as $id => $field ) {
 				$field['args']['id'] = $id;
-				$field['args']['default'] = $saved[$id] ? $saved[$id] : $default[$id];
+				$field['args']['default'] = !empty($saved) ? $saved[$id] : $default[$id];
 				$field['args']['name'] = GOG_PLUGIN_SHORT . '_' . $name . '[' . $id . ']';
 
 				add_settings_field(
