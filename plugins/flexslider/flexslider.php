@@ -118,6 +118,7 @@ function goodold_gallery_flexslider_settings_form() {
 						'desc' => 'Text used for the PREV button.',
 						'size' => 4,
 					),
+					'ignore' => TRUE,
 				),
 				'nextText' => array(
 					'title' => 'Next',
@@ -126,6 +127,7 @@ function goodold_gallery_flexslider_settings_form() {
 						'desc' => 'Text used for the NEXT button.',
 						'size' => 4,
 					),
+					'ignore' => TRUE,
 				),
 				'keyboardNav' => array(
 					'title' => 'Keyboard navigation',
@@ -133,6 +135,7 @@ function goodold_gallery_flexslider_settings_form() {
 					'args'  => array(
 						'label' => 'Allow users to navigate with the keyboards left/right arrows.',
 					),
+					'ignore' => TRUE,
 				),
 				'touchSwipe' => array(
 					'title' => 'Swipe navigation',
@@ -140,6 +143,7 @@ function goodold_gallery_flexslider_settings_form() {
 					'args'  => array(
 						'label' => 'Allow users to use swipe gestures to navigate.',
 					),
+					'ignore' => TRUE,
 				),
 				'pausePlay' => array(
 					'title' => 'Show Play/Pause button',
@@ -155,6 +159,7 @@ function goodold_gallery_flexslider_settings_form() {
 						'desc' => 'Text used for the PLAY button.',
 						'size' => 4,
 					),
+					'ignore' => TRUE,
 				),
 				'pauseText' => array(
 					'title' => 'Pause',
@@ -163,6 +168,7 @@ function goodold_gallery_flexslider_settings_form() {
 						'desc' => 'Text used for the PAUSE button.',
 						'size' => 4,
 					),
+					'ignore' => TRUE,
 				),
 				'pauseOnAction' => array(
 					'title' => 'Pause on action',
@@ -181,72 +187,6 @@ function goodold_gallery_flexslider_settings_form() {
 			),
 		),
 	);
-}
-
-function goodold_gallery_flexslider_generator() {
-	return <<<END
-		<div class="flex-options">
-			<p>
-				<label for="animation" title="Animation'" style="line-height:25px;">Animation':</label>
-				<select id="animation" name="animation">
-					<option value="">Select animation'</option>
-					<option value="none">None (Standard gallery)'</option>
-					<option value="slide">Slide'</option>
-					<option value="fade">Fade'</option>
-				</select>
-			</p>
-
-			<p>
-				<label for="slideshowspeed" title="Slideshow speed">Slideshow speed:</label>
-				<input id="slideshowspeed" name="slideshowspeed" type="text" /> <span>ms</span>
-			</p>
-
-			<p>
-				<label for="animationduration" title="Animation speed">Animation speed:</label>
-				<input id="animationduration" name="animationduration" type="text" /> <span>ms</span>
-			</p>
-
-			<p>
-				<input id="slideshow" type="checkbox" name="slideshow" value="1" />
-				<label for="slideshow" title="Slide automatically" style="line-height:25px;">Slide automatically</label>
-			</p>
-
-			<p>
-				<input id="randomize" type="checkbox" name="randomize" value="1" />
-				<label for="randomize" title="Randomize" style="line-height:25px;">Randomize</label>
-			</p>
-
-			<p>
-				<input id="loop" type="checkbox" name="loop" value="1" />
-				<label for="loop" title="Loop" style="line-height:25px;">Loop</label>
-			</p>
-
-			<p>
-				<input id="title" type="checkbox" name="title" value="1" />
-				<label for="title" title="Select if the title should be displayed" style="line-height:25px;">Show title</label>
-			</p>
-
-			<p>
-				<input id="description" type="checkbox" name="description" value="1" />
-				<label for="description" title="Select if the description should be displayed" style="line-height:25px;">Show description</label>
-			</p>
-
-			<p>
-				<input id="directionnav" type="checkbox" name="directionnav" value="1" />
-				<label for="directionnav" title="Select if a navigation should be displayed" style="line-height:25px;">Show navigation</label>
-			</p>
-
-			<p>
-				<input id="controlnav" type="checkbox" name="controlnav" value="1" />
-				<label for="controlnav" title="Select if a pager should be displayed" style="line-height:25px;">Show pager</label>
-			</p>
-
-			<p>
-				<input id="pauseplay" type="checkbox" name="pauseplay" value="1" />
-				<label for="pauseplay" title="Select if a Play/Pause button should be displayed" style="line-height:25px;">Show Play/Pause</label>
-			</p>
-		</div>
-END;
 }
 
 function goodold_gallery_flexslider_widget() {

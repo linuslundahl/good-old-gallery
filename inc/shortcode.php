@@ -21,12 +21,6 @@ function goodold_gallery_shortcode($attr) {
 		);
 	}
 
-	if ($gog_debug) {
-		print '<pre>';
-		var_dump($settings);
-		print '</pre>';
-	}
-
 	// Get settings from shortcode
 	$attr = shortcode_atts( array(
 		'id'                => null,
@@ -39,7 +33,7 @@ function goodold_gallery_shortcode($attr) {
 		'description'       => $gog_settings['description']       ? $gog_settings['description']       : $gog_default_settings['description'],
 	) + $settings, $attr );
 
-	// Setup Flexslider settings array
+	// Setup Slider settings array
 	$settings = array_slice($attr, 8);
 	foreach( $settings as $key => $setting ) {
 		$settings[$key] = array(
@@ -47,11 +41,6 @@ function goodold_gallery_shortcode($attr) {
 			'val' => is_array($setting) ? $setting['val'] : $setting,
 		);
 	}
-
-	$settings['controlscontainer'] = array(
-		'key' => 'controlsContainer',
-		'val' => "#go-gallery-" . $id . '-' . $i,
-	);
 
 	// Extract GOG settings to vars
 	extract(array_slice($attr, 0, 7));
@@ -62,6 +51,17 @@ function goodold_gallery_shortcode($attr) {
 	// Kill the function if no id is still not found.
 	if ( !$id ) {
 		return;
+	}
+
+	$settings['controlscontainer'] = array(
+		'key' => 'controlsContainer',
+		'val' => "#go-gallery-" . $id . '-' . $i . ' .go-gallery',
+	);
+
+	if ($gog_debug) {
+		print '<pre>';
+		var_dump($settings);
+		print '</pre>';
 	}
 
 	$ret = '';
@@ -154,14 +154,17 @@ function goodold_gallery_shortcode($attr) {
 				if ( !empty( $setting ) ) {
 					if ($setting['key']) {
 						$script .= $setting['key'];
-						if ( is_bool( $setting['val'] ) ) {
-							$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
-						}
-						else if ( is_numeric( $setting['val'] ) ) {
-							$script .= ': ' . $setting['val'] . ', ';
-						}
-						else if ( $setting['val'] == "on" ) {
+						// if ( is_bool( $setting['val'] ) ) {
+						// 	$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
+						// }
+						// else if ( is_numeric( $setting['val'] ) ) {
+						// 	$script .= ': ' . $setting['val'] . ', ';
+						// }
+						if ( $setting['val'] == "on" ) {
 							$script .= ': true, ';
+						}
+						else if ( $setting['val'] == "off" ) {
+							$script .= ': false, ';
 						}
 						else {
 							$script .= ': "' . $setting['val'] . '", ';

@@ -4,7 +4,7 @@
  * Finds available plugins.
  * @return Array
  */
-function goodold_gallery_get_plugins($select = FALSE) {
+function goodold_gallery_get_plugins( $select = FALSE ) {
 	$plugins = array();
 	// $plugin_path = get_stylesheet_directory();
 	// $plugin_url = get_bloginfo( 'template_url' );
@@ -34,14 +34,14 @@ function goodold_gallery_get_plugins($select = FALSE) {
 	return $plugins;
 }
 
-function goodold_gallery_load_plugin($plugin = '') {
+function goodold_gallery_load_plugin( $plugin = '' ) {
 	global $gog_settings, $gog_settings_default;
 
 	$plugin = !empty($plugin) ? $plugin : $gog_settings['plugin'];
 	include_once(GOG_PLUGIN_DIR . '/plugins/' . $plugin . '/' . $plugin . '.php');
 
 	$settings = array();
-	$callbacks = array('setup', 'settings', 'settings_form', 'generator', 'widget');
+	$callbacks = array('setup', 'settings', 'settings_form', 'widget');
 	foreach ($callbacks as $callback)
 	if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
 		$settings[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);

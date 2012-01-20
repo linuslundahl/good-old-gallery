@@ -114,7 +114,7 @@ function goodold_gallery_media_process() {
 				</select>
 			</p>
 
-		<?php echo $gog_plugin['generator']; ?>
+		<?php goodold_gallery_parse_form_custom( $gog_plugin['settings_form'] ); ?>
 
 		</form>
 		</div>

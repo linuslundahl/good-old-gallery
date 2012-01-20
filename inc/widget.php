@@ -32,44 +32,48 @@ class GoodOldGalleryWidget extends WP_Widget {
 			$show = TRUE;
 		}
 
+		// Build settings for shortcode
 		if ( $show ) {
-			$size        = $instance['size']              ? ' size="' . $instance['size'] . '"' : '';
-			$theme       = $instance['theme']             ? ' theme="' . $instance['theme'] . '"' : '';
-			$title       = $instance['gtitle']            ? ' title=1' : ' title=0';
-			$description = $instance['description']       ? ' description=1' : ' description=0';
-			$navigation  = $instance['directionnav']      ? ' directionnav=1' : ' directionnav=0';
-			$pager       = $instance['controlnav']        ? ' controlnav=1' : ' controlnav=0';
-			$animation   = $instance['animation']         ? ' animation="' . $instance['animation'] . '"' : '';
-			$animDur     = $instance['animationduration'] ? ' animationduration="' . $instance['animationduration'] . '"' : '';
-			$sSpeed      = $instance['slideshowspeed']    ? ' slideshowspeed="' . $instance['slideshowspeed'] . '"' : '';
+			$settings = '';
+			foreach ( $instance as $key => $value ) {
+				$key = strtolower($key);
+				if ( $key != 'title' ) {
+					if ( $value ) {
+						$settings .= $key . '="' . $value . '" ';
+					}
+					else {
+						$settings .= $key . '="off" ';
+					}
+					$settings = str_replace('"on"', '1', $settings);
+				}
+			}
 
 			echo $before_widget;
-			echo do_shortcode( '[good-old-gallery id="' . $instance['post-ID'] . '"' . $theme . $size . $title . $description . $navigation . $pager . $animation . $animDur . $sSpeed . ']' );
+			echo do_shortcode( '[good-old-gallery ' . rtrim($settings) . ']' );
 			echo $after_widget;
 		}
 	}
 
 	// UPDATE WIDGET SETTINGS
 	function update($new_instance, $old_instance) {
+		global $gog_plugin;
+
 		$instance['title']             = $new_instance['title'];
-		$instance['post-ID']           = $new_instance['post-ID'];
+		$instance['id']                = $new_instance['id'];
 		$instance['theme']             = $new_instance['theme'];
 		$instance['size']              = $new_instance['size'];
-		$instance['animation']         = $new_instance['animation'];
-		$instance['animationduration'] = $new_instance['animationduration'];
-		$instance['slideshowspeed']    = $new_instance['slideshowspeed'];
-		$instance['gtitle']            = $new_instance['gtitle'];
-		$instance['description']       = $new_instance['description'];
-		$instance['directionnav']      = $new_instance['directionnav'];
-		$instance['controlnav']        = $new_instance['controlnav'];
-		$instance['pages']             = $new_instance['pages'];
+
+		foreach ($gog_plugin['settings'] as $setting => $value) {
+			$setting = $setting == 'title' ? 'g' . $setting : $setting;
+			$instance[$setting] = $new_instance[$setting];
+		}
 
 		return $instance;
 	}
 
 	// WIDGET SETTINGS FORM
 	function form($instance) {
-		global $wpdb, $gog_settings;
+		global $wpdb, $gog_settings, $gog_plugin;
 
 		// Build dropdown with galleries
 		$posts = $wpdb->get_results($wpdb->prepare("
@@ -83,105 +87,82 @@ class GoodOldGalleryWidget extends WP_Widget {
 <?php
 	}
 	else {
+		$gallery_options = array();
 		foreach ($posts as $p) {
-			$selected = '';
-			if ($instance['post-ID']) {
-				$selected = $p->ID == $instance['post-ID'] ? ' selected="yes"' : '';
-			}
-			$gallery_options .= "<option value=\"$p->ID\"$selected>$p->post_title</option>";
-		}
-
-		// Build dropdown with themes
-		$theme_options = '';
-		if ($gog_settings['themes']['active']) {
-			foreach ( $gog_settings['themes']['available'] as $class => $name ) {
-				$selected = '';
-				if ($instance['theme']) {
-					$selected = $class == $instance['theme'] ? ' selected="yes"' : '';
-				}
-				$theme_options .= "<option value=\"$class\"$selected>$name</option>";
-			}
+			$gallery_options[$p->ID] = $p->post_title;
 		}
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		// Prepare widget form
+		$widget_form = array(
+			'basic_settings' => array(
+				'title'    => 'Basic Settings',
+				'callback' => 'settings_header',
+				'fields'   => array(
+					'title' => array(
+						'title' => 'Title of the widget',
+						'type'  => 'text',
+						'args'  => array(
+							'desc' => 'The title is only used in the administration.',
+							'size' => 28,
+						),
+					),
+					'id' => array(
+						'title' => 'Select gallery',
+						'type'  => 'dropdown',
+						'args'  => array(
+							'items' => $gallery_options,
+						),
+					),
+					'size' => array(
+						'title' => 'Size',
+						'type'  => 'dropdown',
+						'args'  => array(
+							'items' => array(
+								'thumbnail' => 'Thumbnail',
+								'medium' => 'Medium',
+								'large' => 'Large',
+								'full' => 'Full',
+							),
+							'desc' => 'Image size used for the galleries.',
+						),
+					),
+				),
+			),
+		);
+
+		// Add theme options
+		$themes = goodold_gallery_get_themes();
+		$theme_options = array();
+		foreach ( $themes as $theme ) {
+			$theme_options[$theme['Class']] = $theme['Name'];
+		}
+
+		if ( $theme_options ) {
+			$widget_form['basic_settings']['fields'] += array(
+				'theme' => array(
+					'title' => 'Select theme',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => $theme_options,
+					),
+				),
+			);
+		}
+
+		// Add plugin id and name to settings form for plugin
+		$widget_form += $gog_plugin['settings_form'];
+		foreach ( $widget_form as $section => $form ) {
+			foreach ( $widget_form[$section]['fields'] as $key => $item) {
+				$widget_form[$section]['fields'][$key]['widget_id'] = $this->get_field_id($key);
+				$widget_form[$section]['fields'][$key]['widget_name'] = $this->get_field_name($key);
+			}
+		}
 ?>
-	<p>
-		<label for="<?php echo $this->get_field_id('title'); ?>" title="<?php echo __( 'Title of the widget' ); ?>"><?php echo __( 'Title' ); ?>:</label>
-		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /><br />
-		<span class="description"><?php echo __( "The title is only used in the administration." ); ?></span>
-	</p>
 
-	<p>
-		<label for="<?php echo $this->get_field_id('post-ID'); ?>" title="<?php echo __( 'Select gallery' ); ?>" style="line-height:25px;"><?php echo __( 'Gallery' ); ?>:</label>
-		<select id="<?php echo $this->get_field_id('post-ID'); ?>" name="<?php echo $this->get_field_name('post-ID'); ?>" style="width: 150px;">
-			<?php echo $gallery_options; ?>
-		</select>
-	</p>
+	<?php goodold_gallery_parse_form_custom( $widget_form, $instance ); ?>
 
-<?php if ($theme_options): ?>
-	<p>
-		<label for="<?php echo $this->get_field_id('theme'); ?>" title="<?php echo __( 'Select theme' ); ?>" style="line-height:25px;"><?php echo __( 'Theme' ); ?>:</label>
-		<select id="<?php echo $this->get_field_id('theme'); ?>" name="<?php echo $this->get_field_name('theme'); ?>" style="width: 150px;">
-			<option value="">Select theme</option>
-			<?php echo $theme_options; ?>
-		</select>
-	</p>
-<?php endif; ?>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('animation'); ?>" title="<?php echo __( 'Animation' ); ?>" style="line-height:25px;"><?php echo __( 'Animation' ); ?>:</label>
-		<select id="<?php echo $this->get_field_id('animation'); ?>" name="<?php echo $this->get_field_name('animation'); ?>" style="width: 150px;">
-			<option value="slide"<?php echo $instance['animation'] == 'slide' ? ' selected="yes"' : ''; ?>><?php echo __( 'Slide' ); ?></option>
-			<option value="fade"<?php echo $instance['animation'] == 'fade' ? ' selected="yes"' : ''; ?>><?php echo __( 'Fade' ); ?></option>
-			<option value="none"<?php echo $instance['animation'] == 'none' ? ' selected="yes"' : ''; ?>><?php echo __( 'None (Standard gallery)' ); ?></option>
-		</select>
-	</p>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('animationduration'); ?>" title="<?php echo __( 'Animation speed' ); ?>"><?php echo __( 'Animation speed' ); ?>:</label>
-		<input id="<?php echo $this->get_field_id('animationduration'); ?>" name="<?php echo $this->get_field_name('animationduration'); ?>" type="text" value="<?php echo $instance['animationduration']; ?>" size="5" /> <span>ms</span>
-	</p>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('slideshowspeed'); ?>" title="<?php echo __( 'Speed of animation' ); ?>"><?php echo __( 'Speed' ); ?>:</label>
-		<input id="<?php echo $this->get_field_id('slideshowspeed'); ?>" name="<?php echo $this->get_field_name('slideshowspeed'); ?>" type="text" value="<?php echo $instance['slideshowspeed']; ?>" size="5" /> <span>ms</span>
-	</p>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('size'); ?>" title="<?php echo __( 'Select gallery size' ); ?>" style="line-height:25px;"><?php echo __( 'Image size' ); ?>:</label>
-		<select id="<?php echo $this->get_field_id('size'); ?>" name="<?php echo $this->get_field_name('size'); ?>">
-			<option value="thumbnail"<?php echo $instance['size'] == 'thumbnail' ? ' selected="yes"' : ''; ?>><?php echo __( 'Thumbnail' ); ?></option>
-			<option value="medium"<?php echo $instance['size'] == 'medium' ? ' selected="yes"' : ''; ?>><?php echo __( 'Medium' ); ?></option>
-			<option value="large"<?php echo $instance['size'] == 'large' ? ' selected="yes"' : ''; ?>><?php echo __( 'Large' ); ?></option>
-			<option value="full"<?php echo $instance['size'] == 'full' ? ' selected="yes"' : ''; ?>><?php echo __( 'Full' ); ?></option>
-		</select>
-	</p>
-
-	<p>
-		<input id="<?php echo $this->get_field_id('gtitle'); ?>" type="checkbox" name="<?php echo $this->get_field_name('gtitle'); ?>"<?php echo $instance['gtitle'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('gtitle'); ?>" title="<?php echo __( 'Select if the title should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show title' ); ?></label>
-	</p>
-
-	<p>
-		<input id="<?php echo $this->get_field_id('description'); ?>" type="checkbox" name="<?php echo $this->get_field_name('description'); ?>"<?php echo $instance['description'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('description'); ?>" title="<?php echo __( 'Select if the description should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show description' ); ?></label>
-	</p>
-
-	<p>
-		<input id="<?php echo $this->get_field_id('controlnav'); ?>" type="checkbox" name="<?php echo $this->get_field_name('controlnav'); ?>"<?php echo $instance['controlnav'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('controlnav'); ?>" title="<?php echo __( 'Select if a controlnav should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show pager' ); ?></label>
-	</p>
-
-	<p>
-		<input id="<?php echo $this->get_field_id('directionnav'); ?>" type="checkbox" name="<?php echo $this->get_field_name('directionnav'); ?>"<?php echo $instance['directionnav'] ? ' checked="checked"' : ''; ?> />
-		<label for="<?php echo $this->get_field_id('directionnav'); ?>" title="<?php echo __( 'Select if a directionnav should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show navigation' ); ?></label>
-	</p>
-
-	<p>
-		<label for="<?php echo $this->get_field_id('pages'); ?>" title="<?php echo __( 'Title of the widget' ); ?>"><?php echo __( 'Show on' ); ?>:</label><br />
-		<textarea id="<?php echo $this->get_field_id('pages'); ?>" name="<?php echo $this->get_field_name('pages'); ?>" rows="3" cols="24"><?php echo $instance['pages']; ?></textarea><br />
-		<span class="description"><?php echo __("Type paths that the gallery should be visible on, separate them with a line break. Leave empty to show in all places.<br />Don't type full url's, only paths with a starting and ending slash.<br />Example: /my-page-path/"); ?></span>
-	</p>
 <?php
 	}
 	}
