@@ -4,7 +4,7 @@
  * Finds available themes.
  * @return Array
  */
-function goodold_gallery_get_themes($select = false) {
+function goodold_gallery_get_themes($select = FALSE) {
 	$themes = array();
 	$theme_path = get_stylesheet_directory();
 	$theme_url = get_bloginfo( 'template_url' );

@@ -13,6 +13,7 @@ else {
 	require_once($wp_load);
 }
 
+require_once('style.php');
 $themes = goodold_gallery_get_themes();
 
 function compress($buffer) {

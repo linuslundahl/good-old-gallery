@@ -20,15 +20,20 @@ function goodold_gallery_default_settings() {
  * Register form fields.
  */
 function goodold_gallery_settings_init(){
-	global $gog_settings, $gog_default_settings;
+	global $gog_settings, $gog_default_settings, $gog_plugin;
 
 	register_setting( GOG_PLUGIN_SHORT . '_settings', GOG_PLUGIN_SHORT . '_settings', 'goodold_gallery_settings_validate' );
+
+	// Get themes for select dropdown
+	$plugin_options = array(NULL => __( 'No plugin' ));
+	$plugin_options += goodold_gallery_get_plugins();
+
 
 	// Setup form
 	$form = array(
 		// Section
-		'settings' => array(
-			'title'    => 'Settings',
+		'basic_settings' => array(
+			'title'    => 'Basic Settings',
 			'callback' => 'settings_header',
 			'fields'   => array(
 				'size' => array(
@@ -58,145 +63,28 @@ function goodold_gallery_settings_init(){
 						'label' => 'Show description for each image.',
 					),
 				),
-				'animation' => array(
-					'title' => 'Transition animation',
-					'type'  => 'dropdown',
-					'args'  => array(
-						'items' => array(
-							'fade' => 'Fade',
-							'slide' => 'Slide',
-							'none' => 'None (Standard WP gallery)',
-						),
-						'desc' => 'Animation that should be used.',
-					),
-				),
-				'slideshow' => array(
-					'title' => 'Slide automatically',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Animate slider automatically by default.',
-					),
-				),
-				'slideshowSpeed' => array(
-					'title' => 'Slideshow speed',
-					'type'  => 'text',
-					'args'  => array(
-						'size' => 4,
-						'desc' => 'ms',
-					),
-				),
-				'animationDuration' => array(
-					'title' => 'Animation speed',
-					'type'  => 'text',
-					'args'  => array(
-						'size' => 4,
-						'desc' => 'ms',
-					),
-				),
-				'randomize' => array(
-					'title' => 'Randomize',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Randomize slide order on page load.',
-					),
-				),
-				'animationLoop' => array(
-					'title' => 'Loop',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Loop galleries when the final slide is reached.',
-					),
-				),
 			),
 		),
-		'controls' => array(
-			'title'    => 'Controls',
+		// Section
+		'plugins' => array(
+			'title'    => 'Plugins',
 			'callback' => 'settings_header',
 			'fields'   => array(
-				'controlNav' => array(
-					'title' => 'Show pager',
-					'type'  => 'checkbox',
+				'plugin' => array(
+					'title' => 'Plugin',
+					'type'  => 'dropdown',
 					'args'  => array(
-						'label' => 'Show pager marker for each image.',
-					),
-				),
-				'directionNav' => array(
-					'title' => 'Show navigation',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Add PREV and NEXT buttons.',
-					),
-				),
-				'prevText' => array(
-					'title' => 'Prev',
-					'type'  => 'text',
-					'args'  => array(
-						'desc' => 'Text used for the PREV button.',
-						'size' => 4,
-					),
-				),
-				'nextText' => array(
-					'title' => 'Next',
-					'type'  => 'text',
-					'args'  => array(
-						'desc' => 'Text used for the NEXT button.',
-						'size' => 4,
-					),
-				),
-				'keyboardNav' => array(
-					'title' => 'Keyboard navigation',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Allow users to navigate with the keyboards left/right arrows.',
-					),
-				),
-				'touchSwipe' => array(
-					'title' => 'Swipe navigation',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Allow users to use swipe gestures to navigate.',
-					),
-				),
-				'pausePlay' => array(
-					'title' => 'Show Play/Pause button',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Add a PLAY/PAUSE button.',
-					),
-				),
-				'playText' => array(
-					'title' => 'Play',
-					'type'  => 'text',
-					'args'  => array(
-						'desc' => 'Text used for the PLAY button.',
-						'size' => 4,
-					),
-				),
-				'pauseText' => array(
-					'title' => 'Pause',
-					'type'  => 'text',
-					'args'  => array(
-						'desc' => 'Text used for the PAUSE button.',
-						'size' => 4,
-					),
-				),
-				'pauseOnAction' => array(
-					'title' => 'Pause on action',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Pause the slideshow when interacting with control elements.',
-					),
-				),
-				'pauseOnHover' => array(
-					'title' => 'Pause on hover',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Pause the slideshow when hovering over slider.',
+						'items' => $plugin_options,
+						'desc' => 'Select what slider plugin that should be used.',
 					),
 				),
 			),
 		),
 	);
+
+	if (!empty($gog_settings['plugin'])) {
+		$form += $gog_plugin['settings_form'];
+	}
 
 	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings, $gog_default_settings );
 }
@@ -240,7 +128,16 @@ function goodold_gallery_settings_page() {
 }
 
 function goodold_gallery_settings_validate($input) {
-	$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';
-	$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
+	global $gog_settings;
+
+	// Set default settings if plugin is changed
+	if ($input['plugin'] != $gog_settings['plugin']) {
+		$plugin = goodold_gallery_load_plugin($input['plugin']);
+		$input += $plugin['settings'];
+	}
+	else {
+		$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';
+		$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
+	}
 	return $input;
 }

@@ -34,7 +34,7 @@ add_filter( 'media_upload_tabs', 'goodold_gallery_media_tab' );
  * Good Old Gallery tab page.
  */
 function goodold_gallery_media_process() {
-	global $wpdb, $gog_settings;
+	global $wpdb, $gog_settings, $gog_plugin;
 
 	media_upload_header();
 
@@ -104,79 +104,19 @@ function goodold_gallery_media_process() {
 <?php endif; ?>
 
 			<p>
-				<label for="animation" title="<?php echo __( 'Animation' ); ?>" style="line-height:25px;"><?php echo __( 'Animation' ); ?>:</label>
-				<select id="animation" name="animation">
-					<option value=""><?php echo __( 'Select animation' ); ?></option>
-					<option value="none"><?php echo __( 'None (Standard gallery)' ); ?></option>
-					<option value="slide"><?php echo __( 'Slide' ); ?></option>
-					<option value="fade"><?php echo __( 'Fade' ); ?></option>
+				<label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
+				<select id="size" name="size">
+					<option value="">Select size</option>
+					<option value="thumbnail">Thumbnail</option>
+					<option value="medium">Medium</option>
+					<option value="large">Large</option>
+					<option value="full">Full</option>
 				</select>
 			</p>
 
-			<div class="flex-options">
-				<p>
-					<label for="slideshowspeed" title="<?php echo __( 'Slideshow speed' ); ?>"><?php echo __( 'Slideshow speed' ); ?>:</label>
-					<input id="slideshowspeed" name="slideshowspeed" type="text" /> <span>ms</span>
-				</p>
+		<?php echo $gog_plugin['generator']; ?>
 
-				<p>
-					<label for="animationduration" title="<?php echo __( 'Animation speed' ); ?>"><?php echo __( 'Animation speed' ); ?>:</label>
-					<input id="animationduration" name="animationduration" type="text" /> <span>ms</span>
-				</p>
-
-				<p>
-					<input id="slideshow" type="checkbox" name="slideshow" value="1" />
-					<label for="slideshow" title="<?php echo __( 'Slide automatically' ); ?>" style="line-height:25px;"><?php echo __( 'Slide automatically' ); ?></label>
-				</p>
-
-				<p>
-					<input id="randomize" type="checkbox" name="randomize" value="1" />
-					<label for="randomize" title="<?php echo __( 'Randomize' ); ?>" style="line-height:25px;"><?php echo __( 'Randomize' ); ?></label>
-				</p>
-
-				<p>
-					<input id="loop" type="checkbox" name="loop" value="1" />
-					<label for="loop" title="<?php echo __( 'Loop' ); ?>" style="line-height:25px;"><?php echo __( 'Loop' ); ?></label>
-				</p>
-
-				<p>
-					<label for="size" title="<?php echo __( 'Select gallery size' ); ?>" style="line-height:25px;"><?php echo __( 'Image size' ); ?>:</label>
-					<select id="size" name="size">
-						<option value="">Select size</option>
-						<option value="thumbnail"><?php echo __( 'Thumbnail' ); ?></option>
-						<option value="medium"><?php echo __( 'Medium' ); ?></option>
-						<option value="large"><?php echo __( 'Large' ); ?></option>
-						<option value="full"><?php echo __( 'Full' ); ?></option>
-					</select>
-				</p>
-
-				<p>
-					<input id="title" type="checkbox" name="title" value="1" />
-					<label for="title" title="<?php echo __( 'Select if the title should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show title' ); ?></label>
-				</p>
-
-				<p>
-					<input id="description" type="checkbox" name="description" value="1" />
-					<label for="description" title="<?php echo __( 'Select if the description should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show description' ); ?></label>
-				</p>
-
-				<p>
-					<input id="directionnav" type="checkbox" name="directionnav" value="1" />
-					<label for="directionnav" title="<?php echo __( 'Select if a navigation should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show navigation' ); ?></label>
-				</p>
-
-				<p>
-					<input id="controlnav" type="checkbox" name="controlnav" value="1" />
-					<label for="controlnav" title="<?php echo __( 'Select if a pager should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show pager' ); ?></label>
-				</p>
-
-				<p>
-					<input id="pauseplay" type="checkbox" name="pauseplay" value="1" />
-					<label for="pauseplay" title="<?php echo __( 'Select if a Play/Pause button should be displayed' ); ?>" style="line-height:25px;"><?php echo __( 'Show Play/Pause' ); ?></label>
-				</p>
-
-			</form>
-			</div>
+		</form>
 		</div>
 	</div>
 </div>

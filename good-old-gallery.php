@@ -17,46 +17,55 @@ define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
 $upload_url = wp_upload_dir();
+$gog_debug = FALSE;
 
 // For checking in admin purposes
-$post_type = isset($_GET['post_type']) ? $_GET['post_type'] : NULL;
-$post_id = isset($_GET['post_id']) ? $_GET['post_id'] : NULL;
-$post = isset($_GET['post']) ? $_GET['post'] : NULL;
-$page = isset($_GET['page']) ? $_GET['page'] : NULL;
+$gog_get = array(
+	'post_type' => isset($_GET['post_type']) ? $_GET['post_type'] : NULL,
+	'post_id'   => isset($_GET['post_id']) ? $_GET['post_id'] : NULL,
+	'post'      => isset($_GET['post']) ? $_GET['post'] : NULL,
+	'page'      => isset($_GET['page']) ? $_GET['page'] : NULL,
+);
 
-// Setup default plugin settings and themes
-$gog_default_settings = array(
-	'title'             => 0,
-	'description'       => 0,
-	'size'              => 'full',
-	// Flexslider specific
-	'animation'         => "slide",
-	'slideshow'         => TRUE,
-	'slideshowSpeed'    => 7000,
-	'animationDuration' => 600,
-	'directionNav'      => TRUE,
-	'controlNav'        => TRUE,
-	'keyboardNav'       => TRUE,
-	'touchSwipe'        => TRUE,
-	'prevText'          => "Prev",
-	'nextText'          => "Next",
-	'pausePlay'         => FALSE,
-	'pauseText'         => 'Pause',
-	'playText'          => 'Play',
-	'randomize'         => FALSE,
-	'slideToStart'      => 0,
-	'animationLoop'     => TRUE,
-	'pauseOnAction'     => TRUE,
-	'pauseOnHover'      => FALSE,
-);
-$gog_default_themes = array(
-	'default' => NULL,
-	'themes' => NULL
-);
+// Load functionality
+require_once('inc/shortcode.php');
+require_once('inc/widget.php');
+require_once('inc/plugins.php');
+
+if (is_admin()) {
+	// Load up different features
+	require_once('inc/forms.php');
+	require_once('inc/style.php');
+	require_once('inc/content.php');
+	require_once('inc/media.php');
+
+	// Add pages
+	require_once('inc/page-settings.php');
+	require_once('inc/page-themes.php');
+}
 
 // Load plugin settings and themes
 $gog_settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
 $gog_themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
+
+$gog_plugin = goodold_gallery_load_plugin();
+
+// Setup default plugin settings and themes
+$gog_default_settings = array(
+	'size'              => 'full',
+	'title'             => 0,
+	'description'       => 0,
+	'plugin'            => 'none',
+);
+
+if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {
+	$gog_default_settings += $gog_plugin['settings'];
+}
+
+$gog_default_themes = array(
+	'default' => NULL,
+	'themes' => NULL
+);
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {
@@ -89,8 +98,8 @@ if ( !$is_loaded ) {
 function goodold_gallery_check_post_for_shortcode( $posts ) {
 	$found = FALSE;
 	if ( !empty($posts) ) {
-		foreach ( $posts as $post ) {
-			if ( stripos($post->post_content, '[good-old-gallery') !== FALSE ) {
+		foreach ( $posts as $gog_get['post'] ) {
+			if ( stripos($gog_get['post']->post_content, '[good-old-gallery') !== FALSE ) {
 				$found = TRUE;
 				break;
 			}
@@ -108,27 +117,34 @@ add_action('the_posts', 'goodold_gallery_check_post_for_shortcode');
 
 // Function that registers styles and js for this plugin
 function goodold_gallery_load_scripts() {
+	global $gog_settings, $gog_plugin;
+
 	if ( !is_admin() ) {
-		wp_enqueue_script( 'flex ', GOG_PLUGIN_URL . '/js/jquery.flexslider-min.js', array('jquery'), '1.7', FALSE );
+		if ( !empty($gog_settings['plugin']) ) {
+			foreach ( $gog_plugin['setup']['files'] as $file ) {
+				wp_enqueue_script( 'slider ', GOG_PLUGIN_URL . '/plugins/' . $gog_settings['plugin'] . '/' . $file, array('jquery'), '', FALSE );
+			}
+		}
 		wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery.css' );
 	}
 }
 
 // Used to load styles and scripts for admin
 function goodold_gallery_load_admin() {
+	global $gog_get;
 	add_thickbox();
 
 	// Load up media upload when administering gallery content
-	if ( get_post_type( $post ) == 'goodoldgallery' || $post_type == 'goodoldgallery' ) {
+	if ( get_post_type( $gog_get['post'] ) == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
 		wp_enqueue_script('media-upload');
 	}
 
 	// Add css and js for admin section
-	if ( get_post_type( $post_id ) == 'goodoldgallery' || get_post_type( $post ) == 'goodoldgallery' || $post_type == 'goodoldgallery' ) {
+	if ( get_post_type( $gog_get['post_id'] ) == 'goodoldgallery' || get_post_type( $gog_get['post'] ) == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
 		wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
 	}
 
-	if ( $post_type == 'goodoldgallery' && ($page == 'gog_settings' || $page == 'gog_themes') ) {
+	if ( $gog_get['post_type'] == 'goodoldgallery' && ($gog_get['page'] == 'gog_settings' || $gog_get['page'] == 'gog_themes') ) {
 		wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 		add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 	}
@@ -152,21 +168,6 @@ function goodold_gallery_flattr_button() {
 	</script>
 
 FLATTR;
-}
-
-require_once('inc/shortcode.php');
-require_once('inc/widget.php');
-
-if (is_admin()) {
-	// Load up different features
-	require_once('inc/forms.php');
-	require_once('inc/style.php');
-	require_once('inc/content.php');
-	require_once('inc/media.php');
-
-	// Add pages
-	require_once('inc/page-settings.php');
-	require_once('inc/page-themes.php');
 }
 
 /**

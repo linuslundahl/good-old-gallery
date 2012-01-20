@@ -4,37 +4,27 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes;
+	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes, $gog_plugin, $gog_debug;
 
 	static $i = 1;
 
-	// Build Flexslider default settings
-	$flex = array(
-		'animation'         => 'animation',
-		'slideshow'         => 'slideshow',
-		'slideshowspeed'    => 'slideshowSpeed',
-		'animationduration' => 'animationDuration',
-		'directionnav'      => 'directionNav',
-		'controlnav'        => 'controlNav',
-		'keyboardnav'       => 'keyboardNav',
-		'touchswipe'        => 'touchSwipe',
-		'prevtext'          => 'prevText',
-		'nexttext'          => 'nextText',
-		'pauseplay'         => 'pausePlay',
-		'pausetext'         => 'pauseText',
-		'playtext'          => 'playText',
-		'randomize'         => 'randomize',
-		'slidetostart'      => 'slideToStart',
-		'animationloop'     => 'animationLoop',
-		'pauseonaction'     => 'pauseOnAction',
-		'pauseonhover'      => 'pauseOnHover',
-	);
+	// Build Slider default settings
+	$slider = array();
+	foreach ($gog_plugin['settings'] as $key => $value) {
+		$slider[$key] = $key;
+	}
 
-	foreach( $flex as $setting ) {
+	foreach( $slider as $setting ) {
 		$settings[strtolower($setting)] = array(
 			'key' => $setting,
 			'val' => $gog_settings[$setting] ? $gog_settings[$setting] : $gog_default_settings[$setting],
 		);
+	}
+
+	if ($gog_debug) {
+		print '<pre>';
+		var_dump($settings);
+		print '</pre>';
 	}
 
 	// Get settings from shortcode
@@ -53,7 +43,7 @@ function goodold_gallery_shortcode($attr) {
 	$settings = array_slice($attr, 8);
 	foreach( $settings as $key => $setting ) {
 		$settings[$key] = array(
-			'key' => $flex[$key],
+			'key' => $slider[$key],
 			'val' => is_array($setting) ? $setting['val'] : $setting,
 		);
 	}
@@ -162,24 +152,32 @@ function goodold_gallery_shortcode($attr) {
 			$script = '';
 			foreach( $settings as $key => $setting ) {
 				if ( !empty( $setting ) ) {
-					$script .= $setting['key'];
-					if ( is_bool( $setting['val'] ) ) {
-						$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
-					}
-					else if ( is_numeric( $setting['val'] ) ) {
-						$script .= ': ' . $setting['val'] . ', ';
-					}
-					else if ( $setting['val'] == "on" ) {
-						$script .= ': true, ';
-					}
-					else {
-						$script .= ': "' . $setting['val'] . '", ';
+					if ($setting['key']) {
+						$script .= $setting['key'];
+						if ( is_bool( $setting['val'] ) ) {
+							$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
+						}
+						else if ( is_numeric( $setting['val'] ) ) {
+							$script .= ': ' . $setting['val'] . ', ';
+						}
+						else if ( $setting['val'] == "on" ) {
+							$script .= ': true, ';
+						}
+						else {
+							$script .= ': "' . $setting['val'] . '", ';
+						}
 					}
 				}
 			}
 
+			if ($gog_debug) {
+				print '<pre>';
+				var_dump($script);
+				print '</pre>';
+			}
+
 			// Finish script
-			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' .go-gallery").flexslider({' . rtrim($script, ', ') . '}); });</script>';
+			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); });</script>';
 
 			// End gallery div
 			$ret .= '</div>' . "\n";

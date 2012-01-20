@@ -33,7 +33,7 @@ function goodold_gallery_themes_init(){
 
 	// Get themes for select dropdown
 	$theme_options = array(NULL => __( 'No theme' ));
-	$theme_options += goodold_gallery_get_themes( true );
+	$theme_options += goodold_gallery_get_themes( TRUE );
 
 	// Setup form
 	$form = array(
@@ -134,7 +134,7 @@ function goodold_gallery_themes_cache() {
 		echo '<p>' . __('Cache last updated: ') . date('H:i, Y-m-d', filemtime($upload_url['basedir'] . '/good-old-gallery-themes.css')) . '</p>';
 	}
 
-	echo "<p>" . sprintf(__("* To use all themes you need to %s, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes."), '<a href="' . GOG_PLUGIN_URL . '/inc/cache.php">' . __( 'rebuild the css cache' ) . '</a>') . "</p>";
+	echo "<p>" . sprintf(__("* To use all themes you need to %s, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes."), '<a href="' . GOG_PLUGIN_URL . '/inc/cache.php?redirect">' . __( 'rebuild the css cache' ) . '</a>') . "</p>";
 }
 /**
  * Print settings page
