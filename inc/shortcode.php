@@ -10,14 +10,15 @@ function goodold_gallery_shortcode($attr) {
 
 	// Build Slider default settings
 	$slider = array();
-	foreach ($gog_plugin['settings'] as $key => $value) {
-		$slider[$key] = $key;
+	foreach ( $gog_plugin['settings'] as $key => $value ) {
+		$new_key = strtolower($key);
+		$slider[$new_key] = $key;
 	}
 
-	foreach( $slider as $setting ) {
-		$settings[strtolower($setting)] = array(
-			'key' => $setting,
-			'val' => $gog_settings[$setting] ? $gog_settings[$setting] : $gog_default_settings[$setting],
+	foreach( $slider as $key => $large ) {
+		$settings[$key] = array(
+			'key' => $large,
+			'val' => $gog_settings[$large] ? $gog_settings[$large] : $gog_default_settings[$large],
 		);
 	}
 
@@ -152,18 +153,12 @@ function goodold_gallery_shortcode($attr) {
 			$script = '';
 			foreach( $settings as $key => $setting ) {
 				if ( !empty( $setting ) ) {
-					if ($setting['key']) {
+					if ( $setting['key'] != NULL && $setting['key'] != '' ) {
 						$script .= $setting['key'];
-						// if ( is_bool( $setting['val'] ) ) {
-						// 	$script .= ( $setting['val'] == TRUE ) ? ': true, ' : ': false, ';
-						// }
-						// else if ( is_numeric( $setting['val'] ) ) {
-						// 	$script .= ': ' . $setting['val'] . ', ';
-						// }
-						if ( $setting['val'] == "on" ) {
+						if ( $setting['val'] == "on" || $setting['val'] == "true" ) {
 							$script .= ': true, ';
 						}
-						else if ( $setting['val'] == "off" ) {
+						else if ( $setting['val'] == "off" || $setting['val'] == "false" ) {
 							$script .= ': false, ';
 						}
 						else {

@@ -42,9 +42,9 @@ class GoodOldGalleryWidget extends WP_Widget {
 						$settings .= $key . '="' . $value . '" ';
 					}
 					else {
-						$settings .= $key . '="off" ';
+						$settings .= $key . '="false" ';
 					}
-					$settings = str_replace('"on"', '1', $settings);
+					$settings = str_replace('"on"', '"true"', $settings);
 				}
 			}
 
@@ -63,10 +63,16 @@ class GoodOldGalleryWidget extends WP_Widget {
 		$instance['theme']             = $new_instance['theme'];
 		$instance['size']              = $new_instance['size'];
 
-		foreach ($gog_plugin['settings'] as $setting => $value) {
-			$setting = $setting == 'title' ? 'g' . $setting : $setting;
-			$instance[$setting] = $new_instance[$setting];
+		foreach ( $gog_plugin['settings_form'] as $section ) {
+			foreach ( $section['fields'] as $setting => $item ) {
+				if ( !isset($item['ignore']) ) {
+					$setting = $setting == 'title' ? 'g' . $setting : $setting;
+					$instance[$setting] = $new_instance[$setting];
+				}
+			}
 		}
+
+		error_log(var_export($instance, TRUE));
 
 		return $instance;
 	}
