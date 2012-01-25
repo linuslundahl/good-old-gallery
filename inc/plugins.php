@@ -35,16 +35,20 @@ function goodold_gallery_get_plugins( $select = FALSE ) {
 }
 
 function goodold_gallery_load_plugin( $plugin = '' ) {
-	global $gog_settings, $gog_settings_default;
-
-	$plugin = !empty($plugin) ? $plugin : $gog_settings['plugin'];
-	include_once(GOG_PLUGIN_DIR . '/plugins/' . $plugin . '/' . $plugin . '.php');
+	global $gog_settings, $gog_default_settings;
 
 	$settings = array();
-	$callbacks = array('setup', 'settings', 'settings_form', 'widget');
-	foreach ($callbacks as $callback)
-	if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
-		$settings[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);
+
+	$default = !empty($gog_settings['plugin']) ? $gog_settings['plugin'] : $gog_default_settings['plugin'];
+	$plugin = !empty($plugin) ? $plugin : $default;
+	if ($plugin != 'none') {
+		include_once(GOG_PLUGIN_DIR . '/plugins/' . $plugin . '/' . $plugin . '.php');
+
+		$callbacks = array('setup', 'settings', 'settings_form', 'widget');
+		foreach ($callbacks as $callback)
+		if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
+			$settings[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);
+		}
 	}
 
 	return $settings;

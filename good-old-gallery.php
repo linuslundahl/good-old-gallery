@@ -4,9 +4,9 @@
  *
  * Plugin Name: Good Old Gallery
  * Plugin URI: http://unwi.se/good-old-gallery
- * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider support and Widgets.
+ * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider and jQuery Cycle support and Widgets.
  * Author: Linus Lundahl
- * Version: 1.13
+ * Version: 2.0-dev
  * Author URI: http://unwi.se/
  *
  */
@@ -27,6 +27,27 @@ $gog_get = array(
 	'page'      => isset($_GET['page']) ? $_GET['page'] : NULL,
 );
 
+// Load plugin settings and themes
+$gog_settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
+$gog_themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
+
+// Setup default plugin settings and themes
+$gog_default_settings = array(
+	'size'              => 'full',
+	'title'             => 0,
+	'description'       => 0,
+	'plugin'            => 'flexslider',
+);
+
+if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {
+	$gog_default_settings += $gog_plugin['settings'];
+}
+
+$gog_default_themes = array(
+	'default' => NULL,
+	'themes' => NULL
+);
+
 // Load functionality
 require_once('inc/shortcode.php');
 require_once('inc/widget.php');
@@ -44,28 +65,7 @@ if (is_admin()) {
 	require_once('inc/page-themes.php');
 }
 
-// Load plugin settings and themes
-$gog_settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
-$gog_themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
-
 $gog_plugin = goodold_gallery_load_plugin();
-
-// Setup default plugin settings and themes
-$gog_default_settings = array(
-	'size'              => 'full',
-	'title'             => 0,
-	'description'       => 0,
-	'plugin'            => 'none',
-);
-
-if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {
-	$gog_default_settings += $gog_plugin['settings'];
-}
-
-$gog_default_themes = array(
-	'default' => NULL,
-	'themes' => NULL
-);
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {

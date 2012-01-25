@@ -82,7 +82,7 @@ function goodold_gallery_settings_init(){
 		),
 	);
 
-	if (!empty($gog_settings['plugin'])) {
+	if (!empty($gog_plugin)) {
 		$form += $gog_plugin['settings_form'];
 	}
 

@@ -4,13 +4,13 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.0
+Stable tag: 1.13
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses Flexslider for sliding and fading transitions.
 
 == Description ==
 
-Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider support and Widgets.
+Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider and jQuery Support support and Widgets.
 
 = Main features =
 
@@ -93,8 +93,9 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 == Changelog ==
 
-= 2.0 =
-* Changed from jQuery Cycle to Flexslider
+= 2.0-dev =
+* !! This is still under development, a lot of functionality is still not completed. !!
+* Added Flexslider support too. 
 * Works with WordPress 3.3
 * Checks posts and widgets for Good Old Galleries, if none are found no JS or CSS is added.
 
