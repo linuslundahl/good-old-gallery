@@ -4,7 +4,7 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode($attr) {
-	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes, $gog_plugin, $gog_debug;
+	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes, $gog_plugin;
 
 	static $i = 1;
 
@@ -54,19 +54,20 @@ function goodold_gallery_shortcode($attr) {
 		return;
 	}
 
-	$settings['controlscontainer'] = array(
-		'key' => 'controlsContainer',
-		'val' => "#go-gallery-" . $id . '-' . $i . ' .go-gallery',
+	// Add settings from plugin shortcode extras function
+	$sc_extra_settings = array(
+		'id' => $id,
+		'i' => $i,
+		'settings' => $settings,
 	);
-
-	if ($gog_debug) {
-		print '<pre>';
-		var_dump($settings);
-		print '</pre>';
+	$sc_extras = goodold_gallery_load_plugin( array( 'function' => 'shortcode_extras', 'settings' => $sc_extra_settings ) );
+	if ( is_array($sc_extras) && !empty($sc_extras) ) {
+		extract($sc_extras);
+		$settings += $settings_extras;
 	}
 
 	$ret = '';
-	if ( $fx == 'none' ) {
+	if ( $animation == 'none' ) {
 		$ret .= do_shortcode( '[gallery id="' . $id . '"]' );
 	}
 	else {
@@ -91,12 +92,12 @@ function goodold_gallery_shortcode($attr) {
 		}
 
 		// Navigation class
-		if ( $settings['directionnav']['val'] === 'on' || $settings['directionnav']['val'] == 1 ) {
+		if ( $navigation ) {
 			$classes .= " has-nav";
 		}
 
 		// Pager class
-		if ( $settings['controlnav']['val'] === 'on' || $settings['controlnav']['val'] == 1 ) {
+		if ( $pager ) {
 			$classes .= " has-pager";
 		}
 
@@ -139,7 +140,7 @@ function goodold_gallery_shortcode($attr) {
 
 			// Begin gallery div and ul
 			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '">' . "\n";
-			$ret .= '<div class="go-gallery go-gallery-' . $id . '" style="width: ' . $width . 'px;">';
+			$ret .= '<div class="go-gallery go-gallery-' . $id . '" style="width: ' . $width . 'px;">' . "\n";
 			$ret .= '<ul class="slides">' . "\n";
 
 			// Insert images
@@ -147,13 +148,18 @@ function goodold_gallery_shortcode($attr) {
 
 			// End gallery ul
 			$ret .= '</ul>' . "\n";
+
+			// Add pager and navigation markup if set
+			$ret .= is_string($pager) ? $pager : '';
+			$ret .= is_string($navigation) ? $navigation : '';
+
 			$ret .= '</div>' . "\n";
 
 			// Build script
 			$script = '';
 			foreach( $settings as $key => $setting ) {
 				if ( !empty( $setting ) ) {
-					if ( $setting['key'] != NULL && $setting['key'] != '' ) {
+					if ( !empty($setting['key']) && !empty($setting['val']) ) {
 						$script .= $setting['key'];
 						if ( $setting['val'] == "on" || $setting['val'] == "true" ) {
 							$script .= ': true, ';
@@ -168,14 +174,11 @@ function goodold_gallery_shortcode($attr) {
 				}
 			}
 
-			if ($gog_debug) {
-				print '<pre>';
-				var_dump($script);
-				print '</pre>';
-			}
+			// Add script extras if set
+			$script .= $script_extras;
 
 			// Finish script
-			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); });</script>';
+			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); });</script>' . "\n";
 
 			// End gallery div
 			$ret .= '</div>' . "\n";

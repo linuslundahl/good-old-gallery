@@ -107,6 +107,30 @@ function goodold_gallery_cycle_settings_form() {
 	);
 }
 
-function goodold_gallery_cycle_widget() {
-	return array();
+function goodold_gallery_cycle_shortcode_extras( $settings ) {
+	$ret = array(
+		'navigation' => '',
+		'pager' => '',
+		'script_extras' => '',
+		'settings_extras' => array(),
+	);
+
+	extract($settings);
+
+	// NAVIGATION
+	if ( $settings['navigation']['val'] ) {
+		$ret['navigation'] = '<div class="nav">' . "\n";
+		$ret['navigation'] .= '<span class="prev">' . $settings['prev']['val'] . '</span><span class="next">' . $settings['next']['val'] . '</span>' . "\n";
+		$ret['navigation'] .= '</div>' . "\n";
+		$ret['script_extras']  .= 'prev: "#go-gallery-' . $id . '-' . $i . ' .prev",' .
+														 'next: "#go-gallery-' . $id . '-' . $i . ' .next",';
+	}
+
+	// PAGER
+	if ( $settings['pager']['val'] ) {
+		$ret['pager'] .= '<div class="pager"></div>' . "\n";
+		$ret['script_extras'] .= 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
+	}
+
+	return $ret;
 }

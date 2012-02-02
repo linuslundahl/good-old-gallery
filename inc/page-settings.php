@@ -132,7 +132,7 @@ function goodold_gallery_settings_validate($input) {
 
 	// Set default settings if plugin is changed
 	if ($input['plugin'] != $gog_settings['plugin']) {
-		$plugin = goodold_gallery_load_plugin($input['plugin']);
+		$plugin = goodold_gallery_load_plugin( array( 'plugin' => $input['plugin'] ) );
 		$input += $plugin['settings'];
 	}
 	else {

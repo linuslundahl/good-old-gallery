@@ -17,7 +17,6 @@ define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__
 define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
 $upload_url = wp_upload_dir();
-$gog_debug = FALSE;
 
 // For checking in admin purposes
 $gog_get = array(
@@ -49,9 +48,9 @@ $gog_default_themes = array(
 );
 
 // Load functionality
-require_once('inc/shortcode.php');
 require_once('inc/widget.php');
 require_once('inc/plugins.php');
+require_once('inc/shortcode.php');
 
 if (is_admin()) {
 	// Load up different features

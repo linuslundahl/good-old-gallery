@@ -189,6 +189,20 @@ function goodold_gallery_flexslider_settings_form() {
 	);
 }
 
-function goodold_gallery_flexslider_widget() {
-	return array();
+function goodold_gallery_flexslider_shortcode_extras( $settings ) {
+	extract($settings);
+
+	$ret = array(
+		'navigation' => !empty($settings['directionnav']['val']) ? TRUE : '',
+		'pager' => !empty($settings['controlnav']['val']) ? TRUE : '',
+		'script_extras' => '',
+		'settings_extras' => array(
+			'controlscontainer' => array(
+				'key' => 'controlsContainer',
+				'val' => "#go-gallery-" . $id . '-' . $i . ' .go-gallery',
+			),
+		),
+	);
+
+	return $ret;
 }
