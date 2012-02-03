@@ -66,6 +66,46 @@ function goodold_gallery_settings_init(){
 			),
 		),
 		// Section
+		'order' => array(
+			'title'    => 'Fields Order',
+			'callback' => 'order_header',
+			'fields'   => array(
+				'order_title' => array(
+					'title' => 'Title',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							'1' => '1',
+							'2' => '2',
+							'3' => '3',
+						),
+					),
+				),
+				'order_desc' => array(
+					'title' => 'Description',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							'1' => '1',
+							'2' => '2',
+							'3' => '3',
+						),
+					),
+				),
+				'order_image' => array(
+					'title' => 'Image',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							'1' => '1',
+							'2' => '2',
+							'3' => '3',
+						),
+					),
+				),
+			),
+		),
+		// Section
 		'plugins' => array(
 			'title'    => 'Plugins',
 			'callback' => 'settings_header',
@@ -100,6 +140,53 @@ function goodold_gallery_add_settings_page() {
  * Main section header.
  */
 function goodold_gallery_settings_header() {
+}
+
+/**
+ * Order section header.
+ */
+function goodold_gallery_order_header() {
+	global $gog_settings, $gog_default_settings;
+
+	$items = array();
+	foreach ($gog_settings as $key => $val) {
+		if (strpos($key, 'order_') !== FALSE) {
+			$items[$val] = $key;
+		}
+	}
+
+	$li = '';
+	if (!empty($items)) {
+		ksort($items);
+		foreach ($items as $key) {
+			$id = str_replace('order_', '', $key);
+			switch ($id) {
+				case "title":
+					$title = __( "Title" );
+					break;
+				case "desc":
+					$title = __( "Description" );
+					break;
+				case "image":
+					$title = __( "Image" );
+					break;
+			}
+			$li .= "\t" . '<li id="' . $id . '"><i class="icon-move"></i> ' . $title . '</li>' . "\n";
+		}
+	}
+	else {
+		$li = <<<ITEMS
+	<li id="title"><i class="icon-move"></i> Title</li>
+	<li id="desc"><i class="icon-move"></i> Description</li>
+	<li id="image"><i class="icon-move"></i> Image</li>
+ITEMS;
+	}
+
+?>
+<ul id="order">
+<?php echo $li; ?>
+</ul>
+<?php
 }
 
 /**

@@ -11,7 +11,7 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
 			// $id
 			GOG_PLUGIN_SHORT . '_' . $section_id,
 			// $title
-			__( $section['title'], "fokus" ),
+			__( $section['title'], "goodoldgallery" ),
 			// $callbackf
 			'goodold_gallery_' . $section['callback'],
 			// $page
@@ -85,7 +85,7 @@ function goodold_gallery_input_dropdown( $args ) {
 
 	echo '<select id="' . $id . '" name="' . $name . '">';
 	foreach($items as $key => $item) {
-		$selected = ($default === $key) ? ' selected="selected"' : '';
+		$selected = ($default == $key) ? ' selected="selected"' : '';
 		echo "<option value=\"$key\"$selected>" . __( $item ) . "</option>";
 	}
 	echo "</select>";

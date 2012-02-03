@@ -36,6 +36,9 @@ $gog_default_settings = array(
 	'title'             => 0,
 	'description'       => 0,
 	'plugin'            => 'flexslider',
+	'order_title'       => 1,
+	'order_desc'        => 2,
+	'order_image'       => 3,
 );
 
 if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {
@@ -141,9 +144,11 @@ function goodold_gallery_load_admin() {
 	// Add css and js for admin section
 	if ( get_post_type( $gog_get['post_id'] ) == 'goodoldgallery' || get_post_type( $gog_get['post'] ) == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
 		wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
+		wp_enqueue_style( 'bootstrap', GOG_PLUGIN_URL . '/style/bootstrap.min.css' );
 	}
 
 	if ( $gog_get['post_type'] == 'goodoldgallery' && ($gog_get['page'] == 'gog_settings' || $gog_get['page'] == 'gog_themes') ) {
+		wp_enqueue_script( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js', 'jquery', false, true );
 		wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 		add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 	}
