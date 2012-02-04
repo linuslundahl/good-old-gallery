@@ -4,7 +4,7 @@ function goodold_gallery_flexslider_setup() {
 	return array(
 		'title' => 'Flexslider',
 		'files' => array('jquery.flexslider-min.js'),
-		'class' => '.go-gallery',
+		'class' => '.go-gallery-inner',
 	);
 }
 

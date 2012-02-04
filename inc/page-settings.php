@@ -198,7 +198,7 @@ function goodold_gallery_settings_page() {
 		<div class="icon32" id="icon-options-general"><br></div>
 		<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
 		<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
-		<p><?php echo sprintf(__( 'These settings are the defaults that will be used by Flexslider (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.' ), '<code>[good-old-gallery]</code>'); ?><br />
+		<p><?php echo sprintf(__( 'These settings are the defaults that will be used by your selected plugin (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.' ), '<code>[good-old-gallery]</code>'); ?><br />
 		<?php echo sprintf(__( 'Use the built in generator found under the %s tab, just click the %s button to find the tab on the far right.' ), '<em>' . GOG_PLUGIN_NAME . '</em>', '<em>' . __( 'Add an Image' ) . '</em>'); ?><br /><br />
 		<?php echo sprintf(__( 'More help can be found at %s' ), '<a href="http://wordpress.org/extend/plugins/good-old-gallery/installation/">wordpress.org</a>'); ?><br /><br />
 		<?php echo sprintf(__( '%s created and maintained by %s.' ), GOG_PLUGIN_NAME, '<a href="http://unwi.se/">Linus Lundahl</a>'); ?></p>

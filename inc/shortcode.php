@@ -83,7 +83,7 @@ function goodold_gallery_shortcode($attr) {
 			'exclude'         => $exclude
 		) );
 
-		$classes = "";
+		$classes = ' go-gallery-' . $id;
 
 		// Add theme class
 		if ( $theme ) {
@@ -101,6 +101,11 @@ function goodold_gallery_shortcode($attr) {
 		// Pager class
 		if ( $pager ) {
 			$classes .= " has-pager";
+		}
+
+		// Plugin class
+		if ( $gog_settings['plugin'] ) {
+			$classes .= " " . $gog_settings['plugin'];
 		}
 
 		if ( $attachments ) {
@@ -162,8 +167,8 @@ function goodold_gallery_shortcode($attr) {
 			}
 
 			// Begin gallery div and ul
-			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '">' . "\n";
-			$ret .= '<div class="go-gallery go-gallery-' . $id . '"' . $gallery_width . '>' . "\n";
+			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '"' . $gallery_width . '>' . "\n";
+			$ret .= '<div class="go-gallery-inner">' . "\n";
 			$ret .= '<ul class="slides">' . "\n";
 
 			// Insert images
