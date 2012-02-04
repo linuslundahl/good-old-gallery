@@ -33,6 +33,7 @@ $gog_themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
 // Setup default plugin settings and themes
 $gog_default_settings = array(
 	'size'              => 'full',
+	'set_width'         => 1,
 	'title'             => 0,
 	'description'       => 0,
 	'plugin'            => 'flexslider',

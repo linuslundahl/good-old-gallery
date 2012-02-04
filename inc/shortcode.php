@@ -23,15 +23,17 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	// Get settings from shortcode
+	$set_settings = !empty($gog_settings) ? $gog_settings : $gog_default_settings;
 	$attr = shortcode_atts( array(
 		'id'                => null,
 		'order'             => 'ASC',
 		'orderby'           => 'menu_order ID',
 		'exclude'           => array(),
-		'theme'             => $gog_themes['default']             ? $gog_themes['theme']['class']      : $gog_default_themes['default'],
-		'size'              => $gog_settings['size']              ? $gog_settings['size']              : $gog_default_settings['size'],
-		'title'             => $gog_settings['title']             ? $gog_settings['title']             : $gog_default_settings['title'],
-		'description'       => $gog_settings['description']       ? $gog_settings['description']       : $gog_default_settings['description'],
+		'theme'             => isset($gog_themes['default'])       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
+		'size'              => $set_settings['size'],
+		'set_width'         => isset($set_settings['set_width'])   ? $set_settings['set_width']    : FALSE,
+		'title'             => isset($set_settings['title'])       ? $set_settings['title']        : FALSE,
+		'description'       => isset($set_settings['description']) ? $set_settings['description']  : FALSE,
 	) + $settings, $attr );
 
 	// Setup Slider settings array
@@ -44,7 +46,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	// Extract GOG settings to vars
-	extract(array_slice($attr, 0, 7));
+	extract(array_slice($attr, 0, 8));
 
 	// Use post_id if no id is set in shortcode.
 	$id = ( !$id && $post->ID ) ? $post->ID : $id;
@@ -104,43 +106,64 @@ function goodold_gallery_shortcode($attr) {
 		if ( $attachments ) {
 
 			// Generate images
-			$images = '';
 			$width = 0;
+			$images = '';
 			foreach ( $attachments as $gallery_id => $attachment ) {
 				$link = get_post_meta($attachment->ID, "_goodold_gallery_image_link", true);
 
+				// Start list item
 				$images .= '<li>' . "\n";
 
-				if ( ( $title && $attachment->post_title ) || ( $description && $attachment->post_content ) ) {
-					$images .= '<div class="meta">' . "\n";
+					// Sort fields in set order
+					$order = goodold_gallery_order_fields($gog_settings);
+					$order = array_flip($order);
+					foreach ($order as $field => $key) {
+						$order[$field] = '';
+					}
+
+					// Add title
 					if ( $title && $attachment->post_title ) {
-						$images .= '<span class="title">' . $attachment->post_title . '</span>' . "\n";
+						$order['title'] = '<span class="title">' . $attachment->post_title . '</span>' . "\n";
 					}
+
+					// Add description
 					if ( $description && $attachment->post_content ) {
-						$images .= '<span class="description">' . $attachment->post_content . '</span>' . "\n";
+						$order['desc'] = '<span class="description">' . $attachment->post_content . '</span>' . "\n";
 					}
-					$images .= '</div>' . "\n";
-				}
 
+				// Start link
 				if ( $link ) {
-					$images .= '<a href="' . $link . '">' . "\n";
+					$order['image'] .= '<a href="' . $link . '">' . "\n";
 				}
 
-				$images .= wp_get_attachment_image( $gallery_id, $size, false ) . "\n";
+				// Add image
+				$order['image'] .= wp_get_attachment_image( $gallery_id, $size, false ) . "\n";
 
-				$img_data = wp_get_attachment_image_src( $gallery_id, $size, false );
-				$width = $width < $img_data[1] ? $img_data[1] : $width;
-
+				// End link
 				if ( $link ) {
-					$images .= '</a>' . "\n";
+					$order['image'] .= '</a>' . "\n";
 				}
 
+				foreach ( $order as $field ) {
+					$images .= !is_numeric($field) ? $field : '';
+				}
+
+				// End list item
 				$images .= '</li>' . "\n";
+
+				// Get widest image width
+				$gallery_width = '';
+				if ( $set_width ) {
+					$img_data = wp_get_attachment_image_src( $gallery_id, $size, false );
+					$width = $width < $img_data[1] ? $img_data[1] : $width;
+					$gallery_width = ' style="width: ' . $width . 'px;"';
+				}
+
 			}
 
 			// Begin gallery div and ul
 			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '">' . "\n";
-			$ret .= '<div class="go-gallery go-gallery-' . $id . '" style="width: ' . $width . 'px;">' . "\n";
+			$ret .= '<div class="go-gallery go-gallery-' . $id . '"' . $gallery_width . '>' . "\n";
 			$ret .= '<ul class="slides">' . "\n";
 
 			// Insert images
@@ -190,3 +213,25 @@ function goodold_gallery_shortcode($attr) {
 	return $ret;
 }
 add_shortcode( 'good-old-gallery', 'goodold_gallery_shortcode' );
+
+/**
+ * Returns the saved order of title, desc and image
+ */
+function goodold_gallery_order_fields($settings) {
+	$ret = array();
+	foreach ( $settings as $key => $val ) {
+		if ( strpos($key, 'order_') !== FALSE ) {
+			$items[$val] = $key;
+		}
+	}
+
+	if ( !empty($items) ) {
+		ksort($items);
+		foreach ( $items as $val => $key ) {
+			$id = str_replace('order_', '', $key);
+			$ret[] = $id;
+		}
+	}
+
+	return $ret;
+}

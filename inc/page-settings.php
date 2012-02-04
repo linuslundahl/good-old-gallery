@@ -49,6 +49,13 @@ function goodold_gallery_settings_init(){
 						'desc' => 'Image size used for the galleries.',
 					),
 				),
+				'set_width' => array(
+					'title' => 'Set gallery width',
+					'type'  => 'checkbox',
+					'args'  => array(
+						'label' => 'Automatically set the width of a gallery to the largest image within it.',
+					),
+				),
 				'title' => array(
 					'title' => 'Show title',
 					'type'  => 'checkbox',
@@ -146,21 +153,14 @@ function goodold_gallery_settings_header() {
  * Order section header.
  */
 function goodold_gallery_order_header() {
-	global $gog_settings, $gog_default_settings;
+	global $gog_settings;
 
-	$items = array();
-	foreach ($gog_settings as $key => $val) {
-		if (strpos($key, 'order_') !== FALSE) {
-			$items[$val] = $key;
-		}
-	}
+	$items = goodold_gallery_order_fields($gog_settings);
 
 	$li = '';
 	if (!empty($items)) {
-		ksort($items);
 		foreach ($items as $key) {
-			$id = str_replace('order_', '', $key);
-			switch ($id) {
+			switch ($key) {
 				case "title":
 					$title = __( "Title" );
 					break;
@@ -171,7 +171,7 @@ function goodold_gallery_order_header() {
 					$title = __( "Image" );
 					break;
 			}
-			$li .= "\t" . '<li id="' . $id . '"><i class="icon-move"></i> ' . $title . '</li>' . "\n";
+			$li .= "\t" . '<li id="' . $key . '"><i class="icon-move"></i> ' . $title . '</li>' . "\n";
 		}
 	}
 	else {
@@ -222,9 +222,12 @@ function goodold_gallery_settings_validate($input) {
 		$plugin = goodold_gallery_load_plugin( array( 'plugin' => $input['plugin'] ) );
 		$input += $plugin['settings'];
 	}
-	else {
-		$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';
-		$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
-	}
+
+	// @TODO: Fix validation for numeric fields in plugins
+	// else {
+	// 	$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';
+	// 	$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
+	// }
+
 	return $input;
 }
