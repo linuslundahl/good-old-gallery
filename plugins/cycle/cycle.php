@@ -34,10 +34,10 @@ function goodold_gallery_cycle_settings_form() {
 					'type'  => 'dropdown',
 					'args'  => array(
 						'items' => array(
+							'' => '- Select animation -',
 							'fade' => 'Fade',
 							'scrollHorz' => 'Horizontal scroll',
 							'scrollVert' => 'Vertical scroll',
-							// 'none' => 'None (Standard WP gallery)',
 						),
 						'desc' => 'Animation that should be used.',
 					),

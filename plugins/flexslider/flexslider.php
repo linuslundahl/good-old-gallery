@@ -46,9 +46,9 @@ function goodold_gallery_flexslider_settings_form() {
 					'type'  => 'dropdown',
 					'args'  => array(
 						'items' => array(
+							'' => '- Select animation -',
 							'fade' => 'Fade',
 							'slide' => 'Slide',
-							// 'none' => 'None (Standard WP gallery)',
 						),
 						'desc' => 'Animation that should be used.',
 					),

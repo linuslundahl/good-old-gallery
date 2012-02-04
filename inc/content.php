@@ -98,14 +98,23 @@ class GoodOldGallery {
 			echo '<p>' . __( 'Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the page/post in HTML mode.' ) . '</p>';
 			echo '<p>' . __( "To generate a shortcode with custom variables, click on the 'Add an Image' icon on a page or a post, then click the 'Good Old Gallery' tab." ) . '</p>';
 			echo '</span>';
+
 			$attachments = get_children( array(
 				'post_parent'			=> $_GET['post']
 			) );
 
-		foreach ( $attachments as $gallery_id => $attachment ) {
-			echo wp_get_attachment_image($gallery_id, 'thumbnail', false) . "\n";
-			echo __( 'Attachment ID: ' ) . $attachment->ID;
-		}
+			if ( $attachments ) {
+				echo '<h4>' . __( 'Gallery overview' ) . '</h4>' . "\n";
+				echo '<ul class="attachments">' . "\n";
+				foreach ( $attachments as $gallery_id => $attachment ) {
+					echo '<li class="submitbox">' . "\n";
+					echo '<div class="image">' . wp_get_attachment_image($gallery_id, 'thumbnail', false) . '</div>' . "\n";
+					echo '<div class="id">' . __( 'Attachment ID: ' ) . $attachment->ID . '</div>' . "\n";
+					echo "<a href='" . wp_nonce_url( "post.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' class='submitdelete deletion'>" . __( 'Delete Permanently' ) . '</a>' . "\n";
+					echo '</li>' . "\n";
+				}
+				echo '</ul>' . "\n";
+			}
 		}
 	}
 

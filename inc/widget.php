@@ -41,9 +41,16 @@ class GoodOldGalleryWidget extends WP_Widget {
 					if ( $value ) {
 						$settings .= $key . '="' . $value . '" ';
 					}
+					else if ( $value === NULL ) {
+						$settings .= $key . '="false" ';
+					}
+					else if ( $value === '' ) {
+						// Print nothing
+					}
 					else {
 						$settings .= $key . '="false" ';
 					}
+
 					$settings = str_replace('"on"', '"true"', $settings);
 				}
 			}
@@ -71,8 +78,6 @@ class GoodOldGalleryWidget extends WP_Widget {
 				}
 			}
 		}
-
-		error_log(var_export($instance, TRUE));
 
 		return $instance;
 	}

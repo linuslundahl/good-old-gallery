@@ -97,7 +97,7 @@ function goodold_gallery_media_process() {
 			<p>
 				<label for="theme" title="<?php echo __( 'Select theme' ); ?>" style="line-height:25px;"><?php echo __( 'Theme' ); ?>:</label>
 				<select id="theme" name="Theme">
-					<option value="">Select theme</option>
+					<option value="">- Select theme -</option>
 					<?php echo $theme_options; ?>
 				</select>
 			</p>
@@ -106,7 +106,7 @@ function goodold_gallery_media_process() {
 			<p>
 				<label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
 				<select id="size" name="size">
-					<option value="">Select size</option>
+					<option value="">- Select size -</option>
 					<option value="thumbnail">Thumbnail</option>
 					<option value="medium">Medium</option>
 					<option value="large">Large</option>
