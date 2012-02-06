@@ -2,6 +2,8 @@
 
 Version 2.0-dev
 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=linuslundahl&url=https://github.com/linuslundahl/good-old-gallery&title=Good Old Gallery&language=&tags=github&category=software)
+
 The version hosted at GitHub is __still in development__ and may contain bugs and unfinished code. __Use at own risk!__
 
 Get the latest stable version from [wordpress.org](http://wordpress.org/extend/plugins/good-old-gallery/).
