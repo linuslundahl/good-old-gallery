@@ -69,7 +69,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	$ret = '';
-	if ( $animation == 'none' ) {
+	if ( $settings['animation']['val'] == 'none' ) {
 		$ret .= do_shortcode( '[gallery id="' . $id . '"]' );
 	}
 	else {
@@ -101,6 +101,11 @@ function goodold_gallery_shortcode($attr) {
 		// Pager class
 		if ( $pager ) {
 			$classes .= " has-pager";
+		}
+
+		// Animation class
+		if ( $settings['animation']['val'] ) {
+			$classes .= " " . $settings['animation']['val'];
 		}
 
 		// Plugin class

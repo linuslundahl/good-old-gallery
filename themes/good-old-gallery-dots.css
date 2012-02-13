@@ -9,8 +9,9 @@
  *
  */
 
-.go-gallery-container.gog-dots { padding: 0; position: relative; }
-.go-gallery-container.gog-dots.has-nav { padding: 0 30px; position: relative; }
+.go-gallery-container.gog-dots { margin: 0 !important; padding: 0 !important; position: relative; }
+.go-gallery-container.gog-dots .slides { margin: 0 !important; padding: 0 !important; }
+.go-gallery-container.gog-dots.has-nav { padding: 0 30px !important; position: relative; }
 .go-gallery-container.gog-dots .slides li { position: relative; }
 
 /** Pager */
@@ -21,7 +22,7 @@
 	border-radius: 8px;
 	background: rgba(128,128,128,.7);
 	left: 20px;
-	padding: 5px 10px;
+	padding: 5px 10px !important;
 	position: absolute;
 	top: 20px;
 	z-index: 999;
@@ -30,18 +31,23 @@
 .go-gallery-container.gog-dots.has-pager .flex-control-nav {
 	left: 50px;
 }
+.go-gallery-container.gog-dots .scrollHorz li,
+.go-gallery-container.gog-dots .scrollVert li,
+.go-gallery-container.gog-dots .slide li {
+	margin: 0px !important;
+	padding: 0px !important;
+}
 .go-gallery-container.gog-dots .pager a,
 .go-gallery-container.gog-dots .flex-control-nav a {
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
 	border-radius: 3px;
 	background: #000;
-	float: left;
 	height: 0;
-	margin: 0 0 0 3px;
+	margin: 0 0 0 3px !important;
 	overflow: hidden;
 	outline: none;
-	padding: 6px 0 0 0;
+	padding: 6px 0 0 0 !important;
 	width: 6px;
 }
 .go-gallery-container.gog-dots .pager a.activeSlide,

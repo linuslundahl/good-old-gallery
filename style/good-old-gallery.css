@@ -8,6 +8,8 @@
 .go-gallery-container ol,
 .go-gallery-container li { list-style: none; margin: 0; padding: 0; }
 
+.go-gallery-container .slides li:nth-child(1n+1) { display: none; }
+
 .go-gallery-container .flex-direction-nav,
 .go-gallery-container .flex-pauseplay { float: left; }
 .go-gallery-container .flex-direction-nav li { float: left; }
