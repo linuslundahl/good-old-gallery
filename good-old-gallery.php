@@ -135,15 +135,18 @@ function goodold_gallery_load_scripts() {
 // Used to load styles and scripts for admin
 function goodold_gallery_load_admin() {
 	global $gog_get;
-	add_thickbox();
+
+	$post_type = get_post_type( $gog_get['post'] );
+	$post_id_type = get_post_type( $gog_get['post_id'] );
 
 	// Load up media upload when administering gallery content
-	if ( get_post_type( $gog_get['post'] ) == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
+	if ( $post_type == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
+		add_thickbox();
 		wp_enqueue_script('media-upload');
 	}
 
 	// Add css and js for admin section
-	if ( get_post_type( $gog_get['post_id'] ) == 'goodoldgallery' || get_post_type( $gog_get['post'] ) == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
+	if ( $post_id_type == 'goodoldgallery' || $post_type == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
 		wp_enqueue_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
 		wp_enqueue_style( 'bootstrap', GOG_PLUGIN_URL . '/style/bootstrap.min.css' );
 	}
@@ -151,29 +154,9 @@ function goodold_gallery_load_admin() {
 	if ( $gog_get['post_type'] == 'goodoldgallery' && ($gog_get['page'] == 'gog_settings' || $gog_get['page'] == 'gog_themes') ) {
 		wp_enqueue_script( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js', 'jquery', false, true );
 		wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
-		add_action( 'admin_head', 'goodold_gallery_flattr_button' );
 	}
 }
-add_action( 'admin_enqueue_scripts', 'goodold_gallery_load_admin' );
-
-// Add flattr button js and admin js
-function goodold_gallery_flattr_button() {
-	echo <<<FLATTR
-
-	<script type="text/javascript">
-	/* <![CDATA[ */
-			(function() {
-				var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-				s.type = 'text/javascript';
-				s.async = true;
-				s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-				t.parentNode.insertBefore(s, t);
-			})();
-	/* ]]> */
-	</script>
-
-FLATTR;
-}
+add_action( 'admin_head', 'goodold_gallery_load_admin' );
 
 /**
  * Returns an array of valid paths
