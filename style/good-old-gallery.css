@@ -11,6 +11,7 @@
 .go-gallery-container .slides li:nth-child(1n+1) { display: none; }
 
 .go-gallery-container .flex-direction-nav,
+
 .go-gallery-container .flex-pauseplay { float: left; }
 .go-gallery-container .flex-direction-nav li { float: left; }
 .go-gallery-container .flex-direction-nav li .prev,
@@ -25,4 +26,4 @@
 .go-gallery-container .description { font-size: .8em; font-style: italic; }
 
 .go-gallery-container img,
-.go-gallery-container a { border: none; display: block; margin: 0; padding: 0; }
+.go-gallery-container a { border: none; display: block; height: 100%; margin: 0; padding: 0; max-width: 100%; }

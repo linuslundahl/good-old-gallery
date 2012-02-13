@@ -51,9 +51,26 @@ function goodold_gallery_settings_init(){
 				),
 				'set_width' => array(
 					'title' => 'Set gallery width',
-					'type'  => 'checkbox',
+					'type'  => 'dropdown',
 					'args'  => array(
-						'label' => 'Automatically set the width of a gallery to the largest image within it.',
+						'items' => array(
+							''         => 'Off',
+							'smallest' => 'Smallest',
+							'largest'  => 'Largest',
+						),
+						'label' => 'Automatically set the width of a gallery to the smallest or largest image within it.',
+					),
+				),
+				'set_height' => array(
+					'title' => 'Set gallery height',
+					'type'  => 'dropdown',
+					'args'  => array(
+						'items' => array(
+							''         => 'Off',
+							'smallest' => 'Smallest',
+							'largest'  => 'Largest',
+						),
+						'label' => 'Automatically set the height of a gallery to the smallest or largest image within it.',
 					),
 				),
 				'title' => array(

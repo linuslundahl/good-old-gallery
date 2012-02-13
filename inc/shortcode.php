@@ -32,12 +32,13 @@ function goodold_gallery_shortcode($attr) {
 		'theme'             => isset($gog_themes['default'])       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
 		'size'              => $set_settings['size'],
 		'set_width'         => isset($set_settings['set_width'])   ? $set_settings['set_width']    : FALSE,
+		'set_height'        => isset($set_settings['set_height'])  ? $set_settings['set_height']   : FALSE,
 		'title'             => isset($set_settings['title'])       ? $set_settings['title']        : FALSE,
 		'description'       => isset($set_settings['description']) ? $set_settings['description']  : FALSE,
 	) + $settings, $attr );
 
 	// Setup Slider settings array
-	$settings = array_slice($attr, 8);
+	$settings = array_slice($attr, 9);
 	foreach( $settings as $key => $setting ) {
 		$settings[$key] = array(
 			'key' => $slider[$key],
@@ -117,6 +118,7 @@ function goodold_gallery_shortcode($attr) {
 
 			// Generate images
 			$width = 0;
+			$height = 0;
 			$images = '';
 			foreach ( $attachments as $gallery_id => $attachment ) {
 				$link = get_post_meta($attachment->ID, "_goodold_gallery_image_link", true);
@@ -161,18 +163,27 @@ function goodold_gallery_shortcode($attr) {
 				// End list item
 				$images .= '</li>' . "\n";
 
-				// Get widest image width
-				$gallery_width = '';
-				if ( $set_width ) {
+				$gallery_style = '';
+				if ( $set_width || $set_height ) {
 					$img_data = wp_get_attachment_image_src( $gallery_id, $size, false );
-					$width = $width < $img_data[1] ? $img_data[1] : $width;
-					$gallery_width = ' style="width: ' . $width . 'px;"';
+					// Get width
+					if ( $set_width ) {
+						$width = goodold_gallery_get_img_size( $set_width, $img_data[1], $width );
+						$gallery_style .= 'width: ' . $width . 'px;';
+					}
+					// Get height
+					if ( $set_height ) {
+						$height = goodold_gallery_get_img_size( $set_height, $img_data[2], $height );
+						$gallery_style .= ' height: ' . $height . 'px;';
+					}
 				}
 
 			}
 
+			$gallery_style = !empty($gallery_style) ? ' style="' . $gallery_style . '"' : '';
+
 			// Begin gallery div and ul
-			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '"' . $gallery_width . '>' . "\n";
+			$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '"' . $gallery_style . '>' . "\n";
 			$ret .= '<div class="go-gallery-inner">' . "\n";
 			$ret .= '<ul class="slides">' . "\n";
 
@@ -240,6 +251,27 @@ function goodold_gallery_order_fields($settings) {
 		foreach ( $items as $val => $key ) {
 			$id = str_replace('order_', '', $key);
 			$ret[] = $id;
+		}
+	}
+
+	return $ret;
+}
+
+/**
+ * Returns largest/smallest image width/height
+ */
+function goodold_gallery_get_img_size($type, $size, $height) {
+	$ret = 0;
+
+	if ( $type == 'largest' ) {
+		$ret = $height < $size ? $size : $height;
+	}
+	else if ( $type == 'smallest' ) {
+		if ( $height === 0 ) {
+			$ret = $size;
+		}
+		else {
+			$ret = $height > $size ? $size : $height;
 		}
 	}
 
