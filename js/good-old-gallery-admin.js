@@ -38,28 +38,30 @@ var $j = jQuery.noConflict();
 		value = "";
 	};
 
-	$('#go-gallery-generator input[type="checkbox"], #go-gallery-generator select').each(function () {
-		$this = $(this);
-		$this.change(getValues);
-	});
+	$(function () {
+		$('#go-gallery-generator input[type="checkbox"], #go-gallery-generator select').each(function () {
+			$this = $(this);
+			$this.change(getValues);
+		});
 
-	$('#go-gallery-generator input[type="text"]').each(function () {
-		$this = $(this);
-		$this.keyup(getValues);
-	});
+		$('#go-gallery-generator input[type="text"]').each(function () {
+			$this = $(this);
+			$this.keyup(getValues);
+		});
 
-	// Settings page
-	showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
-	$('#order').sortable({
-		update : function (event, ui) {
-			var order = $(this).sortable('toArray');
-			$.each(order, function(index) {
-				console.log($('#' + order[index]));
-				$('#order_' + order[index]).val(index+1);
-			});
-			console.log(order);
+		// Settings page
+		showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
+		if ($.isFunction($.fn.sortable)) {
+			$('#order').sortable({
+				update : function (event, ui) {
+					var order = $(this).sortable('toArray');
+					$.each(order, function(index) {
+						$('#order_' + order[index]).val(index+1);
+					});
+				}
+			}).next('table').hide();
 		}
-	}).next('table').hide();
+	});
 }($j));
 
 // Add Flattr button

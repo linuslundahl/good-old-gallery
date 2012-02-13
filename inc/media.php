@@ -212,7 +212,15 @@ function goodold_gallery_build_shortcode($post) {
 	foreach ( $post as $key => $item ) {
 		if ($key != 'gog-shortcode' && $key != 'submit') {
 			if (!empty($item)) {
-				$ret .= ' ' . $key . '="' . $item . '"';
+				if ( is_array($item) ) {
+					$old_item = $item;
+					reset($item);
+					$new_key = key($item);
+					$ret .= $old_item[$new_key] ? ' ' . $new_key . '="' . $old_item[$new_key] . '"' : '';
+				}
+				else {
+					$ret .= $item ? ' ' . $key . '="' . $item . '"' : '';
+				}
 			}
 		}
 	}
