@@ -175,7 +175,7 @@ function goodold_gallery_order_header() {
 	$items = goodold_gallery_order_fields($gog_settings);
 
 	$li = '';
-	if (!empty($items)) {
+	if (!empty($items) && count($items) == 3) {
 		foreach ($items as $key) {
 			switch ($key) {
 				case "title":
