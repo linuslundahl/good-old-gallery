@@ -9,8 +9,7 @@
  *
  */
 
-.go-gallery-container.gog-dots { margin: 0 !important; padding: 0 !important; position: relative; }
-.go-gallery-container.gog-dots .slides { margin: 0 !important; padding: 0 !important; }
+.go-gallery-container.gog-dots { margin: 0 !important; padding: 0 !important; overflow: hidden; position: relative; }
 .go-gallery-container.gog-dots.has-nav { padding: 0 30px !important; position: relative; }
 .go-gallery-container.gog-dots .slides li { position: relative; }
 
@@ -37,23 +36,28 @@
 	margin: 0px !important;
 	padding: 0px !important;
 }
+.go-gallery-container.gog-dots .pager li,
+.go-gallery-container.gog-dots .flex-control-nav li {
+	margin: 0;
+}
 .go-gallery-container.gog-dots .pager a,
 .go-gallery-container.gog-dots .flex-control-nav a {
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
 	border-radius: 3px;
 	background: #000;
+	float: left;
 	height: 0;
-	margin: 0 0 0 3px !important;
+	margin: 0 0 0 6px;
 	overflow: hidden;
 	outline: none;
-	padding: 6px 0 0 0 !important;
+	padding: 6px 0 0 0;
 	width: 6px;
 }
 .go-gallery-container.gog-dots .pager a.activeSlide,
 .go-gallery-container.gog-dots .flex-control-nav a.active { background: #fff;}
 .go-gallery-container.gog-dots .pager a:first-child,
-.go-gallery-container.gog-dots .flex-control-nav li:first-child { margin: 0; }
+.go-gallery-container.gog-dots .flex-control-nav li:first-child a { margin: 0; }
 /* end Pager */
 
 /** Navigation */
