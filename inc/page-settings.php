@@ -246,5 +246,7 @@ function goodold_gallery_settings_validate($input) {
 	// 	$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
 	// }
 
+	unset($input['save']);
+
 	return $input;
 }

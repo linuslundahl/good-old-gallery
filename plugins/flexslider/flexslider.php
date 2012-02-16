@@ -193,8 +193,8 @@ function goodold_gallery_flexslider_shortcode_extras( $settings ) {
 	extract($settings);
 
 	$ret = array(
-		'navigation' => !empty($settings['directionnav']['val']) ? TRUE : '',
-		'pager' => !empty($settings['controlnav']['val']) ? TRUE : '',
+		'navigation' => $settings['directionnav']['val'] == 'true' ? TRUE : FALSE,
+		'pager' => $settings['controlnav']['val'] == 'true' ? TRUE : FALSE,
 		'script_extras' => '',
 		'settings_extras' => array(
 			'controlscontainer' => array(

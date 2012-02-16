@@ -118,7 +118,7 @@ function goodold_gallery_cycle_shortcode_extras( $settings ) {
 	extract($settings);
 
 	// NAVIGATION
-	if ( $settings['navigation']['val'] ) {
+	if ( $settings['navigation']['val'] == 'true' ) {
 		$ret['navigation'] = '<div class="nav">' . "\n";
 		$ret['navigation'] .= '<span class="prev">' . $settings['prev']['val'] . '</span><span class="next">' . $settings['next']['val'] . '</span>' . "\n";
 		$ret['navigation'] .= '</div>' . "\n";
@@ -127,7 +127,7 @@ function goodold_gallery_cycle_shortcode_extras( $settings ) {
 	}
 
 	// PAGER
-	if ( $settings['pager']['val'] ) {
+	if ( $settings['pager']['val'] == 'true' ) {
 		$ret['pager'] .= '<div class="pager"></div>' . "\n";
 		$ret['script_extras'] .= 'pager: "#go-gallery-' . $id . '-' . $i . ' .pager",';
 	}

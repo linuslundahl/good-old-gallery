@@ -116,8 +116,10 @@ function goodold_gallery_input_password( $args ) {
 function goodold_gallery_input_checkbox( $args ) {
 	extract($args);
 
-	$checked = $default ? ' checked="checked"' : '';
-	echo "<input id=\"$id\" name=\"$name\" type=\"checkbox\"$checked />";
+
+	$checked = checked( 'true', $default, false );
+	echo "<input value=\"false\" name=\"$name\" type=\"hidden\" />";
+	echo "<input id=\"$id\" value=\"true\" name=\"$name\" type=\"checkbox\"$checked />";
 	echo isset($label) ? '<label for="' . $id . '"> ' . __ ( $label ) . '</label>' : '';
 }
 
