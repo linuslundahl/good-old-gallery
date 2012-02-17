@@ -2,12 +2,12 @@
 
 /** @ignore */
 if ($_SERVER['PHP_SELF'] == '/wp-admin/network/plugins.php') {
-  require_once('../../wp-load.php');
-  require_once('../includes/admin.php');
+	require_once('../../wp-load.php');
+	require_once('../includes/admin.php');
 }
 else {
-  require_once('../wp-load.php');
-  require_once('includes/admin.php');
+	require_once('../wp-load.php');
+	require_once('includes/admin.php');
 }
 
 /**
@@ -188,7 +188,7 @@ function goodold_gallery_upload_button($title, $type) {
 
 
 /**
- * Adds Good Old Gallery media button. (Can't get this working properly yet)
+ * Adds Good Old Gallery media button to posts.
  */
 function goodold_gallery_media_button($context) {
 	$post = wp_get_single_post();
@@ -196,12 +196,23 @@ function goodold_gallery_media_button($context) {
 	$button = ' %s';
 	if (get_post_type() != 'goodoldgallery') {
 		$image = GOG_PLUGIN_URL . '/img/good-old-gallery-small.png';
-		$button .= '<a href="media-upload.php?post_id=' . $post->ID . '&type=image&tab=gogallery" id="add_gogallery" class="thickbox" title="Insert ' . GOG_PLUGIN_NAME . '"><img src="' . $image . '" /></a>';
+		$button .= '<a href="media-upload.php?post_id=' . $post->ID . '&tab=gogallery&TB_iframe=1" id="add_gogallery" class="thickbox add_media" title="Insert ' . GOG_PLUGIN_NAME . '"><img src="' . $image . '" /></a>';
 	}
 
 	 return sprintf($context, $button);
 }
-// add_filter('media_buttons_context', 'goodold_gallery_media_button');
+add_filter( 'media_buttons_context', 'goodold_gallery_media_button' );
+
+/**
+ * Delete attachments from gallery posts with ajax.
+ */
+function goodold_gallery_delete_attachment( $post ) {
+	if( wp_delete_attachment( $_POST['att_ID'], true )) {
+		echo sprintf(__( 'Attachment ID: %s has been deleted.' ), $_POST['att_ID']);
+	}
+	exit();
+}
+add_filter( 'wp_ajax_delete_attachment', 'goodold_gallery_delete_attachment' );
 
 /**
  * Helper function that builds a shortcode for TinyMCE

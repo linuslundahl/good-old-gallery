@@ -143,6 +143,7 @@ function goodold_gallery_load_admin() {
 	if ( $post_type == 'goodoldgallery' || $gog_get['post_type'] == 'goodoldgallery' ) {
 		add_thickbox();
 		wp_enqueue_script('media-upload');
+		wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
 	}
 
 	// Add css and js for admin section

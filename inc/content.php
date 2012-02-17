@@ -100,17 +100,26 @@ class GoodOldGallery {
 			echo '</span>';
 
 			$attachments = get_children( array(
-				'post_parent'			=> $_GET['post']
+				'post_parent' => $_GET['post']
 			) );
 
 			if ( $attachments ) {
 				echo '<h4>' . __( 'Gallery overview' ) . '</h4>' . "\n";
 				echo '<ul class="attachments">' . "\n";
 				foreach ( $attachments as $gallery_id => $attachment ) {
-					echo '<li class="submitbox">' . "\n";
+					echo '<li>' . "\n";
 					echo '<div class="image">' . wp_get_attachment_image($gallery_id, 'thumbnail', false) . '</div>' . "\n";
-					echo '<div class="id">' . __( 'Attachment ID: ' ) . $attachment->ID . '</div>' . "\n";
-					echo "<a href='" . wp_nonce_url( "post.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' class='submitdelete deletion'>" . __( 'Delete Permanently' ) . '</a>' . "\n";
+					echo '<div class="id">' . sprintf(__( 'Attachment ID: %s ' ), $attachment->ID) . '</div>' . "\n";
+
+					$id = $attachment->ID;
+					$post = get_post( $id );
+					$filename = esc_html( basename( $post->guid ) );
+
+					echo "<a href='#' class='del-link' onclick=\"document.getElementById('del_attachment_$id').style.display='block';return false;\">" . __( 'Delete' ) . "</a>
+						<div id='del_attachment_$id' class='del-attachment' style='display:none;'>" . sprintf( __( 'You are about to delete <strong>%s</strong>.' ), $filename ) . "
+						<a href='" . wp_nonce_url( GOG_PLUGIN_URL . "/inc/delete.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' data-id='$attachment->ID' data-nonce='" . wp_create_nonce( 'goodold_gallery_delete_attachment' ) . "' class='submitdelete button'>" . __( 'Continue' ) . '</a>' . "
+						<a href='#' class='button' onclick=\"this.parentNode.style.display='none';return false;\">" . __( 'Cancel' ) . "</a>
+						</div>" . "\n";
 					echo '</li>' . "\n";
 				}
 				echo '</ul>' . "\n";

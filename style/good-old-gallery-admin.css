@@ -10,6 +10,33 @@
 .describe .wp-post-thumbnail,
 #normal-sortables { display: none !important; }
 
+/* Attachments on Add/Edit Gallery page */
+#gog_sectionid .attachments li {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #dfdfdf;
+	overflow: hidden;
+	padding: 10px;
+}
+#gog_sectionid .attachments li.deleted {
+	background-color: lightYellow;
+	border-color: #E6DB55;
+}
+#gog_sectionid .attachments li .image {
+	float: left;
+	margin-right: 10px;
+}
+#gog_sectionid .attachments li .del-link {
+	color: red;
+	border-bottom: 1px solid red;
+	text-decoration: none;
+}
+#gog_sectionid .attachments li .del-link:hover {
+	background: red;
+	color: #fff;
+}
 #gog_sectionid .inside { padding: 0 8px; }
 #add_image img { vertical-align: text-bottom; }
 
@@ -41,23 +68,6 @@ h3.hndle { cursor: default !important; }
 
 div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 
-
-/* Attachments on Add/Edit Gallery page */
-#gog_sectionid .attachments li {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  background: #fff;
-  border: 1px solid #dfdfdf;
-  overflow: hidden;
-  padding: 10px;
-}
-#gog_sectionid .attachments li .image {
-  float: left;
-  margin-right: 10px;
-}
-
-
 /* Plugin info in settings */
 .goodoldgallery_page_gog_settings .plugin-info { margin: 0 0 10px 0; }
 .js.goodoldgallery_page_gog_settings .plugin-info { display: none; margin: 0 }
@@ -69,26 +79,26 @@ div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 .goodoldgallery_page_gog_settings #order { display: none; }
 .js.goodoldgallery_page_gog_settings #order { display: block; }
 .js.goodoldgallery_page_gog_settings #order li {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  background: #ddd;
-  color: #999;
-  cursor: move;
-  font-weight: bold;
-  padding: 5px 10px;
-  margin: 5px 10px;
-  width: 400px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background: #ddd;
+	color: #999;
+	cursor: move;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin: 5px 10px;
+	width: 400px;
 }
 .js.goodoldgallery_page_gog_settings #order li i {
-  background-image:url(../img/glyphicons-halflings-off.png);
+	background-image:url(../img/glyphicons-halflings-off.png);
 }
 .js.goodoldgallery_page_gog_settings #order li:hover {
-  background: #ccc;
-  color: #333;
+	background: #ccc;
+	color: #333;
 }
 .js.goodoldgallery_page_gog_settings #order li:hover i {
-  background-image:url(../img/glyphicons-halflings.png);
+	background-image:url(../img/glyphicons-halflings.png);
 }
 
 /* Themes settings */

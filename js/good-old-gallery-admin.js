@@ -76,6 +76,29 @@ var $j = jQuery.noConflict();
 			$this.keyup(getValues);
 		});
 
+		$('a.submitdelete').each(function () {
+			var $this = $(this).click(function () {
+					attID = $this.attr('data-id');
+
+					$.ajax({
+							type: 'post',
+							url: '/wp-admin/admin-ajax.php',
+							data: {
+									action: 'delete_attachment',
+									att_ID: attID,
+									_ajax_nonce: $this.attr('data-nonce'),
+									post_type: 'attachment'
+							},
+							success: function (data, textStatus, jqXHR) {
+									console.log(data, textStatus, jqXHR);
+									$this.parents('li').html(data).addClass('deleted');
+							}
+					});
+
+					return false;
+			});
+		});
+
 		// Themes page
 		if (body.hasClass('goodoldgallery_page_gog_themes')) {
 			showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
