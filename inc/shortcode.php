@@ -47,7 +47,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	// Extract GOG settings to vars
-	extract(array_slice($attr, 0, 8));
+	extract(array_slice($attr, 0, 9));
 
 	// Use post_id if no id is set in shortcode.
 	$id = ( !$id && $post->ID ) ? $post->ID : $id;
@@ -135,13 +135,15 @@ function goodold_gallery_shortcode($attr) {
 
 					// Add title
 					if ( $title && $attachment->post_title ) {
-						$order['title'] = '<span class="title">' . $attachment->post_title . '</span>' . "\n";
+						$order['title'] = '<div class="title">' . $attachment->post_title . '</div>' . "\n";
 					}
 
 					// Add description
 					if ( $description && $attachment->post_content ) {
-						$order['desc'] = '<span class="description">' . $attachment->post_content . '</span>' . "\n";
+						$order['desc'] = '<div class="description">' . $attachment->post_content . '</div>' . "\n";
 					}
+
+				$order['image'] .= '<div class="image">';
 
 				// Start link
 				if ( $link ) {
@@ -155,6 +157,8 @@ function goodold_gallery_shortcode($attr) {
 				if ( $link ) {
 					$order['image'] .= '</a>' . "\n";
 				}
+
+				$order['image'] .= '</div>';
 
 				foreach ( $order as $field ) {
 					$images .= !is_numeric($field) ? $field : '';
@@ -222,7 +226,7 @@ function goodold_gallery_shortcode($attr) {
 			$script .= $script_extras;
 
 			// Finish script
-			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); });</script>' . "\n";
+			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $(function () { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); }); });</script>' . "\n";
 
 			// End gallery div
 			$ret .= '</div>' . "\n";

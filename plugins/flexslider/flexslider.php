@@ -13,24 +13,24 @@ function goodold_gallery_flexslider_setup() {
 
 function goodold_gallery_flexslider_settings() {
 	return array(
-		'animation'         => "slide",
-		'slideshow'         => TRUE,
+		'animation'         => 'slide',
+		'slideshow'         => 'true',
 		'slideshowSpeed'    => 7000,
 		'animationDuration' => 600,
-		'directionNav'      => TRUE,
-		'controlNav'        => TRUE,
-		'keyboardNav'       => TRUE,
-		'touchSwipe'        => TRUE,
-		'prevText'          => "Prev",
-		'nextText'          => "Next",
-		'pausePlay'         => FALSE,
+		'directionNav'      => 'true',
+		'controlNav'        => 'true',
+		'keyboardNav'       => 'true',
+		'touchSwipe'        => 'true',
+		'prevText'          => 'Prev',
+		'nextText'          => 'Next',
+		'pausePlay'         => 'false',
 		'pauseText'         => 'Pause',
 		'playText'          => 'Play',
-		'randomize'         => FALSE,
-		'slideToStart'      => 0,
-		'animationLoop'     => TRUE,
-		'pauseOnAction'     => TRUE,
-		'pauseOnHover'      => FALSE,
+		'randomize'         => 'false',
+		'slideToStart'      => 'false',
+		'animationLoop'     => 'true',
+		'pauseOnAction'     => 'true',
+		'pauseOnHover'      => 'false',
 	);
 }
 

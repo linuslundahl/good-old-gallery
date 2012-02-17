@@ -4,18 +4,18 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 1.13
+Stable tag: 2.0
 
-Good Old Gallery helps you use galleries on multiple pages and posts, it also uses Flexslider for sliding and fading transitions.
+Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
 == Description ==
 
-Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider and jQuery Support support and Widgets.
+Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider and jQuery Cycle support and Widgets.
 
 = Main features =
 
 * Uses built in WP gallery functionality.
-* [Flexslider](http://flex.madebymufffin.com/).
+* [Flexslider](http://flex.madebymufffin.com/) or [jQuert Cycle](http://jquery.malsup.com/cycle/).
 * Shortcode generator.
 * Widgets.
 * Stylesheet theme support, per gallery.
@@ -75,28 +75,24 @@ You are also given a new widget called *Good Old Gallery*, use it in regions whe
 
 == Frequently Asked Questions ==
 
-= What's with Good Old? =
-
-This plugin was actually conceived when the company I work for [Good Old](http://goodold.se/) was redoing their site, I made this plugin to help maintain galleries and specifically galleries in widgets.
-
-Then I figured that this plugin is probably something the general WP user could have use for, so I decided to further develop it on my spare time.
-
-And as you've probably figured out by now, the name Good Old comes from the company I work for.
+The FAQ is currently empty.
 
 == Screenshots ==
 
 1. Galleries listing page
-2. Add new gallery page
+2. Edit gallery page
 3. Default settings page
 4. Gallery shortcode generator
 5. Widget settings
 
 == Changelog ==
 
-= 2.0-dev =
-* !! This is still under development, a lot of functionality is still not completed. !!
-* Added Flexslider support too. 
-* Works with WordPress 3.3
+= 2.0 =
+* Added Flexslider support too.
+* Uses the Settings API.
+* Better shortcode genreator.
+* Attachments overview and quick delete attachment on gallery posts.
+* Works with WordPress 3.3.
 * Checks posts and widgets for Good Old Galleries, if none are found no JS or CSS is added.
 
 = 1.13 =
@@ -120,7 +116,7 @@ And as you've probably figured out by now, the name Good Old comes from the comp
 
 = 2.0 =
 !! WARNING !!  
-This update changes the shortcode markup since Flexslider is now used instead of jQuery Cycle, *if this breaks anything on your installation stay on version 1.12.*  
+The plugin now comes with both Flexslider and jQuery Cycle support, if you've been using the plugin for long time it might be best to stick with jQuery Cycle.  
 Once the plugin is updated please *re-save the settings page.*
 
 = 1.12 =

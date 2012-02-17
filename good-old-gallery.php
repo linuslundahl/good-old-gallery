@@ -6,7 +6,7 @@
  * Plugin URI: http://unwi.se/good-old-gallery
  * Description: Good Old Gallery is a WordPress plugin that helps you upload image galleries that can be used on more than one page/post, it utilizes the built in gallery functionality in WP. Other features include built in Flexslider and jQuery Cycle support and Widgets.
  * Author: Linus Lundahl
- * Version: 2.0-dev
+ * Version: 2.0
  * Author URI: http://unwi.se/
  *
  */
@@ -32,14 +32,15 @@ $gog_themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
 
 // Setup default plugin settings and themes
 $gog_default_settings = array(
-	'size'              => 'full',
-	'set_width'         => 1,
-	'title'             => 0,
-	'description'       => 0,
-	'plugin'            => 'cycle',
-	'order_title'       => 1,
-	'order_desc'        => 2,
-	'order_image'       => 3,
+	'size'        => 'full',
+	'set_width'   => '',
+	'set_height'  => '',
+	'title'       => 'false',
+	'description' => 'false',
+	'plugin'      => 'cycle',
+	'order_title' => 1,
+	'order_desc'  => 2,
+	'order_image' => 3,
 );
 
 if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {

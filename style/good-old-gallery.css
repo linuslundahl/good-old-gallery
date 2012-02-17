@@ -24,8 +24,7 @@
 
 /* Cycle specific */
 .go-gallery-container.cycle,
-.go-gallery-container.cycle .go-gallery { clear: both; float: left; }
-.go-gallery-container.cycle .slides { float: left; width: 100%; }
-
-.go-gallery-container.cycle img,
-.go-gallery-container.cycle a { border: none; display: block; height: 100%; margin: 0; padding: 0; max-width: 100%; }
+.go-gallery-container.cycle .go-gallery-inner { display: block; overflow: hidden; }
+.go-gallery-container.cycle .slides { display: block; }
+.go-gallery-container.cycle .slides li { margin: 0; }
+.go-gallery-container.cycle img { max-width: 100%; }

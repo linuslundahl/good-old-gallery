@@ -1,6 +1,6 @@
 # Good Old Gallery
 
-Version 2.0-dev
+Version 2.0
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=linuslundahl&url=https://github.com/linuslundahl/good-old-gallery&title=Good Old Gallery&language=&tags=github&category=software)
 
@@ -24,6 +24,4 @@ It's now possible to sort the Title, Description and Image output.
 What's left?
 ------------
 
-I need to go through and confirm that the widgets are implemented correctly.  
-The Edit Gallery page needs a facelift.  
-I need to update the included theme to support new markup + Make the default theme support both Cycle and Flexslider or at least make a version for Cycle.
+Not much, I think it's pretty much ready for release on wp.org.

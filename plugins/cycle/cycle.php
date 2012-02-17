@@ -16,12 +16,10 @@ function goodold_gallery_cycle_settings() {
 		'fx'          => 'fade',
 		'speed'       => 500,
 		'timeout'     => 10000,
-		'title'       => 0,
-		'description' => 0,
-		'navigation'  => 0,
-		'pager'       => 0,
+		'navigation'  => 'true',
+		'pager'       => 'true',
 		'prev'        => 'prev',
-		'next'        => 'next'
+		'next'        => 'next',
 	);
 }
 
@@ -57,20 +55,6 @@ function goodold_gallery_cycle_settings_form() {
 					'type'  => 'text',
 					'args'  => array(
 						'size' => 4,
-					),
-				),
-				'title' => array(
-					'title' => 'Show title',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Select if the title for each image should be displayed.',
-					),
-				),
-				'description' => array(
-					'title' => 'Show description',
-					'type'  => 'checkbox',
-					'args'  => array(
-						'label' => 'Select if the description for each image should be displayed.',
 					),
 				),
 				'pager' => array(
