@@ -1,20 +1,40 @@
 var $j = jQuery.noConflict();
 
 (function ($) {
-	var $this, showHide, getValues, value = "", link, confirm = 1;
+	var $this, showHide, showHideSelect, getValues, value = "";
 
 	// Show/Hide div
-	showHide = function (div, title, alt, id) {
-		div.hide();
-		link = $('<a />').attr('href', '#').addClass(id).text(title).insertBefore(div);
+	showHide = function ($div, title, alt, id) {
+		var link;
+
+		$div.hide();
+		link = $('<a />').attr('href', '#').addClass(id).text(title).insertBefore($div);
 		link.click(function (e) {
-			div.slideToggle().toggleClass('open');
-			if (div.hasClass('open')) {
+			$div.slideToggle().toggleClass('open');
+			if ($div.hasClass('open')) {
 				link.text(alt);
 			} else {
 				link.text(title);
 			}
 			e.preventDefault();
+		});
+	};
+
+	// Show/Hide info via dropdown
+	showHideSelect = function ($select) {
+		var val = $select.val();
+
+		if (val.length) {
+			$('.plugin-info.' + val).show();
+		}
+
+		$select.change(function () {
+			val = $select.val();
+			console.log(1, val);
+			$('.plugin-info').slideUp();
+			if (val.length) {
+				$('.plugin-info.' + val).slideDown();
+			}
 		});
 	};
 
@@ -31,6 +51,8 @@ var $j = jQuery.noConflict();
 			var $this = $(this);
 			if ($this.is(':checked')) {
 				value += ' ' + $this.attr('id') + '="' + $this.val() + '"';
+			} else {
+				value += ' ' + $this.attr('id') + '="' + $this.prev().val() + '"';
 			}
 		});
 
@@ -39,6 +61,11 @@ var $j = jQuery.noConflict();
 	};
 
 	$(function () {
+		var body = $('body');
+
+		getValues();
+
+		// Shortcode generator
 		$('#go-gallery-generator input[type="checkbox"], #go-gallery-generator select').each(function () {
 			$this = $(this);
 			$this.change(getValues);
@@ -49,17 +76,26 @@ var $j = jQuery.noConflict();
 			$this.keyup(getValues);
 		});
 
+		// Themes page
+		if (body.hasClass('goodoldgallery_page_gog_themes')) {
+			showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
+		}
+
 		// Settings page
-		showHide($('.goodoldgallery_page_gog_themes .themes-available'), 'View installed themes', 'Hide installed themes', 'themes-link');
-		if ($.isFunction($.fn.sortable)) {
-			$('#order').sortable({
-				update : function (event, ui) {
-					var order = $(this).sortable('toArray');
-					$.each(order, function(index) {
-						$('#order_' + order[index]).val(index+1);
-					});
-				}
-			}).next('table').hide();
+		if (body.hasClass('goodoldgallery_page_gog_settings')) {
+			showHideSelect($('select#plugin'));
+
+			// Make fields sortable
+			if ($.isFunction($.fn.sortable)) {
+				$('#order').sortable({
+					update : function (event, ui) {
+						var order = $(this).sortable('toArray');
+						$.each(order, function(index) {
+							$('#order_' + order[index]).val(index+1);
+						});
+					}
+				}).next('table').hide();
+			}
 		}
 	});
 }($j));

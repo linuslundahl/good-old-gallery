@@ -2,9 +2,12 @@
 
 function goodold_gallery_cycle_setup() {
 	return array(
-		'title' => 'jQuery Cycle',
-		'files' => array('jquery.cycle.all.min.js'),
-		'class' => '.slides',
+		'title'   => 'jQuery Cycle',
+		'version' => '2.9999.2',
+		'files'   => array('jquery.cycle.all.min.js'),
+		'class'   => '.slides',
+		'url'     => 'http://jquery.malsup.com/cycle/',
+		'info'    => 'The jQuery Cycle Plugin is a slideshow plugin that supports many different types of transition effects. It supports pause-on-hover, auto-stop, auto-fit, before/after callbacks, click triggers and much more.',
 	);
 }
 

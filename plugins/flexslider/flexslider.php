@@ -2,9 +2,12 @@
 
 function goodold_gallery_flexslider_setup() {
 	return array(
-		'title' => 'Flexslider',
-		'files' => array('jquery.flexslider-min.js'),
-		'class' => '.go-gallery-inner',
+		'title'   => 'Flexslider',
+		'version' => '1.8',
+		'files'   => array('jquery.flexslider-min.js'),
+		'class'   => '.go-gallery-inner',
+		'url'     => 'http://flex.madebymufffin.com/',
+		'info'    => 'An awesome, fully responsive jQuery slider plugin.',
 	);
 }
 

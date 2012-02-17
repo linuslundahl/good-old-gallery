@@ -4,7 +4,7 @@
  * Finds available plugins.
  * @return Array
  */
-function goodold_gallery_get_plugins( $select = FALSE ) {
+function goodold_gallery_get_plugins( $select = FALSE, $full = FALSE ) {
 	$plugins = array();
 	// $plugin_path = get_stylesheet_directory();
 	// $plugin_url = get_bloginfo( 'template_url' );
@@ -24,7 +24,12 @@ function goodold_gallery_get_plugins( $select = FALSE ) {
 					include_once($path . '/' . $filename . '/' . $filename . '.php');
 					if ( function_exists('goodold_gallery_' . $filename . '_setup') ) {
 						$settings = call_user_func('goodold_gallery_' . $filename . '_setup');
-						$plugins[$filename] = $settings['title'];
+						if ( $full ) {
+							$plugins[$filename] = $settings;
+						}
+						else {
+							$plugins[$filename] = $settings['title'];
+						}
 					}
 				}
 			}

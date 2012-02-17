@@ -26,8 +26,16 @@ function goodold_gallery_settings_init(){
 
 	// Get themes for select dropdown
 	$plugin_options = array(NULL => __( 'No plugin' ));
-	$plugin_options += goodold_gallery_get_plugins();
-
+	$plugin_settings = goodold_gallery_get_plugins( FALSE, TRUE );
+	$plugin_info = '';
+	foreach ( $plugin_settings as $plugin => $settings ) {
+		$plugin_options[$plugin] = $settings['title'];
+		$plugin_info .= '<div class="plugin-info ' . $plugin . '">';
+		$plugin_info .= '<h4>' . $settings['title'] . ' <span class="version">' . sprintf(__( 'Version: %s' ), $settings['version']) . '</span></h4>';
+		$plugin_info .= '<p><a href="' . $settings['url'] . '">' . $settings['url'] . '</a></p>';
+		$plugin_info .= '<p>' . __( $settings['info'] ) . '</p>';
+		$plugin_info .= '</div>';
+	}
 
 	// Setup form
 	$form = array(
@@ -140,6 +148,12 @@ function goodold_gallery_settings_init(){
 					'args'  => array(
 						'items' => $plugin_options,
 						'desc' => 'Select what slider plugin that should be used.',
+					),
+				),
+				'info' => array(
+					'type' => 'markup',
+					'args' => array(
+						'desc' => $plugin_info,
 					),
 				),
 			),

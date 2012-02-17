@@ -27,11 +27,13 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
 					'name'    => GOG_PLUGIN_SHORT . '_' . $name . '[' . $id . ']',
 				);
 
+				$title = isset($field['title']) ? '<label for="' . $id . '">' . __( $field['title'] ) .'</label>' : '';
+
 				add_settings_field(
 					// $id
 					$id,
 					// $title
-					'<label for="' . $id . '">' . __( $field['title'] ) .'</label>',
+					$title,
 					// $callback (input type callback)
 					'goodold_gallery_input_' . $field['type'],
 					// $page
@@ -79,6 +81,13 @@ function goodold_gallery_notices() {
 	settings_errors();
 }
 add_action( 'admin_notices', 'goodold_gallery_notices' );
+
+
+function goodold_gallery_input_markup( $args ) {
+	extract($args);
+
+	echo isset($desc) ? $desc : '';
+}
 
 function goodold_gallery_input_dropdown( $args ) {
 	extract($args);

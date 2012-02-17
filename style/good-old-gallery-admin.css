@@ -41,6 +41,7 @@ h3.hndle { cursor: default !important; }
 
 div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 
+
 /* Attachments on Add/Edit Gallery page */
 #gog_sectionid .attachments li {
   -webkit-border-radius: 4px;
@@ -56,6 +57,13 @@ div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
   margin-right: 10px;
 }
 
+
+/* Plugin info in settings */
+.goodoldgallery_page_gog_settings .plugin-info { margin: 0 0 10px 0; }
+.js.goodoldgallery_page_gog_settings .plugin-info { display: none; margin: 0 }
+.js.goodoldgallery_page_gog_settings .plugin-info h4,
+.js.goodoldgallery_page_gog_settings .plugin-info p { margin: .3em 0; }
+.js.goodoldgallery_page_gog_settings .plugin-info .version { font-size: 10px; font-weight: normal; }
 
 /* Order fields in Settings */
 .goodoldgallery_page_gog_settings #order { display: none; }
