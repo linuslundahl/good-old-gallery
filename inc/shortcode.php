@@ -15,6 +15,7 @@ function goodold_gallery_shortcode($attr) {
 		$slider[$new_key] = $key;
 	}
 
+	$settings = array();
 	foreach( $slider as $key => $large ) {
 		$settings[$key] = array(
 			'key' => $large,
@@ -31,10 +32,10 @@ function goodold_gallery_shortcode($attr) {
 		'exclude'           => array(),
 		'theme'             => isset($gog_themes['default'])       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
 		'size'              => $set_settings['size'],
-		'set_width'         => isset($set_settings['set_width'])   ? $set_settings['set_width']    : FALSE,
-		'set_height'        => isset($set_settings['set_height'])  ? $set_settings['set_height']   : FALSE,
-		'title'             => isset($set_settings['title'])       ? $set_settings['title']        : FALSE,
-		'description'       => isset($set_settings['description']) ? $set_settings['description']  : FALSE,
+		'set_width'         => isset($set_settings['set_width'])   ? $set_settings['set_width']    : '',
+		'set_height'        => isset($set_settings['set_height'])  ? $set_settings['set_height']   : '',
+		'title'             => isset($set_settings['title'])       ? $set_settings['title']        : 'false',
+		'description'       => isset($set_settings['description']) ? $set_settings['description']  : 'false',
 	) + $settings, $attr );
 
 	// Setup Slider settings array
@@ -70,7 +71,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	$ret = '';
-	if ( $settings['animation']['val'] == 'none' ) {
+	if ( $settings['animation']['val'] == 'none' || empty($gog_settings['plugin'])) {
 		$ret .= do_shortcode( '[gallery id="' . $id . '"]' );
 	}
 	else {
@@ -134,12 +135,12 @@ function goodold_gallery_shortcode($attr) {
 					}
 
 					// Add title
-					if ( $title && $attachment->post_title ) {
+					if ( $title != 'false' && $attachment->post_title ) {
 						$order['title'] = '<div class="title">' . $attachment->post_title . '</div>' . "\n";
 					}
 
 					// Add description
-					if ( $description && $attachment->post_content ) {
+					if ( $description != 'false' && $attachment->post_content ) {
 						$order['desc'] = '<div class="description">' . $attachment->post_content . '</div>' . "\n";
 					}
 

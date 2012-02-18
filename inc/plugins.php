@@ -44,7 +44,14 @@ function goodold_gallery_load_plugin( $args = array() ) {
 
 	$ret = array();
 
-	$default = !empty($gog_settings['plugin']) ? $gog_settings['plugin'] : $gog_default_settings['plugin'];
+	$default = $gog_default_settings['plugin'];
+	if ( isset($gog_settings['plugin']) && !empty($gog_settings['plugin']) ) {
+		$default = $gog_settings['plugin'];
+	}
+	else if ( !empty($gog_settings) && empty($gog_settings['plugin']) ) {
+		$default = '';
+	}
+
 	$plugin = isset($args['plugin']) && !empty($args['plugin']) ? $args['plugin'] : $default;
 	if ( !empty($plugin) && $plugin != 'none') {
 		require_once(GOG_PLUGIN_DIR . '/plugins/' . $plugin . '/' . $plugin . '.php');
