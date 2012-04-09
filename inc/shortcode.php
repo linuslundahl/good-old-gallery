@@ -3,7 +3,7 @@
 /**
  * Handles output for galleries
  */
-function goodold_gallery_shortcode($attr) {
+function goodold_gallery_shortcode( $attr ) {
 	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes, $gog_plugin;
 
 	static $i = 1;
@@ -16,7 +16,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	$settings = array();
-	foreach( $slider as $key => $large ) {
+	foreach ( $slider as $key => $large ) {
 		$settings[$key] = array(
 			'key' => $large,
 			'val' => $gog_settings[$large] ? $gog_settings[$large] : $gog_default_settings[$large],
@@ -48,7 +48,7 @@ function goodold_gallery_shortcode($attr) {
 	}
 
 	// Extract GOG settings to vars
-	extract(array_slice($attr, 0, 9));
+	extract(array_slice($attr, 0, 10));
 
 	// Use post_id if no id is set in shortcode.
 	$id = ( !$id && $post->ID ) ? $post->ID : $id;

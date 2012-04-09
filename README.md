@@ -1,6 +1,6 @@
 # Good Old Gallery
 
-Version 2.0.1
+Version 2.0.2
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=linuslundahl&url=https://github.com/linuslundahl/good-old-gallery&title=Good Old Gallery&language=&tags=github&category=software)
 

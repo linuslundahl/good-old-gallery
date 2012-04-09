@@ -183,7 +183,7 @@ if ( is_admin() && isset($_GET['post_id']) && (get_post_type($_GET['post_id']) =
  * Custom upload media button.
  */
 function goodold_gallery_upload_button($title, $type) {
-	return "<a href='" . esc_url( get_upload_iframe_src($type) ) . "' id='add_$type' class='thickbox button' title='$title' onclick='return false;'>$title</a>";
+	return '<a href="' . esc_url( get_upload_iframe_src() ) . '" id="content-add_media" class="thickbox button" title="' . $title . '" onclick="return false;">' . $title . '</a>';
 }
 
 

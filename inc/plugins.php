@@ -6,13 +6,9 @@
  */
 function goodold_gallery_get_plugins( $select = FALSE, $full = FALSE ) {
 	$plugins = array();
-	// $plugin_path = get_stylesheet_directory();
-	// $plugin_url = get_bloginfo( 'template_url' );
 
 	$paths = array(
 		GOG_PLUGIN_DIR . '/plugins' => GOG_PLUGIN_URL . '/plugins',
-		// WP_CONTENT_DIR . '/gog-plugins' => WP_CONTENT_URL . '/gog-plugins',
-		// $plugin_path . '/gog-plugins' => $plugin_url . '/gog-plugins'
 	);
 
 	foreach ( $paths as $path => $url ) {
@@ -39,17 +35,23 @@ function goodold_gallery_get_plugins( $select = FALSE, $full = FALSE ) {
 	return $plugins;
 }
 
+/**
+ * Loads plugins from the plugins dir.
+ */
 function goodold_gallery_load_plugin( $args = array() ) {
 	global $gog_settings, $gog_default_settings;
 
-	$ret = array();
+	// Add default keys
+	$ret = array(
+		'setup' => array(),
+		'settings' => array(),
+		'settings_form' => array(),
+		'widget' => array(),
+	);
 
 	$default = $gog_default_settings['plugin'];
 	if ( isset($gog_settings['plugin']) && !empty($gog_settings['plugin']) ) {
 		$default = $gog_settings['plugin'];
-	}
-	else if ( !empty($gog_settings) && empty($gog_settings['plugin']) ) {
-		$default = '';
 	}
 
 	$plugin = isset($args['plugin']) && !empty($args['plugin']) ? $args['plugin'] : $default;
@@ -63,10 +65,10 @@ function goodold_gallery_load_plugin( $args = array() ) {
 			}
 		}
 		else {
-			$callbacks = array('setup', 'settings', 'settings_form', 'widget');
-			foreach ($callbacks as $callback)
-			if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
-				$ret[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);
+			foreach ($ret as $callback => $item) {
+				if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
+					$ret[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);
+				}
 			}
 		}
 	}
