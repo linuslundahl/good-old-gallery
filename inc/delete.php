@@ -1,9 +1,12 @@
 <?php
 
+include_once('./functions.php');
+$wp_root = get_wp_root(dirname(dirname(__FILE__)));
+
 /** WordPress Administration Bootstrap */
-$wp_load = realpath("../../../../wp-load.php");
+$wp_load = $wp_root . "/wp-load.php";
 if ( !file_exists($wp_load) ) {
-	$wp_config = realpath("../../../../wp-config.php");
+	$wp_config = $wp_root . "/wp-config.php";
 	if ( !file_exists($wp_config) ) {
 			exit("Can't find wp-config.php or wp-load.php");
 	}
@@ -15,7 +18,7 @@ else {
 	require_once($wp_load);
 }
 
-require_once('../../../../wp-admin/admin.php');
+require_once($wp_root . '/wp-admin/admin.php');
 
 wp_reset_vars(array('action'));
 
