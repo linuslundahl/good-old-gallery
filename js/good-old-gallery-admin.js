@@ -82,7 +82,7 @@ var $j = jQuery.noConflict();
 
 					$.ajax({
 							type: 'post',
-							url: '/wp-admin/admin-ajax.php',
+							url: 'admin-ajax.php',
 							data: {
 									action: 'delete_attachment',
 									att_ID: attID,
@@ -90,7 +90,6 @@ var $j = jQuery.noConflict();
 									post_type: 'attachment'
 							},
 							success: function (data, textStatus, jqXHR) {
-									console.log(data, textStatus, jqXHR);
 									$this.parents('li').html(data).addClass('deleted');
 							}
 					});
