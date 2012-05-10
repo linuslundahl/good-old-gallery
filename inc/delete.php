@@ -1,6 +1,6 @@
 <?php
 
-include_once('./functions.php');
+include_once('functions.php');
 $wp_root = get_wp_root(dirname(dirname(__FILE__)));
 
 /** WordPress Administration Bootstrap */

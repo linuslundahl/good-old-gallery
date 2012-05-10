@@ -1,9 +1,9 @@
 <?php
 
-include_once('./functions.php');
+include_once('functions.php');
 $wp_root = get_wp_root(dirname(dirname(__FILE__)));
 require_once($wp_root . "/wp-load.php");
-require_once($wp_root . "/includes/admin.php");
+require_once($wp_root . "/wp-admin/includes/admin.php");
 
 /**
  * Adds Good Old Gallery media tab.
