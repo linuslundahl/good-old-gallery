@@ -52,14 +52,7 @@ $gog_default_themes = array(
 	'themes' => NULL
 );
 
-// Load functionality
-require_once('inc/plugins.php');
-
-$gog_plugin = goodold_gallery_load_plugin();
-
-require_once('inc/widget.php');
-require_once('inc/shortcode.php');
-
+// Load admin sections
 if (is_admin()) {
 	// Load up different features
 	require_once('inc/forms.php');
@@ -71,6 +64,14 @@ if (is_admin()) {
 	require_once('inc/page-settings.php');
 	require_once('inc/page-themes.php');
 }
+
+// Load functionality
+require_once('inc/plugins.php');
+
+$gog_plugin = goodold_gallery_load_plugin();
+
+require_once('inc/shortcode.php');
+require_once('inc/widget.php');
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {
