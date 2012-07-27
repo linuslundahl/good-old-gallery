@@ -11,6 +11,8 @@
  *
  */
 
+register_activation_hook( __FILE__, 'goodold_gallery_activate' );
+
 // Globals
 define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ));
 define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ));
@@ -51,6 +53,18 @@ $gog_default_themes = array(
 	'default' => NULL,
 	'themes' => NULL
 );
+
+if ( !isset($gog_settings['plugin']) ) {
+	goodold_gallery_activate();
+}
+
+$gog_plugin = goodold_gallery_load_plugin();
+
+// Activation function
+function goodold_gallery_activate() {
+	global $gog_default_settings;
+	add_option( GOG_PLUGIN_SHORT . 'add_settings', $gog_default_settings );
+}
 
 // Load admin sections
 if (is_admin()) {
