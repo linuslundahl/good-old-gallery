@@ -11,8 +11,6 @@
  *
  */
 
-register_activation_hook( __FILE__, 'goodold_gallery_activate' );
-
 // Globals
 define('GOG_PLUGIN_URL', WP_PLUGIN_URL . '/' . plugin_basename( dirname(__FILE__) ));
 define('GOG_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . plugin_basename( dirname(__FILE__) ));
@@ -20,13 +18,21 @@ define('GOG_PLUGIN_NAME', 'Good Old Gallery');
 define('GOG_PLUGIN_SHORT', 'gog');
 $upload_url = wp_upload_dir();
 
-// For checking in admin purposes
-$gog_get = array(
-	'post_type' => isset($_GET['post_type']) ? $_GET['post_type'] : NULL,
-	'post_id'   => isset($_GET['post_id']) ? $_GET['post_id'] : NULL,
-	'post'      => isset($_GET['post']) ? $_GET['post'] : NULL,
-	'page'      => isset($_GET['page']) ? $_GET['page'] : NULL,
-);
+// WordPress hooks
+register_activation_hook( __FILE__, 'goodold_gallery_activate' );
+
+// Load admin sections
+if (is_admin()) {
+	// Load up different features
+	require_once('inc/forms.php');
+	require_once('inc/style.php');
+	require_once('inc/content.php');
+	require_once('inc/media.php');
+
+	// Add pages
+	require_once('inc/page-settings.php');
+	require_once('inc/page-themes.php');
+}
 
 // Load plugin settings and themes
 $gog_settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
@@ -45,6 +51,22 @@ $gog_default_settings = array(
 	'order_image' => 3,
 );
 
+// Load current plugin
+require_once('inc/plugins.php');
+$gog_plugin = goodold_gallery_load_plugin();
+
+// Load needed functionality
+require_once('inc/shortcode.php');
+require_once('inc/widget.php');
+
+// For checking in admin purposes
+$gog_get = array(
+	'post_type' => isset($_GET['post_type']) ? $_GET['post_type'] : NULL,
+	'post_id'   => isset($_GET['post_id']) ? $_GET['post_id'] : NULL,
+	'post'      => isset($_GET['post']) ? $_GET['post'] : NULL,
+	'page'      => isset($_GET['page']) ? $_GET['page'] : NULL,
+);
+
 if ( isset($gog_plugin['settings']) && is_array($gog_plugin['settings']) ) {
 	$gog_default_settings += $gog_plugin['settings'];
 }
@@ -58,34 +80,11 @@ if ( !isset($gog_settings['plugin']) ) {
 	goodold_gallery_activate();
 }
 
-$gog_plugin = goodold_gallery_load_plugin();
-
 // Activation function
 function goodold_gallery_activate() {
 	global $gog_default_settings;
 	add_option( GOG_PLUGIN_SHORT . 'add_settings', $gog_default_settings );
 }
-
-// Load admin sections
-if (is_admin()) {
-	// Load up different features
-	require_once('inc/forms.php');
-	require_once('inc/style.php');
-	require_once('inc/content.php');
-	require_once('inc/media.php');
-
-	// Add pages
-	require_once('inc/page-settings.php');
-	require_once('inc/page-themes.php');
-}
-
-// Load functionality
-require_once('inc/plugins.php');
-
-$gog_plugin = goodold_gallery_load_plugin();
-
-require_once('inc/shortcode.php');
-require_once('inc/widget.php');
 
 // Just tag the page for fun
 function goodold_gallery_add_head_tag() {
