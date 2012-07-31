@@ -3,7 +3,7 @@
 function goodold_gallery_cycle_setup() {
 	return array(
 		'title'   => 'jQuery Cycle',
-		'version' => '2.9999.2',
+		'version' => '2.9999.5',
 		'files'   => array('jquery.cycle.all.min.js'),
 		'class'   => '.slides',
 		'url'     => 'http://jquery.malsup.com/cycle/',

@@ -3,7 +3,7 @@
 function goodold_gallery_flexslider_setup() {
 	return array(
 		'title'   => 'Flexslider',
-		'version' => '1.8',
+		'version' => '2.1',
 		'files'   => array('jquery.flexslider-min.js'),
 		'class'   => '.go-gallery-inner',
 		'url'     => 'http://flex.madebymufffin.com/',
