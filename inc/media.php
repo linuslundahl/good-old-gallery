@@ -29,7 +29,7 @@ add_filter( 'media_upload_tabs', 'goodold_gallery_media_tab' );
  * Good Old Gallery tab page.
  */
 function goodold_gallery_media_process() {
-	global $wpdb, $gog_settings, $gog_plugin;
+	global $wpdb, $gog_settings;
 
 	media_upload_header();
 
@@ -49,9 +49,10 @@ function goodold_gallery_media_process() {
 
 	// Build dropdown with themes
 	$theme_options = '';
-	if ($gog_settings['themes']['active']) {
-		foreach ( $gog_settings['themes']['available'] as $class => $name ) {
-			$theme_options .= "<option value=\"$class\">$name</option>";
+	if (!empty($gog_settings->themes['themes'])) {
+		$themes = $gog_settings->GetThemes();
+		foreach ( $themes as $file => $theme ) {
+			$theme_options .= '<option value="' . $theme['Class'] . '">' . $theme['Name'] . '</option>';
 		}
 	}
 ?>
@@ -109,7 +110,7 @@ function goodold_gallery_media_process() {
 				</select>
 			</p>
 
-		<?php goodold_gallery_parse_form_custom( $gog_plugin['settings_form'] ); ?>
+		<?php goodold_gallery_parse_form_custom( $gog_settings->plugin['settings_form'] ); ?>
 
 		</form>
 		</div>

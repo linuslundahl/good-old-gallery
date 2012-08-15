@@ -14,7 +14,7 @@ else {
 }
 
 require_once('style.php');
-$themes = goodold_gallery_get_themes();
+$themes = $gog_settings->GetThemes();
 
 function compress($buffer) {
 	global $themes;

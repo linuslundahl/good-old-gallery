@@ -1,39 +1,26 @@
 <?php
 
-register_activation_hook( __FILE__, 'goodold_gallery_default_themes' );
 add_action( 'admin_init', 'goodold_gallery_themes_init' );
 add_action( 'admin_menu', 'goodold_gallery_add_themes_page' );
-
-/**
- * Save default settings.
- */
-function goodold_gallery_default_themes() {
-	global $gog_themes, $gog_default_themes;
-
-	if (!is_array($gog_themes)) {
-		update_option( GOG_PLUGIN_SHORT . '_themes', $gog_default_themes );
-		$gog_themes = $gog_default_themes;
-	}
-}
 
 /**
  * Register form fields.
  */
 function goodold_gallery_themes_init(){
-	global $gog_themes, $gog_default_themes;
+	global $gog_settings;
 
 	register_setting( GOG_PLUGIN_SHORT . '_themes', GOG_PLUGIN_SHORT . '_themes', 'goodold_gallery_themes_validate' );
 
 	$themes_active = FALSE;
 	$themes_extra = "";
-	if ($gog_themes['themes']) {
+	if ($gog_settings->themes['themes']) {
 		$themes_active = TRUE;
 		$themes_extra = " *";
 	}
 
 	// Get themes for select dropdown
 	$theme_options = array(NULL => __( 'No theme' ));
-	$theme_options += goodold_gallery_get_themes( TRUE );
+	$theme_options += $gog_settings->GetThemes( TRUE );
 
 	// Setup form
 	$form = array(
@@ -74,7 +61,7 @@ function goodold_gallery_themes_init(){
 		);
 	}
 
-	goodold_gallery_parse_form( $form, 'themes', __FILE__, $gog_themes, $gog_default_themes );
+	goodold_gallery_parse_form( $form, 'themes', __FILE__, $gog_settings->themes );
 }
 
 /**
@@ -94,9 +81,9 @@ function goodold_gallery_themes_header() {
  * Build themes function for settings page
  */
 function goodold_gallery_themes_available() {
-	global $gog_themes;
+	global $gog_settings;
 
-	$themes = goodold_gallery_get_themes();
+	$themes = $gog_settings->GetThemes();
 
 	if ( $themes ) {
 		echo '<ul class="themes-available">';
@@ -125,7 +112,7 @@ function goodold_gallery_themes_available() {
  * Cache builder
  */
 function goodold_gallery_themes_cache() {
-	global $upload_url;
+	global $gog_settomgs, $upload_url;
 
 	if ( file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
 		$upload_dir = explode('/', $upload_url['basedir']);
@@ -158,7 +145,7 @@ function goodold_gallery_themes_page() {
 
 function goodold_gallery_themes_validate($input) {
 	if ($input['default']) {
-		$theme = goodold_gallery_get_themes();
+		$theme = $gog_settings->GetThemes();
 		$theme = $theme[$input['default']];
 		$input['theme'] = array( 'url' => $theme['path']['url'], 'class' => $theme['Class'], 'id' => substr($input['default'], 0, -4) );
 	}

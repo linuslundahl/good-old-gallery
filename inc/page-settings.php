@@ -1,32 +1,19 @@
 <?php
 
-register_activation_hook( __FILE__, 'goodold_gallery_default_settings' );
 add_action( 'admin_init', 'goodold_gallery_settings_init' );
 add_action( 'admin_menu', 'goodold_gallery_add_settings_page' );
-
-/**
- * Save default settings.
- */
-function goodold_gallery_default_settings() {
-	global $gog_settings, $gog_default_settings;
-
-	if (!is_array($gog_settings)) {
-		update_option( GOG_PLUGIN_SHORT . '_settings', $gog_default_settings );
-		$gog_settings = $gog_default_settings;
-	}
-}
 
 /**
  * Register form fields.
  */
 function goodold_gallery_settings_init(){
-	global $gog_settings, $gog_default_settings, $gog_plugin;
+	global $gog_settings;
 
 	register_setting( GOG_PLUGIN_SHORT . '_settings', GOG_PLUGIN_SHORT . '_settings', 'goodold_gallery_settings_validate' );
 
 	// Get themes for select dropdown
 	$plugin_options = array(NULL => __( 'No plugin' ));
-	$plugin_settings = goodold_gallery_get_plugins( FALSE, TRUE );
+	$plugin_settings = $gog_settings->GetPlugins( TRUE );
 	$plugin_info = '';
 	foreach ( $plugin_settings as $plugin => $settings ) {
 		$plugin_options[$plugin] = $settings['title'];
@@ -160,11 +147,11 @@ function goodold_gallery_settings_init(){
 		),
 	);
 
-	if (!empty($gog_plugin)) {
-		$form += $gog_plugin['settings_form'];
+	if (!empty($gog_settings->plugin)) {
+		$form += $gog_settings->plugin['settings_form'];
 	}
 
-	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings, $gog_default_settings );
+	goodold_gallery_parse_form( $form, 'settings', __FILE__, $gog_settings->settings );
 }
 
 /**
@@ -186,7 +173,7 @@ function goodold_gallery_settings_header() {
 function goodold_gallery_order_header() {
 	global $gog_settings;
 
-	$items = goodold_gallery_order_fields($gog_settings);
+	$items = goodold_gallery_order_fields($gog_settings->settings);
 
 	$li = '';
 	if (!empty($items) && count($items) == 3) {
@@ -249,7 +236,7 @@ function goodold_gallery_settings_validate($input) {
 	global $gog_settings;
 
 	// Set default settings if plugin is changed
-	if ($input['plugin'] != $gog_settings['plugin']) {
+	if ($input['plugin'] != $gog_settings->settings['plugin']) {
 		$plugin = goodold_gallery_load_plugin( array( 'plugin' => $input['plugin'] ) );
 		$input += $plugin['settings'];
 	}

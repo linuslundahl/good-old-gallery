@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
@@ -87,9 +87,11 @@ The FAQ is currently empty.
 
 == Changelog ==
 
-= 2.0.2 =
+= 2.0.3 =
 * Trying to fix issues with version 2.x for some people.
+* Fix theme selection in the shortcode generator.
 * Fix hiding Description.
+* Code optimizing.
 
 = 2.0.1 =
 * Fixes issues when no slider plugin is selected.

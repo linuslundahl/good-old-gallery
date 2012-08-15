@@ -4,13 +4,13 @@
  * Handles output for galleries
  */
 function goodold_gallery_shortcode( $attr ) {
-	global $post, $gog_default_settings, $gog_settings, $gog_default_themes, $gog_themes, $gog_plugin;
+	global $post, $gog_settings;
 
 	static $i = 1;
 
 	// Build Slider default settings
 	$slider = array();
-	foreach ( $gog_plugin['settings'] as $key => $value ) {
+	foreach ( $gog_settings->plugin['settings'] as $key => $value ) {
 		$new_key = strtolower($key);
 		$slider[$new_key] = $key;
 	}
@@ -19,23 +19,22 @@ function goodold_gallery_shortcode( $attr ) {
 	foreach ( $slider as $key => $large ) {
 		$settings[$key] = array(
 			'key' => $large,
-			'val' => $gog_settings[$large] ? $gog_settings[$large] : $gog_default_settings[$large],
+			'val' => $gog_settings->settings[$large],
 		);
 	}
 
 	// Get settings from shortcode
-	$set_settings = !empty($gog_settings) ? $gog_settings : $gog_default_settings;
 	$attr = shortcode_atts( array(
 		'id'                => null,
 		'order'             => 'ASC',
 		'orderby'           => 'menu_order ID',
 		'exclude'           => array(),
-		'theme'             => isset($gog_themes['default'])       ? $gog_themes['theme']['class'] : $gog_default_themes['default'],
-		'size'              => $set_settings['size'],
-		'set_width'         => isset($set_settings['set_width'])   ? $set_settings['set_width']    : '',
-		'set_height'        => isset($set_settings['set_height'])  ? $set_settings['set_height']   : '',
-		'title'             => isset($set_settings['title'])       ? $set_settings['title']        : 'false',
-		'description'       => isset($set_settings['description']) ? $set_settings['description']  : 'false',
+		'theme'             => $gog_settings->themes['default'],
+		'size'              => $gog_settings->settings['size'],
+		'set_width'         => $gog_settings->settings['set_width'],
+		'set_height'        => $gog_settings->settings['set_height'],
+		'title'             => $gog_settings->settings['title'],
+		'description'       => $gog_settings->settings['description'],
 	) + $settings, $attr );
 
 	// Setup Slider settings array
@@ -64,14 +63,15 @@ function goodold_gallery_shortcode( $attr ) {
 		'i' => $i,
 		'settings' => $settings,
 	);
-	$sc_extras = goodold_gallery_load_plugin( array( 'function' => 'shortcode_extras', 'settings' => $sc_extra_settings ) );
+
+	$sc_extras = $gog_settings->LoadPlugin( array( 'function' => 'shortcode_extras', 'settings' => $sc_extra_settings ) );
 	if ( is_array($sc_extras) && !empty($sc_extras) ) {
 		extract($sc_extras);
 		$settings += $settings_extras;
 	}
 
 	$ret = '';
-	if ( $settings['animation']['val'] == 'none' || empty($gog_settings['plugin'])) {
+	if ( $settings['animation']['val'] == 'none' || empty($gog_settings->settings['plugin'])) {
 		$ret .= do_shortcode( '[gallery id="' . $id . '"]' );
 	}
 	else {
@@ -91,7 +91,7 @@ function goodold_gallery_shortcode( $attr ) {
 		if ( $theme ) {
 			$classes .= ' ' . $theme;
 		}
-		else if ( empty($theme) && $gog_themes['default'] ) {
+		else if ( empty($theme) && $gog_settings->themes['default'] ) {
 			$classes .= ' ' . $gog_theme['theme']['class'];
 		}
 
@@ -111,8 +111,8 @@ function goodold_gallery_shortcode( $attr ) {
 		}
 
 		// Plugin class
-		if ( $gog_settings['plugin'] ) {
-			$classes .= " " . $gog_settings['plugin'];
+		if ( $gog_settings->settings['plugin'] ) {
+			$classes .= " " . $gog_settings->settings['plugin'];
 		}
 
 		if ( $attachments ) {
@@ -227,7 +227,7 @@ function goodold_gallery_shortcode( $attr ) {
 			$script .= $script_extras;
 
 			// Finish script
-			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $(function () { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_plugin['setup']['class'] . '").' . $gog_settings['plugin'] . '({' . rtrim($script, ', ') . '}); }); });</script>' . "\n";
+			$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $(function () { $("#go-gallery-' . $id . '-' . $i . ' ' . $gog_settings->plugin['setup']['class'] . '").' . $gog_settings->settings['plugin'] . '({' . rtrim($script, ', ') . '}); }); });</script>' . "\n";
 
 			// End gallery div
 			$ret .= '</div>' . "\n";

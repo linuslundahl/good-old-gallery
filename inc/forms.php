@@ -3,7 +3,7 @@
 /**
  * Loops through the form array and prints sections and fields accordingly.
  */
-function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
+function goodold_gallery_parse_form( $form, $name, $page, $saved ) {
 	// Loop through form array
 	foreach ( $form as $section_id => $section ) {
 		// Print section
@@ -23,7 +23,7 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
 			foreach ( $section['fields'] as $id => $field ) {
 				$field['args'] += array(
 					'id'      => $id,
-					'default' => !empty($saved) ? $saved[$id] : $default[$id],
+					'default' => $saved[$id],
 					'name'    => GOG_PLUGIN_SHORT . '_' . $name . '[' . $id . ']',
 				);
 
@@ -51,7 +51,7 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved, $default ) {
 /**
  * Loops through the form array and prints fields accordingly.
  */
-function goodold_gallery_parse_form_custom( $form, $saved = array(), $default = array() ) {
+function goodold_gallery_parse_form_custom( $form, $saved = array() ) {
 	$output = '';
 
 	foreach ( $form as $section ) {
@@ -59,7 +59,7 @@ function goodold_gallery_parse_form_custom( $form, $saved = array(), $default = 
 			if ( !isset($item['ignore']) ) {
 				$item['args'] += array(
 					'id'      => isset($item['widget_id']) ? $item['widget_id'] : strtolower($key),
-					'default' => !empty($saved) && isset($saved[$key]) ? $saved[$key] : $default[$key],
+					'default' => $saved[$key],
 					'name'    => isset($item['widget_name']) ? $item['widget_name'] : GOG_PLUGIN_SHORT . '_' . strtolower($key) . '[' . strtolower($key) . ']',
 				);
 

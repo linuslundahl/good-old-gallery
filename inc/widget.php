@@ -63,14 +63,14 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 	// UPDATE WIDGET SETTINGS
 	function update($new_instance, $old_instance) {
-		global $gog_plugin;
+		global $gog_settings;
 
 		$instance['title']             = $new_instance['title'];
 		$instance['id']                = $new_instance['id'];
 		$instance['theme']             = $new_instance['theme'];
 		$instance['size']              = $new_instance['size'];
 
-		foreach ( $gog_plugin['settings_form'] as $section ) {
+		foreach ( $gog_settings->plugin['settings_form'] as $section ) {
 			foreach ( $section['fields'] as $setting => $item ) {
 				if ( !isset($item['ignore']) ) {
 					$setting = $setting == 'title' ? 'g' . $setting : $setting;
@@ -84,7 +84,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 
 	// WIDGET SETTINGS FORM
 	function form($instance) {
-		global $wpdb, $gog_settings, $gog_plugin;
+		global $wpdb, $gog_settings;
 
 		// Build dropdown with galleries
 		$posts = $wpdb->get_results($wpdb->prepare("
@@ -144,7 +144,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 		);
 
 		// Add theme options
-		$themes = goodold_gallery_get_themes();
+		$themes = $gog_settings->GetThemes();
 		$theme_options = array();
 		foreach ( $themes as $theme ) {
 			$theme_options[$theme['Class']] = $theme['Name'];
@@ -163,7 +163,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 		}
 
 		// Add plugin id and name to settings form for plugin
-		$widget_form += $gog_plugin['settings_form'];
+		$widget_form += $gog_settings->plugin['settings_form'];
 		foreach ( $widget_form as $section => $form ) {
 			foreach ( $widget_form[$section]['fields'] as $key => $item) {
 				$widget_form[$section]['fields'][$key]['widget_id'] = $this->get_field_id($key);
