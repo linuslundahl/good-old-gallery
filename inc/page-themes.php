@@ -7,7 +7,12 @@ add_action( 'admin_menu', 'goodold_gallery_add_themes_page' );
  * Register form fields.
  */
 function goodold_gallery_themes_init(){
-	global $gog_settings;
+	global $gog_settings, $upload_url;
+
+	// Build cache if needed.
+	if ( $gog_settings->themes['themes'] && !file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
+		wp_redirect( GOG_PLUGIN_URL . '/inc/cache.php?redirect' );
+	}
 
 	register_setting( GOG_PLUGIN_SHORT . '_themes', GOG_PLUGIN_SHORT . '_themes', 'goodold_gallery_themes_validate' );
 
@@ -112,7 +117,7 @@ function goodold_gallery_themes_available() {
  * Cache builder
  */
 function goodold_gallery_themes_cache() {
-	global $gog_settomgs, $upload_url;
+	global $upload_url;
 
 	if ( file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
 		$upload_dir = explode('/', $upload_url['basedir']);
@@ -123,6 +128,7 @@ function goodold_gallery_themes_cache() {
 
 	echo "<p>" . sprintf(__("* To use all themes you need to %s, otherwise the themes won't be loaded, you also need to rebuild the cache if you install or delete themes."), '<a href="' . GOG_PLUGIN_URL . '/inc/cache.php?redirect">' . __( 'rebuild the css cache' ) . '</a>') . "</p>";
 }
+
 /**
  * Print settings page
  */
