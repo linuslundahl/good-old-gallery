@@ -88,14 +88,6 @@ add_action( 'wp_head', 'goodold_gallery_add_head_tag' );
 function goodold_gallery_load_styles() {
 	global $gog_settings, $is_loaded;
 
-	// Add minified css of all themes or the selected theme css
-	if ( !is_admin() && (!empty($gog_settings->themes['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
-		wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
-	}
-	else if ( !is_admin() && ($gog_settings->themes['default'] && empty($gog_settings->themes['all'])) ) {
-		wp_enqueue_style( 'good-old-gallery-theme', $gog_settings->themes['theme']['url'] . '/' . $gog_settings->themes['default'] );
-	}
-
 	// Check if the shortcode has been loaded
 	if ( is_active_widget( FALSE, FALSE, 'goodoldgallerywidget', TRUE ) ) {
 		goodold_gallery_load_scripts();
@@ -112,9 +104,20 @@ if ( !$is_loaded ) {
 		$found = FALSE;
 		if ( !empty($posts) ) {
 			foreach ( $posts as $gog_get['post'] ) {
+				// Check post content for shortcode.
 				if ( stripos($gog_get['post']->post_content, '[good-old-gallery') !== FALSE ) {
 					$found = TRUE;
 					break;
+				}
+				// Not found in post content, let's check custom fields.
+				else {
+					$custom = get_post_custom($gog_get['post']->ID);
+					foreach ( $custom as $field ) {
+						if ( stripos($field[0], '[good-old-gallery') !== FALSE ) {
+							$found = TRUE;
+							break;
+						}
+					}
 				}
 			}
 
@@ -135,6 +138,14 @@ function goodold_gallery_load_scripts() {
 	global $gog_settings;
 
 	if ( !is_admin() ) {
+		// Add minified css of all themes or the selected theme css
+		if ( !is_admin() && (!empty($gog_settings->themes['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {
+			wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
+		}
+		else if ( !is_admin() && ($gog_settings->themes['default'] && empty($gog_settings->themes['all'])) ) {
+			wp_enqueue_style( 'good-old-gallery-theme', $gog_settings->themes['theme']['url'] . '/' . $gog_settings->themes['default'] );
+		}
+
 		if ( !empty($gog_settings->settings['plugin']) ) {
 			foreach ( $gog_settings->plugin['setup']['files'] as $file ) {
 				wp_enqueue_script( 'slider ', GOG_PLUGIN_URL . '/plugins/' . $gog_settings->settings['plugin'] . '/' . $file, array('jquery'), '', FALSE );

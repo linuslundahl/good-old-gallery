@@ -149,7 +149,9 @@ function goodold_gallery_themes_page() {
 <?php
 }
 
-function goodold_gallery_themes_validate($input) {
+function goodold_gallery_themes_validate( $input ) {
+	global $gog_settings;
+
 	if ($input['default']) {
 		$theme = $gog_settings->GetThemes();
 		$theme = $theme[$input['default']];

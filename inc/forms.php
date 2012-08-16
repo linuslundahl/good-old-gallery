@@ -59,7 +59,7 @@ function goodold_gallery_parse_form_custom( $form, $saved = array() ) {
 			if ( !isset($item['ignore']) ) {
 				$item['args'] += array(
 					'id'      => isset($item['widget_id']) ? $item['widget_id'] : strtolower($key),
-					'default' => $saved[$key],
+					'default' => isset($saved[$key]) ? $saved[$key] : '',
 					'name'    => isset($item['widget_name']) ? $item['widget_name'] : GOG_PLUGIN_SHORT . '_' . strtolower($key) . '[' . strtolower($key) . ']',
 				);
 

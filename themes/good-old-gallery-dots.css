@@ -54,17 +54,17 @@
 	padding: 6px 0 0 0;
 	width: 6px;
 }
-.go-gallery-container.gog-dots .pager a.activeSlide,
+.go-gallery-container.gog-dots .pager a.flex-active,
 .go-gallery-container.gog-dots .flex-control-nav a.active { background: #fff;}
 .go-gallery-container.gog-dots .pager a:first-child,
 .go-gallery-container.gog-dots .flex-control-nav li:first-child a { margin: 0; }
 /* end Pager */
 
 /** Navigation */
-.go-gallery-container.gog-dots .nav .prev,
-.go-gallery-container.gog-dots .nav .next,
-.go-gallery-container.gog-dots .flex-direction-nav .prev,
-.go-gallery-container.gog-dots .flex-direction-nav .next {
+.go-gallery-container.gog-dots .nav .flex-prev,
+.go-gallery-container.gog-dots .nav .flex-next,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-prev,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-next {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
@@ -73,14 +73,14 @@
 	top: 0;
 	width: 30px;
 }
-.go-gallery-container.gog-dots .nav .prev,
-.go-gallery-container.gog-dots .flex-direction-nav .prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; cursor: pointer; }
-.go-gallery-container.gog-dots .nav .next,
-.go-gallery-container.gog-dots .flex-direction-nav .next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; cursor: pointer; }
-.go-gallery-container.gog-dots .nav .prev:hover,
-.go-gallery-container.gog-dots .flex-direction-nav .prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
-.go-gallery-container.gog-dots .nav .next:hover,
-.go-gallery-container.gog-dots .flex-direction-nav .next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
+.go-gallery-container.gog-dots .nav .flex-prev,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; cursor: pointer; }
+.go-gallery-container.gog-dots .nav .flex-next,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; cursor: pointer; }
+.go-gallery-container.gog-dots .nav .flex-prev:hover,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
+.go-gallery-container.gog-dots .nav .flex-next:hover,
+.go-gallery-container.gog-dots .flex-direction-nav .flex-next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
 /* end Navigation */
 
 /** Flex Play/Pause */

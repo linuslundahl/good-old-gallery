@@ -29,7 +29,7 @@ function goodold_gallery_shortcode( $attr ) {
 		'order'             => 'ASC',
 		'orderby'           => 'menu_order ID',
 		'exclude'           => array(),
-		'theme'             => $gog_settings->themes['default'],
+		'theme'             => !empty($gog_settings->themes['theme']['class']) ? $gog_settings->themes['theme']['class'] : '',
 		'size'              => $gog_settings->settings['size'],
 		'set_width'         => $gog_settings->settings['set_width'],
 		'set_height'        => $gog_settings->settings['set_height'],
@@ -92,9 +92,6 @@ function goodold_gallery_shortcode( $attr ) {
 		// Add theme class
 		if ( $theme ) {
 			$classes .= ' ' . $theme;
-		}
-		else if ( empty($theme) && $gog_settings->themes['default'] ) {
-			$classes .= ' ' . $gog_theme['theme']['class'];
 		}
 
 		// Navigation class
