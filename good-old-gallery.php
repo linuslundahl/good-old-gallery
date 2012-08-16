@@ -172,37 +172,3 @@ function goodold_gallery_load_admin() {
 	}
 }
 add_action( 'admin_head', 'goodold_gallery_load_admin' );
-);
-dold_gallery_load_admin' );
-
-/**
- * Returns an array of valid paths
- */
-function goodold_gallery_paths($paths) {
-	$paths = explode("\n", $paths);
-
-	foreach( $paths as $key => $path ) {
-		$paths[$key] = trim($path);
-	}
-
-	return $paths;
-}
-
-}
-alse, true );
-	}
-}
-add_action( 'admin_head', 'goodold_gallery_load_admin' );
-
-/**
- * Returns an array of valid paths
- */
-function goodold_gallery_paths($paths) {
-	$paths = explode("\n", $paths);
-
-	foreach( $paths as $key => $path ) {
-		$paths[$key] = trim($path);
-	}
-
-	return $paths;
-}
