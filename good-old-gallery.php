@@ -65,7 +65,7 @@ function goodold_gallery_activate() {
 
 	$settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
 	if (!$settings) {
-		add_option( GOG_PLUGIN_SHORT . 'add_settings', $gog_settings->settings );
+		add_option( GOG_PLUGIN_SHORT . '_settings', $gog_settings->settings );
 	}
 
 	$themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
@@ -172,6 +172,7 @@ function goodold_gallery_load_admin() {
 	}
 }
 add_action( 'admin_head', 'goodold_gallery_load_admin' );
+);
 dold_gallery_load_admin' );
 
 /**

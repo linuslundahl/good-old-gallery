@@ -15,8 +15,8 @@ class GogSettings {
 	public $plugin = array();
 
 	public function __construct(){
-		$settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
-		$themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
+		$settings = $this->GetOption( 'settings' );
+		$themes = $this->GetOption( 'themes' );
 
 		$this->default = array(
 			'settings' => array(
@@ -36,15 +36,32 @@ class GogSettings {
 			),
 		);
 
-		$this->settings = !$settings ? $this->default['settings'] : $settings;
-		$this->themes = !$themes ? $this->default['themes'] : $themes;
+		$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
+		$this->themes = !$themes || !is_array($themes) ? $this->default['themes'] : $themes;
 
-		$this->plugin = $this->LoadPlugin($this->settings);
+		// Load slider plugin settings from db, if not found load from settings file and save.
+		$this->plugin = $this->GetOption( 'plugin' );
+		if (empty($this->plugin['plugin']) || (!empty($this->plugin['plugin']) && $this->plugin['plugin'] != $this->settings['plugin'])) {
+			$this->plugin = $this->LoadPlugin( $this->settings );
+			update_option( GOG_PLUGIN_SHORT . '_plugin', $this->plugin );
+		}
 
-		// Extend default settings with plugin settings
+		// Extend default settings with slider plugin settings
 		if (isset($this->plugin['settings']) && is_array($this->plugin['settings'])) {
 			$this->default['settings'] += $this->plugin['settings'];
 		}
+
+	}
+
+	/**
+	 * Get a gog_ option from the database.
+	 *
+	 * @param string $title
+	 *
+	 * @return array
+	 */
+	public function GetOption( $title ) {
+		return get_option( GOG_PLUGIN_SHORT . '_' . $title );
 	}
 
 	/**
@@ -105,20 +122,20 @@ class GogSettings {
 			'widget' => array(),
 		);
 
-		$plugin = !$args['plugin'] ? $this->settings['plugin'] : $args['plugin'];
-		if ( !empty($plugin) && $plugin != 'none') {
-			require_once(GOG_PLUGIN_DIR . '/plugins/' . $plugin . '/' . $plugin . '.php');
+		$ret['plugin'] = !$args['plugin'] ? $this->settings['plugin'] : $args['plugin'];
+		if ( !empty($ret['plugin']) && $ret['plugin'] != 'none') {
+			require_once(GOG_PLUGIN_DIR . '/plugins/' . $ret['plugin'] . '/' . $ret['plugin'] . '.php');
 
 			if ( isset($args['function']) ) {
-				if ( function_exists('goodold_gallery_' . $plugin . '_' . $args['function']) ) {
+				if ( function_exists('goodold_gallery_' . $ret['plugin'] . '_' . $args['function']) ) {
 					$settings = isset($args['settings']) ? $args['settings'] : array();
-					$ret = call_user_func('goodold_gallery_' . $plugin . '_' . $args['function'], $settings);
+					$ret = call_user_func('goodold_gallery_' . $ret['plugin'] . '_' . $args['function'], $settings);
 				}
 			}
 			else {
 				foreach ($ret as $callback => $item) {
-					if ( function_exists('goodold_gallery_' . $plugin . '_' . $callback) ) {
-						$ret[$callback] = call_user_func('goodold_gallery_' . $plugin . '_' . $callback);
+					if ( function_exists('goodold_gallery_' . $ret['plugin'] . '_' . $callback) ) {
+						$ret[$callback] = call_user_func('goodold_gallery_' . $ret['plugin'] . '_' . $callback);
 					}
 				}
 			}
