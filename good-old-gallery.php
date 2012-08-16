@@ -172,3 +172,15 @@ function goodold_gallery_load_admin() {
 	}
 }
 add_action( 'admin_head', 'goodold_gallery_load_admin' );
+
+/**
+ * Add link to settings page on plugins page.
+ */
+function goodold_gallery_plugin_action_links( $links, $file ) {
+	if ( $file == plugin_basename( dirname(__FILE__).'/good-old-gallery.php' ) ) {
+		$links[] = '<a href="edit.php?post_type=goodoldgallery&page=gog_settings">'.__('Settings').'</a>';
+	}
+
+	return $links;
+}
+add_filter( 'plugin_action_links', 'goodold_gallery_plugin_action_links', 10, 2 );
