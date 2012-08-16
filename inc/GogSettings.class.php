@@ -49,8 +49,8 @@ class GogSettings {
 		// Extend default settings with slider plugin settings
 		if (isset($this->plugin['settings']) && is_array($this->plugin['settings'])) {
 			$this->default['settings'] += $this->plugin['settings'];
+			$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
 		}
-
 	}
 
 	/**

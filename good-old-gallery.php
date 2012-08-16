@@ -61,16 +61,16 @@ function goodold_gallery_includes() {
  * Activation function.
  */
 function goodold_gallery_activate() {
-	global $gog_settings;
+	$s = new GogSettings;
 
 	$settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
 	if (!$settings) {
-		add_option( GOG_PLUGIN_SHORT . '_settings', $gog_settings->settings );
+		add_option( GOG_PLUGIN_SHORT . '_settings', $s->settings );
 	}
 
 	$themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
 	if (!$themes) {
-		add_option( GOG_PLUGIN_SHORT . '_themes', $gog_settings->themes );
+		add_option( GOG_PLUGIN_SHORT . '_themes', $s->themes );
 	}
 }
 

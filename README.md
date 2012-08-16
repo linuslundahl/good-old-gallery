@@ -8,8 +8,8 @@ The version hosted at GitHub is __still in development__ and may contain bugs an
 
 Get the latest stable version from [wordpress.org](http://wordpress.org/extend/plugins/good-old-gallery/).
 
-So what's new?
---------------
+What's new in 2.x?
+------------------
 
 * __Flexslider__  
 Flexslider is now used as the main slider plugin instead of jQuery Cycle, though Cycle is still supported for backwards compatibility. And more plugins can easily be added.
@@ -19,9 +19,4 @@ A lot of work has been put on making the settings page use the built in Settings
 The shortcode generator has gotten some small fixes.
 * __Sorting fields__  
 It's now possible to sort the Title, Description and Image output.
-* __General bug fixes__  
-
-What's left?
-------------
-
-Not much, I think it's pretty much ready for release on wp.org.
+* __General bug fixes__

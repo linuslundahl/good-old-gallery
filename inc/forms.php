@@ -23,7 +23,7 @@ function goodold_gallery_parse_form( $form, $name, $page, $saved ) {
 			foreach ( $section['fields'] as $id => $field ) {
 				$field['args'] += array(
 					'id'      => $id,
-					'default' => $saved[$id],
+					'default' => isset($saved[$id]) ? $saved[$id] : '',
 					'name'    => GOG_PLUGIN_SHORT . '_' . $name . '[' . $id . ']',
 				);
 
