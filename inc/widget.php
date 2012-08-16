@@ -65,10 +65,10 @@ class GoodOldGalleryWidget extends WP_Widget {
 	function update($new_instance, $old_instance) {
 		global $gog_settings;
 
-		$instance['title']             = $new_instance['title'];
-		$instance['id']                = $new_instance['id'];
-		$instance['theme']             = $new_instance['theme'];
-		$instance['size']              = $new_instance['size'];
+		$instance['title'] = $new_instance['title'];
+		$instance['id']    = $new_instance['id'];
+		$instance['theme'] = $new_instance['theme'];
+		$instance['size']  = $new_instance['size'];
 
 		foreach ( $gog_settings->plugin['settings_form'] as $section ) {
 			foreach ( $section['fields'] as $setting => $item ) {

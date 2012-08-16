@@ -77,6 +77,7 @@ class GogSettings {
 
 		$paths = array(
 			GOG_PLUGIN_DIR . '/plugins' => GOG_PLUGIN_URL . '/plugins',
+			WP_CONTENT_DIR . '/gog-plugins' => WP_CONTENT_URL . '/gog-plugins',
 		);
 
 		foreach ( $paths as $path => $url ) {
@@ -160,7 +161,7 @@ class GogSettings {
 		$paths = array(
 			GOG_PLUGIN_DIR . '/themes' => GOG_PLUGIN_URL . '/themes',
 			WP_CONTENT_DIR . '/gog-themes' => WP_CONTENT_URL . '/gog-themes',
-			$theme_path . '/gog-themes' => $theme_url . '/gog-themes'
+			$theme_path . '/gog-themes' => $theme_url . '/gog-themes',
 		);
 
 		foreach ( $paths as $path => $url ) {
@@ -170,12 +171,12 @@ class GogSettings {
 				while ( false !== ($filename = readdir($folder)) ) {
 					if ( $filename ) {
 						if ( substr(strtolower($filename), -3) == 'css' ) {
-							$info = $this->GetThemesInfo($path . '/' . $filename);
+							$info = $this->LoadTheme( $path . '/' . $filename );
 							if ( $select ) {
 								$themes[$filename] = $info['Name'];
 							}
 							else {
-								$info['path'] = array('path' => $path, 'url' => $url);
+								$info['path'] = array( 'path' => $path, 'url' => $url );
 								$themes[$filename] = $info;
 							}
 						}
@@ -188,14 +189,14 @@ class GogSettings {
 	}
 
 	/**
-	 * Gets information about themes.
+	 * Loads information about a theme.
 	 *
 	 * @param string $file
 	 *	- A path to a specific stylesheet file.
 	 *
 	 * @return array
 	 */
-	public function GetThemesInfo( $file = NULL ) {
+	public function LoadTheme( $file = NULL ) {
 		$default_headers = array(
 			'Name' => 'Style Name',
 			'Class' => 'Class',
