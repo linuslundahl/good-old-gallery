@@ -72,7 +72,7 @@ class GoodOldGallery {
 
 		$edit = FALSE;
 		$button = __( 'Upload images' );
-		if ( $_GET['post'] ) {
+		if ( !empty($_GET['post']) ) {
 			$button = __( 'Manage gallery' );
 			$edit = TRUE;
 		}

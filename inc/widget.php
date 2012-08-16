@@ -22,7 +22,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 		extract($args);
 
 		$show = FALSE;
-		if ( $instance['gallery-pages'] ) {
+		if ( isset($instance['gallery-pages']) ) {
 			$paths = goodold_gallery_paths( $instance['gallery-pages'] );
 			if ( in_array($_SERVER['REQUEST_URI'], $paths) ) {
 				$show = TRUE;
@@ -103,7 +103,7 @@ class GoodOldGalleryWidget extends WP_Widget {
 			$gallery_options[$p->ID] = $p->post_title;
 		}
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		$title = apply_filters( 'widget_title', isset($instance['title']) ? $instance['title'] : '' );
 
 		// Prepare widget form
 		$widget_form = array(

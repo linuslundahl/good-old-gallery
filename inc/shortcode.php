@@ -38,12 +38,14 @@ function goodold_gallery_shortcode( $attr ) {
 	) + $settings, $attr );
 
 	// Setup Slider settings array
-	$settings = array_slice($attr, 9);
+	$settings = array_slice($attr, 10);
 	foreach( $settings as $key => $setting ) {
-		$settings[$key] = array(
-			'key' => $slider[$key],
-			'val' => is_array($setting) ? $setting['val'] : $setting,
-		);
+		if (isset($slider[$key])) {
+			$settings[$key] = array(
+				'key' => $slider[$key],
+				'val' => is_array($setting) ? $setting['val'] : $setting,
+			);
+		}
 	}
 
 	// Extract GOG settings to vars
@@ -128,7 +130,7 @@ function goodold_gallery_shortcode( $attr ) {
 				$images .= '<li>' . "\n";
 
 					// Sort fields in set order
-					$order = goodold_gallery_order_fields($gog_settings);
+					$order = goodold_gallery_order_fields($gog_settings->settings);
 					$order = array_flip($order);
 					foreach ($order as $field => $key) {
 						$order[$field] = '';

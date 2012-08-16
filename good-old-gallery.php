@@ -86,7 +86,7 @@ add_action( 'wp_head', 'goodold_gallery_add_head_tag' );
  * Use init to load up styles.
  */
 function goodold_gallery_load_styles() {
-	global $is_loaded;
+	global $gog_settings, $is_loaded;
 
 	// Add minified css of all themes or the selected theme css
 	if ( !is_admin() && (!empty($gog_settings->themes['all']) && file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css')) ) {

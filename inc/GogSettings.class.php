@@ -123,7 +123,7 @@ class GogSettings {
 			'widget' => array(),
 		);
 
-		$ret['plugin'] = !$args['plugin'] ? $this->settings['plugin'] : $args['plugin'];
+		$ret['plugin'] = empty($args['plugin']) ? $this->settings['plugin'] : $args['plugin'];
 		if ( !empty($ret['plugin']) && $ret['plugin'] != 'none') {
 			require_once(GOG_PLUGIN_DIR . '/plugins/' . $ret['plugin'] . '/' . $ret['plugin'] . '.php');
 
