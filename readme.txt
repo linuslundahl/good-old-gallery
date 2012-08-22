@@ -56,12 +56,15 @@ Creating a theme is rather simple, just start out with one of the themes found i
 The structure of a theme is:
 
 `gog-themes 
+|- my-theme/my-theme/*.* (any image resources used in theme-name.css)
 |- my-theme/my-theme.css (this is the only required file)  
 |- my-theme/my-theme.png (preview in with size 300x150 px, must be a png)`
 
 Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better.
 
 Now add some css to style your Good Old Galleries.
+
+When using an image in your css you should use `url(theme-name/image-name.png)` without quotes. This is to allow the cached css file to add absolute paths to your images.
 
 If you enable all themes on the settings page and build the css cache, you can use `[good-old-gallery theme="theme-class"]` to use per gallery themes.
 

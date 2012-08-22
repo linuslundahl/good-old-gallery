@@ -33,7 +33,7 @@ function compress( $buffer ) {
 	// Add absolute paths
 	foreach ( $themes as $file => $theme ) {
 		$path = substr( $file, 0, -4 );
-		$buffer = str_replace( $path, $theme['path']['url'] . '/' . $path, $buffer );
+		$buffer = str_replace( 'url(' . $path, 'url(' . $theme['path']['url'] . '/' . $path, $buffer );
 	}
 
 	return $buffer;

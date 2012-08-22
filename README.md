@@ -39,7 +39,10 @@ Custom themes can be stored in two locations. `wp-content/gog-themes` or `wp-con
 
 The theme structure is:
 
+	../gog-themes/theme-name/theme-name/*.* (any image resources used in theme-name.css)
 	../gog-themes/theme-name/theme-name.css (required)
 	../gog-themes/theme-name/theme-name.png
+
+When using an image in your css you should use `url(theme-name/image-name.png)` without quotes. This is to allow the cached css file to add absolute paths to your images.
 
 See themes located in `good-old-gallery/themes` for reference on how the theme info in the css file should be formatted.
