@@ -49,13 +49,15 @@ switch ( $action ) {
 		if ( $post->post_type == 'attachment' ) {
 			$force = ( $force || !MEDIA_TRASH );
 			if ( ! wp_delete_attachment($post_id, $force) )
-				wp_die( __( 'Error in deleting.', 'goodoldgallery' ) );
-		} else {
-			if ( !wp_delete_post($post_id, $force) )
-				wp_die( __( 'Error in deleting.', 'goodoldgallery' ) );
+				wp_die( __( 'Error when deleting.', 'goodoldgallery' ) );
+		}
+		else {
+			if ( !wp_delete_post($post_id, $force) ) {
+				wp_die( __( 'Error when deleting.', 'goodoldgallery' ) );
+			}
 		}
 
-		wp_redirect( add_query_arg('deleted', 1, $sendback) );
+		wp_redirect( add_query_arg( 'deleted', 1, $sendback ) );
 		exit();
 		break;
 }

@@ -7,14 +7,14 @@ class GOG_PageSettings {
 		$this->settings = $settings;
 
 		// Add pages
-		add_action( 'admin_init', array( $this, 'settingsInit' ) );
+		add_action( 'admin_init', array( $this, 'initSettingsPage' ) );
 		add_action( 'admin_menu', array( $this, 'addSettingsPage' ) );
 	}
 
 	/**
 	 * Register form fields.
 	 */
-	public function settingsInit(){
+	public function initSettingsPage(){
 		register_setting( GOG_PLUGIN_SHORT . '_settings', GOG_PLUGIN_SHORT . '_settings', array( $this, 'settingsValidate' ) );
 
 		// Get themes for select dropdown
@@ -204,11 +204,7 @@ class GOG_PageSettings {
 ITEMS;
 		}
 
-?>
-	<ul id="order">
-<?php echo $li; ?>
-	</ul>
-<?php
+		echo '<ul id="order">' . $li . '</ul>';
 	}
 
 	/**
@@ -238,11 +234,10 @@ ITEMS;
 
 	public function settingsValidate($input) {
 		// Set default settings if plugin is changed
-		if ($input['plugin'] != $this->settings->settings['plugin']) {
+		if ( $input['plugin'] != $this->settings->settings['plugin'] ) {
 			$plugin = $this->settings->LoadPlugin( array( 'plugin' => $input['plugin'] ) );
 			$input += $plugin['settings'];
 		}
-
 		// @TODO: Fix validation for numeric fields in plugins
 		// else {
 		// 	$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';

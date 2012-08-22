@@ -6,6 +6,13 @@
 class GOG_FormBuilder {
 
 	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		add_action( 'admin_notices', array( $this, 'notices' ) );
+	}
+
+	/**
 	 * Loops through the form array and prints sections and fields accordingly using the Settings API.
 	 */
 	public function parseForm( $form, $name, $page, $saved ) {
@@ -86,7 +93,7 @@ class GOG_FormBuilder {
 	/**
 	 * Register errors and notices.
 	 */
-	public function Notices() {
+	public function notices() {
 		settings_errors();
 	}
 
@@ -168,6 +175,3 @@ class GOG_FormBuilder {
 		}
 	}
 }
-
-// Register notices.
-add_action( 'admin_notices', array('GOG_FormBuilder', 'Notices') );

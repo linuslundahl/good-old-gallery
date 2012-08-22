@@ -51,7 +51,9 @@ $content = compress( ob_get_contents() );
 ob_end_clean();
 
 $upload_url = wp_upload_dir();
-file_put_contents( $upload_url['basedir'] . '/good-old-gallery-themes.css', $content );
+if ( is_writeable( $upload_url['basedir'] ) ) {
+	file_put_contents( $upload_url['basedir'] . '/good-old-gallery-themes.css', $content );
+}
 
 // Redirect back to settings
 if ( isset($_GET['redirect']) ) {

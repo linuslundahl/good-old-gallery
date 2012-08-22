@@ -28,7 +28,7 @@ class GOG_Admin {
 		add_filter( 'wp_ajax_delete_attachment', array( $this, 'deleteAttachment' ) );
 
 		// Register styles and scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'loadStyleAndScripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'loadStylesAndScripts' ) );
 
 		// Add action to save the gallery metadata
 		add_action( 'save_post', array( $this, 'saveMetaContent' ) );
@@ -99,7 +99,7 @@ class GOG_Admin {
 	/**
 	 * Register styles and scripts.
 	 */
-	public function loadStyleAndScripts( $hook ) {
+	public function loadStylesAndScripts( $hook ) {
 		// Load up media upload when administering gallery content
 		if ( ( ($hook == 'edit.php' || $hook == 'post.php') && ( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'goodoldgallery' ) ) || ( $hook == 'post-new.php' && $_GET['post_type'] == 'goodoldgallery' ) ) {
 			add_thickbox();
@@ -334,7 +334,7 @@ class GOG_Admin {
 	<?php if ($theme_options): ?>
 				<p>
 					<label for="theme" title="<?php echo __( 'Select theme', 'goodoldgallery' ); ?>" style="line-height:25px;"><?php echo __( 'Theme', 'goodoldgallery' ); ?>:</label>
-					<select id="theme" name="Theme">
+					<select id="theme" name="theme">
 						<option value="">- Select theme -</option>
 						<?php echo $theme_options; ?>
 					</select>

@@ -7,14 +7,14 @@ class GOG_PageThemes {
 		$this->settings = $settings;
 
 		// Add pages
-		add_action( 'admin_init', array( $this, 'themesInit') );
+		add_action( 'admin_init', array( $this, 'initThemesPage') );
 		add_action( 'admin_menu', array( $this, 'addThemesPage' ) );
 	}
 
 	/**
 	 * Register form fields.
 	 */
-	public function themesInit(){
+	public function initThemesPage(){
 		global $upload_url;
 
 		// Build cache if needed.

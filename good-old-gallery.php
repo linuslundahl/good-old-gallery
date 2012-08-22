@@ -74,7 +74,7 @@ class GoodOldGallery {
 
 		// Check if the shortcode has been loaded
 		if ( is_active_widget( FALSE, FALSE, 'goodoldgallerywidget', TRUE ) ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'loadStyleAndScripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'loadStylesAndScripts' ) );
 			$this->is_loaded = TRUE;
 		}
 	}
@@ -85,14 +85,16 @@ class GoodOldGallery {
 	public function activate() {
 		$s = new GOG_Settings;
 
-		$settings = get_option( GOG_PLUGIN_SHORT . '_settings' );
-		if (!$settings) {
+		if ( !get_option( GOG_PLUGIN_SHORT . '_settings' ) ) {
 			add_option( GOG_PLUGIN_SHORT . '_settings', $s->settings );
 		}
 
-		$themes = get_option( GOG_PLUGIN_SHORT . '_themes' );
-		if (!$themes) {
+		if ( !get_option( GOG_PLUGIN_SHORT . '_themes' ) ) {
 			add_option( GOG_PLUGIN_SHORT . '_themes', $s->themes );
+		}
+
+		if ( !get_option( GOG_PLUGIN_SHORT . '_plugin' ) ) {
+			add_option( GOG_PLUGIN_SHORT . '_plugin', $s->plugin );
 		}
 	}
 
@@ -146,7 +148,7 @@ class GoodOldGallery {
 				}
 
 				if ( $found ) {
-					add_action( 'wp_enqueue_scripts', array( $this, 'loadStyleAndScripts' ) );
+					add_action( 'wp_enqueue_scripts', array( $this, 'loadStylesAndScripts' ) );
 				}
 			}
 		}
@@ -157,10 +159,12 @@ class GoodOldGallery {
 	/**
 	 * Register styles and js for selected slider plugin.
 	 */
-	public function loadStyleAndScripts() {
+	public function loadStylesAndScripts() {
+		global $upload_url;
+
 		if ( !$this->is_admin ) {
 			// Add minified css of all themes or the selected theme css
-			if ( !empty( $this->settings->themes['all'] ) && file_exists( $upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
+			if ( ( !empty( $this->settings->themes['themes'] ) && $this->settings->themes['themes'] == 'true' ) && file_exists( $upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
 				wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 			}
 			// Add selected themes css

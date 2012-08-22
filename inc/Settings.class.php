@@ -37,20 +37,34 @@ class GOG_Settings {
 			),
 		);
 
+		$is_admin = is_admin();
+
 		$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
 		$this->themes = !$themes || !is_array($themes) ? $this->default['themes'] : $themes;
 
+		// Check for faulty settings in options
+		$u = FALSE;
+		if ( $is_admin && ( empty( $this->settings['plugin'] ) || empty( $settings ) || empty( $themes ) ) ) {
+			update_option( GOG_PLUGIN_SHORT . '_themes', $this->default['themes'] );
+			$u = TRUE;
+		}
+
 		// Load slider plugin settings from db, if not found load from settings file and save.
 		$this->plugin = $this->getOption( 'plugin' );
-		if (empty($this->plugin['plugin']) || (!empty($this->plugin['plugin']) && $this->plugin['plugin'] != $this->settings['plugin'])) {
-			$this->plugin = $this->loadPlugin( $this->settings );
+		if ( $u || ( empty( $this->plugin['plugin'] ) || ( !empty($this->plugin['plugin'] ) && $this->plugin['plugin'] != $this->settings['plugin'] ) ) ) {
+			$this->plugin = $this->loadPlugin( $u ? $this->default['settings'] : $this->settings );
 			update_option( GOG_PLUGIN_SHORT . '_plugin', $this->plugin );
 		}
 
 		// Extend default settings with slider plugin settings
-		if (isset($this->plugin['settings']) && is_array($this->plugin['settings'])) {
+		if ( isset( $this->plugin['settings'] ) && is_array( $this->plugin['settings'] ) ) {
 			$this->default['settings'] += $this->plugin['settings'];
 			$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
+		}
+
+		// Add update settings if faulty settings in options
+		if ( $u ) {
+			update_option( GOG_PLUGIN_SHORT . '_settings', $this->default['settings'] );
 		}
 	}
 
