@@ -4,7 +4,7 @@ function goodold_gallery_flexslider_setup() {
 	return array(
 		'title'   => 'Flexslider',
 		'version' => '2.1',
-		'files'   => array('jquery.flexslider-min.js'),
+		'files'   => array( 'jquery.flexslider-min.js' ),
 		'class'   => '.go-gallery-inner',
 		'url'     => 'http://flex.madebymufffin.com/',
 		'info'    => 'An awesome, fully responsive jQuery slider plugin.',
@@ -193,7 +193,7 @@ function goodold_gallery_flexslider_settings_form() {
 }
 
 function goodold_gallery_flexslider_shortcode_extras( $settings ) {
-	extract($settings);
+	extract( $settings );
 
 	$ret = array(
 		'navigation' => $settings['directionnav']['val'] == 'true' ? TRUE : FALSE,

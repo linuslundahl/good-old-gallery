@@ -34,12 +34,12 @@ class GOG_Admin {
 		add_action( 'save_post', array( $this, 'saveMetaContent' ) );
 
 		// Remove unwanted tabs for Good Old Gallery content uploader
-		if ( isset($_GET['post_id']) && ( get_post_type( $_GET['post_id'] ) == 'goodoldgallery') ) {
+		if ( isset( $_GET['post_id'] ) && ( get_post_type( $_GET['post_id'] ) == 'goodoldgallery') ) {
 			add_filter( 'media_upload_tabs', array( $this, 'removeMediaTabs' ) );
 		}
 
 		// Insert shortcode into post othwerwise load page
-		if ( isset($_POST['gog-shortcode']) ) {
+		if ( isset( $_POST['gog-shortcode'] ) ) {
 			media_send_to_editor( GOG_Shortcode::buildShortcode( $_POST ) );
 		}
 		else {
@@ -101,7 +101,7 @@ class GOG_Admin {
 	 */
 	public function loadStylesAndScripts( $hook ) {
 		// Load up media upload when administering gallery content
-		if ( ( ($hook == 'edit.php' || $hook == 'post.php') && ( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'goodoldgallery' ) ) || ( $hook == 'post-new.php' && $_GET['post_type'] == 'goodoldgallery' ) ) {
+		if ( ( ( $hook == 'edit.php' || $hook == 'post.php' ) && ( isset( $_GET['post'] ) && get_post_type( $_GET['post'] ) == 'goodoldgallery' ) ) || ( $hook == 'post-new.php' && $_GET['post_type'] == 'goodoldgallery' ) ) {
 			add_thickbox();
 
 			wp_enqueue_script( 'media-upload' );
@@ -142,7 +142,7 @@ class GOG_Admin {
 	public function addMeta() {
 		add_meta_box( 'good-old-gallery',
 			__( 'Gallery', 'goodoldgallery' ),
-			array($this, 'addMetaContent'),
+			array( $this, 'addMetaContent' ),
 			'goodoldgallery',
 			'advanced'
 		);
@@ -156,7 +156,7 @@ class GOG_Admin {
 
 		$edit = FALSE;
 		$button = __( 'Upload images', 'goodoldgallery' );
-		if ( !empty($_GET['post']) ) {
+		if ( !empty( $_GET['post'] ) ) {
 			$button = __( 'Manage gallery', 'goodoldgallery' );
 			$edit = TRUE;
 		}
@@ -165,7 +165,7 @@ class GOG_Admin {
 
 		$out = $this->uploadButton( $button, 'image' );
 		$context = apply_filters( 'media_buttons_context', __( '%s' ) );
-		printf($context, $out);
+		printf( $context, $out );
 
 		if ( !$edit ) {
 			echo ' <span class="description">' . __( 'Click to upload your images.', 'goodoldgallery' ) . '</span>';
@@ -192,13 +192,14 @@ class GOG_Admin {
 				echo '<ul class="attachments">' . "\n";
 				foreach ( $attachments as $gallery_id => $attachment ) {
 					echo '<li>' . "\n";
-					echo '<div class="image">' . wp_get_attachment_image($gallery_id, 'thumbnail', false) . '</div>' . "\n";
-					echo '<div class="id">' . sprintf(__( 'Attachment ID: %s ', 'goodoldgallery' ), $attachment->ID) . '</div>' . "\n";
+					echo '<div class="image">' . wp_get_attachment_image( $gallery_id, 'thumbnail', false ) . '</div>' . "\n";
+					echo '<div class="id">' . sprintf( __( 'Attachment ID: %s ', 'goodoldgallery' ), $attachment->ID ) . '</div>' . "\n";
 
 					$id = $attachment->ID;
 					$post = get_post( $id );
 					$filename = esc_html( basename( $post->guid ) );
 
+					// Delete code borrowed from wordpress.
 					echo "<a href='#' class='del-link' onclick=\"document.getElementById('del_attachment_$id').style.display='block';return false;\">" . __( 'Delete', 'goodoldgallery' ) . "</a>
 						<div id='del_attachment_$id' class='del-attachment' style='display:none;'>" . sprintf( __( 'You are about to delete <strong>%s</strong>.', 'goodoldgallery' ), $filename ) . "
 						<a href='" . wp_nonce_url( GOG_PLUGIN_URL . "/inc/delete.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' data-id='$attachment->ID' data-nonce='" . wp_create_nonce( 'goodold_gallery_delete_attachment' ) . "' class='submitdelete button'>" . __( 'Continue', 'goodoldgallery' ) . '</a>' . "
@@ -236,8 +237,8 @@ class GOG_Admin {
 	/**
 	 * Saves custom image link field.
 	 */
-	public function imageAttachmentFieldsToSave($post, $attachment) {
-		if( isset($attachment['goodold_gallery_image_link']) ){
+	public function imageAttachmentFieldsToSave( $post, $attachment ) {
+		if( isset( $attachment['goodold_gallery_image_link'] ) ){
 			update_post_meta( $post['ID'], '_goodold_gallery_image_link', $attachment['goodold_gallery_image_link'] );
 		}
 		return $post;
@@ -254,13 +255,13 @@ class GOG_Admin {
 	public function mediaTab( $tabs ) {
 		global $wpdb;
 
-		$posts = $wpdb->get_results($wpdb->prepare("
+		$posts = $wpdb->get_results( $wpdb->prepare("
 			SELECT ID FROM $wpdb->posts
 				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		));
+		) );
 
 		if ( $posts ) {
-			$newtab = array('gogallery' => __( GOG_PLUGIN_NAME, 'goodoldgallery' ));
+			$newtab = array( 'gogallery' => __( GOG_PLUGIN_NAME, 'goodoldgallery' ) );
 			$tabs = array_merge($tabs, $newtab);
 		}
 
@@ -276,10 +277,10 @@ class GOG_Admin {
 		media_upload_header();
 
 		// Build dropdown with galleries
-		$posts = $wpdb->get_results($wpdb->prepare("
+		$posts = $wpdb->get_results( $wpdb->prepare("
 			SELECT ID, post_title FROM $wpdb->posts
 				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		));
+		) );
 
 		$options = !$posts ? "<option value=\"\">No galleries found</option>" : "";
 
@@ -321,7 +322,7 @@ class GOG_Admin {
 				<input id="gog-shortcode" name="gog-shortcode" type="hidden" value="true" />
 				<input class="button submit" type="submit" name="submit" value="<?php echo __( 'Insert into post', 'goodoldgallery' ); ?>" />
 
-	<?php if ($gallery_options): ?>
+	<?php if ( $gallery_options ): ?>
 				<p>
 					<label for="id" title="<?php echo __( 'Select gallery', 'goodoldgallery' ); ?>" style="line-height:25px;"><?php echo __( 'Gallery', 'goodoldgallery' ); ?>:</label>
 					<select id="id" name="id">
@@ -331,7 +332,7 @@ class GOG_Admin {
 				</p>
 	<?php endif; ?>
 
-	<?php if ($theme_options): ?>
+	<?php if ( $theme_options ): ?>
 				<p>
 					<label for="theme" title="<?php echo __( 'Select theme', 'goodoldgallery' ); ?>" style="line-height:25px;"><?php echo __( 'Theme', 'goodoldgallery' ); ?>:</label>
 					<select id="theme" name="theme">
@@ -374,10 +375,10 @@ class GOG_Admin {
 	/**
 	 * Hide unwanted tabs in Good Old Gallery uploader.
 	 */
-	public function removeMediaTabs($tabs) {
-		unset($tabs['type_url']);
-		unset($tabs['library']);
-		unset($tabs['gogallery']);
+	public function removeMediaTabs( $tabs ) {
+		unset( $tabs['type_url'] );
+		unset( $tabs['library'] );
+		unset( $tabs['gogallery'] );
 		return $tabs;
 	}
 
@@ -396,7 +397,7 @@ class GOG_Admin {
 		$post = wp_get_single_post();
 
 		$button = ' %s';
-		if (get_post_type() != 'goodoldgallery' && isset($post->ID)) {
+		if ( get_post_type() != 'goodoldgallery' && isset( $post->ID ) ) {
 			$image = GOG_PLUGIN_URL . '/style/img/good-old-gallery-small.png';
 			$button .= '<a href="media-upload.php?post_id=' . $post->ID . '&tab=gogallery&TB_iframe=1" id="add_gogallery" class="thickbox add_media" title="Insert ' . GOG_PLUGIN_NAME . '"><img src="' . $image . '" /></a>';
 		}
@@ -408,8 +409,8 @@ class GOG_Admin {
 	 * Delete attachments from gallery posts with ajax.
 	 */
 	public function deleteAttachment( $post ) {
-		if( wp_delete_attachment( $_POST['att_ID'], true )) {
-			echo sprintf(__( 'Attachment ID: %s has been deleted.', 'goodoldgallery' ), $_POST['att_ID']);
+		if( wp_delete_attachment( $_POST['att_ID'], true ) ) {
+			echo sprintf( __( 'Attachment ID: %s has been deleted.', 'goodoldgallery' ), $_POST['att_ID'] );
 		}
 		exit();
 	}

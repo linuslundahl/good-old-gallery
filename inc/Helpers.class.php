@@ -13,12 +13,12 @@ class GOG_Helpers {
 				return $wp_root = str_replace( "\\", "/", dirname( $f ) );
 			}
 
-			if ( is_dir($f) ) {
+			if ( is_dir( $f ) ) {
 				$newdir = dirname( dirname( $f ) );
 			}
 		}
 
-		if ( isset($newdir) && $newdir != $directory ) {
+		if ( isset( $newdir ) && $newdir != $directory ) {
 			if ( self::getWPRoot( $newdir ) ) {
 				return $wp_root;
 			}
@@ -46,7 +46,7 @@ class GOG_Helpers {
 	public function orderFields( $settings ) {
 		$ret = array();
 		foreach ( $settings as $key => $val ) {
-			if ( strpos($key, 'order_') !== FALSE ) {
+			if ( strpos( $key, 'order_' ) !== FALSE ) {
 				$items[$val] = $key;
 			}
 		}
@@ -54,7 +54,7 @@ class GOG_Helpers {
 		if ( !empty( $items ) ) {
 			ksort( $items );
 			foreach ( $items as $val => $key ) {
-				$id = str_replace('order_', '', $key);
+				$id = str_replace( 'order_', '', $key );
 				$ret[] = $id;
 			}
 		}

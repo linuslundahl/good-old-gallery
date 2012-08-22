@@ -28,12 +28,12 @@ class GOG_Widget extends WP_Widget {
 	 * Widget output.
 	 */
 	public function widget( $args, $instance ) {
-		extract($args);
+		extract( $args );
 
 		$show = FALSE;
-		if ( isset($instance['gallery-pages']) ) {
+		if ( isset( $instance['gallery-pages'] ) ) {
 			$paths = goodold_gallery_paths( $instance['gallery-pages'] );
-			if ( in_array($_SERVER['REQUEST_URI'], $paths) ) {
+			if ( in_array( $_SERVER['REQUEST_URI'], $paths ) ) {
 				$show = TRUE;
 			}
 		}
@@ -45,7 +45,7 @@ class GOG_Widget extends WP_Widget {
 		if ( $show ) {
 			$settings = '';
 			foreach ( $instance as $key => $value ) {
-				$key = strtolower($key);
+				$key = strtolower( $key );
 				if ( $key != 'title' ) {
 					if ( $value ) {
 						$settings .= $key . '="' . $value . '" ';
@@ -60,12 +60,12 @@ class GOG_Widget extends WP_Widget {
 						$settings .= $key . '="false" ';
 					}
 
-					$settings = str_replace('"on"', '"true"', $settings);
+					$settings = str_replace( '"on"', '"true"', $settings );
 				}
 			}
 
 			echo $before_widget;
-			echo do_shortcode( '[good-old-gallery ' . rtrim($settings) . ']' );
+			echo do_shortcode( '[good-old-gallery ' . rtrim( $settings ) . ']' );
 			echo $after_widget;
 		}
 	}
@@ -89,7 +89,7 @@ class GOG_Widget extends WP_Widget {
 
 		foreach ( $gog->settings->plugin['settings_form'] as $section ) {
 			foreach ( $section['fields'] as $setting => $item ) {
-				if ( !isset($item['ignore']) ) {
+				if ( !isset( $item['ignore'] ) ) {
 					$setting = $setting == 'title' ? 'g' . $setting : $setting;
 					$instance[$setting] = $new_instance[$setting];
 				}
@@ -106,21 +106,21 @@ class GOG_Widget extends WP_Widget {
 		global $wpdb, $gog;
 
 		// Build dropdown with galleries
-		$posts = $wpdb->get_results($wpdb->prepare("
+		$posts = $wpdb->get_results( $wpdb->prepare("
 			SELECT ID, post_title FROM $wpdb->posts
 				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		));
+		) );
 
-		if (!$posts) {
+		if ( !$posts ) {
 			echo '<p>' . __( 'No galleries found.', 'goodoldgallery' ) . '</p>';
 		}
 		else {
 			$gallery_options = array();
-			foreach ($posts as $p) {
+			foreach ( $posts as $p ) {
 				$gallery_options[$p->ID] = $p->post_title;
 			}
 
-			$title = apply_filters( 'widget_title', isset($instance['title']) ? $instance['title'] : '' );
+			$title = apply_filters( 'widget_title', isset( $instance['title'] ) ? $instance['title'] : '' );
 
 			// Prepare widget form
 			$widget_form = array(
@@ -184,8 +184,8 @@ class GOG_Widget extends WP_Widget {
 			$widget_form += $gog->settings->plugin['settings_form'];
 			foreach ( $widget_form as $section => $form ) {
 				foreach ( $widget_form[$section]['fields'] as $key => $item) {
-					$widget_form[$section]['fields'][$key]['widget_id'] = $this->get_field_id($key);
-					$widget_form[$section]['fields'][$key]['widget_name'] = $this->get_field_name($key);
+					$widget_form[$section]['fields'][$key]['widget_id'] = $this->get_field_id( $key );
+					$widget_form[$section]['fields'][$key]['widget_name'] = $this->get_field_name( $key );
 				}
 			}
 

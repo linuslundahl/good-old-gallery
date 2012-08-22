@@ -31,17 +31,17 @@ class GOG_FormBuilder {
 			);
 
 			// Print fields in section
-			if ( !empty($section['fields']) && is_array($section['fields']) ) {
+			if ( !empty( $section['fields'] ) && is_array( $section['fields'] ) ) {
 				foreach ( $section['fields'] as $id => $field ) {
 					$field['args'] += array(
 						'id'      => $id,
-						'default' => isset($saved[$id]) ? $saved[$id] : '',
+						'default' => isset( $saved[$id] ) ? $saved[$id] : '',
 						'name'    => GOG_PLUGIN_SHORT . '_' . $name . '[' . $id . ']',
 					);
 
-					$title = isset($field['title']) ? '<label for="' . $id . '">' . __( $field['title'], 'goodoldgallery' ) .'</label>' : '';
+					$title = isset( $field['title'] ) ? '<label for="' . $id . '">' . __( $field['title'], 'goodoldgallery' ) .'</label>' : '';
 
-					if ( method_exists('GOG_FormBuilder', $field['type']) ) {
+					if ( method_exists( 'GOG_FormBuilder', $field['type'] ) ) {
 						add_settings_field(
 							// $id
 							$id,
@@ -70,17 +70,18 @@ class GOG_FormBuilder {
 
 		foreach ( $form as $section ) {
 			foreach ( $section['fields'] as $key => $item ) {
-				if ( !isset($item['ignore']) ) {
+				if ( !isset( $item['ignore'] ) ) {
+					$lkey = strtolower( $key );
 					$item['args'] += array(
-						'id'      => isset($item['widget_id']) ? $item['widget_id'] : strtolower($key),
-						'default' => isset($saved[$key]) ? $saved[$key] : '',
-						'name'    => isset($item['widget_name']) ? $item['widget_name'] : GOG_PLUGIN_SHORT . '_' . strtolower($key) . '[' . strtolower($key) . ']',
+						'id'      => isset( $item['widget_id'] ) ? $item['widget_id'] : $lkey,
+						'default' => isset( $saved[$key] ) ? $saved[$key] : '',
+						'name'    => isset( $item['widget_name'] ) ? $item['widget_name'] : GOG_PLUGIN_SHORT . '_' . $lkey . '[' . $lkey . ']',
 					);
 
 					echo '<p>';
-					echo $item['type'] != 'checkbox' ? '<label for="' . strtolower($key) . '">' . __( $item['title'], 'goodoldgallery' ) .':</label> ' : '';
+					echo $item['type'] != 'checkbox' ? '<label for="' . $lkey . '">' . __( $item['title'], 'goodoldgallery' ) .':</label> ' : '';
 					if ( method_exists( 'GOG_FormBuilder', $item['type'] ) ) {
-						self::$item['type']($item['args']);
+						self::$item['type']( $item['args'] );
 					}
 					echo '</p>';
 				}
@@ -101,31 +102,31 @@ class GOG_FormBuilder {
 	 * Outputs plain markup
 	 */
 	public function markup( $args ) {
-		extract($args);
+		extract( $args );
 
-		echo isset($desc) ? $desc : '';
+		echo isset( $desc ) ? $desc : '';
 	}
 
 	/**
 	 * Ouputs a <select>.
 	 */
 	public function select( $args ) {
-		extract($args);
+		extract( $args );
 
 		echo '<select id="' . $id . '" name="' . $name . '">';
-		foreach($items as $key => $item) {
-			$selected = ($default == $key) ? ' selected="selected"' : '';
+		foreach( $items as $key => $item ) {
+			$selected = ( $default == $key ) ? ' selected="selected"' : '';
 			echo "<option value=\"$key\"$selected>" . __( $item, 'goodoldgallery' ) . "</option>";
 		}
 		echo "</select>";
-		echo isset($desc) ? '<span class="description"> ' . __( $desc, 'goodoldgallery' ) . '</span>' : '';
+		echo isset( $desc ) ? '<span class="description"> ' . __( $desc, 'goodoldgallery' ) . '</span>' : '';
 	}
 
 	/**
 	 * Outputs a <textarea>.
 	 */
 	public function textarea( $args ) {
-		extract($args);
+		extract( $args );
 
 		echo "<textarea id=\"$id\" name=\"$name\" rows=\"7\" cols=\"50\" type=\"textarea\">{$default}</textarea>";
 	}
@@ -134,19 +135,19 @@ class GOG_FormBuilder {
 	 * Outputs an <input> textfield.
 	 */
 	public function text( $args ) {
-		extract($args);
+		extract( $args );
 
-		$size = isset($size) ? $size : 40;
+		$size = isset( $size ) ? $size : 40;
 
 		echo "<input id=\"$id\" name=\"$name\" size=\"$size\" type=\"text\" value=\"{$default}\" />";
-		echo isset($desc) ? '<span class="description"> ' . __( $desc, 'goodoldgallery' ) . '</span>' : '';
+		echo isset( $desc ) ? '<span class="description"> ' . __( $desc, 'goodoldgallery' ) . '</span>' : '';
 	}
 
 	/**
 	 * Outputs an <input> password field.
 	 */
 	public function password( $args ) {
-		extract($args);
+		extract( $args );
 
 		echo "<input id=\"$id\" name=\"$name\" size=\"40\" type=\"password\" value=\"\" />";
 	}
@@ -155,22 +156,22 @@ class GOG_FormBuilder {
 	 * Outputs an <input> checkbox.
 	 */
 	public function checkbox( $args ) {
-		extract($args);
+		extract( $args );
 
 		$checked = checked( 'true', $default, false );
 		echo "<input value=\"false\" name=\"$name\" type=\"hidden\" />";
 		echo "<input id=\"$id\" value=\"true\" name=\"$name\" type=\"checkbox\"$checked />";
-		echo isset($label) ? '<label for="' . $id . '"> ' . __ ( $label ) . '</label>' : '';
+		echo isset( $label ) ? '<label for="' . $id . '"> ' . __ ( $label ) . '</label>' : '';
 	}
 
 	/**
 	 * Outputs an <input> radio button.
 	 */
 	public function radio( $args ) {
-		extract($args);
+		extract( $args );
 
-		foreach($items as $key => $item) {
-			$checked = ($default == $key) ? ' checked="checked"' : '';
+		foreach( $items as $key => $item ) {
+			$checked = ( $default == $key ) ? ' checked="checked"' : '';
 			echo "<label><input value=\"$key\" name=\"$name\" type=\"radio\"$checked /> $item</label><br />";
 		}
 	}

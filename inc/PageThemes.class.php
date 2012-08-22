@@ -18,7 +18,7 @@ class GOG_PageThemes {
 		global $upload_url;
 
 		// Build cache if needed.
-		if ( $this->settings->themes['themes'] && !file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
+		if ( $this->settings->themes['themes'] && !file_exists( $upload_url['basedir'] . '/good-old-gallery-themes.css' ) ) {
 			wp_redirect( GOG_PLUGIN_URL . 'inc/cache.php?redirect' );
 		}
 
@@ -32,7 +32,7 @@ class GOG_PageThemes {
 		}
 
 		// Get themes for select dropdown
-		$theme_options = array(NULL => __( 'No theme', 'goodoldgallery' ));
+		$theme_options = array( NULL => __( 'No theme', 'goodoldgallery' ) );
 		$theme_options += $this->settings->GetThemes( TRUE );
 
 		// Setup form
@@ -106,11 +106,11 @@ class GOG_PageThemes {
 		if ( $themes ) {
 			echo '<ul class="themes-available">';
 			foreach ( $themes as $file => $theme ) {
-				$author = filter_var($theme['AuthorURI'], FILTER_VALIDATE_URL) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
+				$author = filter_var( $theme['AuthorURI'], FILTER_VALIDATE_URL ) ? '<a href="' . $theme['AuthorURI'] . '">' . $theme['Author'] . '</a>' : $theme['Author'];
 
-				$scr_check = $theme['path']['path'] . '/' . substr($file, 0, -4) . '.png';
-				$screenshot = $theme['path']['url'] . '/' . substr($file, 0, -4) . '.png';
-				$screenshot = file_exists($scr_check) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
+				$scr_check = $theme['path']['path'] . '/' . substr( $file, 0, -4 ) . '.png';
+				$screenshot = $theme['path']['url'] . '/' . substr( $file, 0, -4 ) . '.png';
+				$screenshot = file_exists( $scr_check ) ? '<div class="screenshot"><img src="' . $screenshot . '" alt="' . $theme['Name'] . '" /></div>' : '';
 
 				echo '<li class="theme">';
 				echo $screenshot;
@@ -132,14 +132,14 @@ class GOG_PageThemes {
 	public function themesCache() {
 		global $upload_url;
 
-		if ( file_exists($upload_url['basedir'] . '/good-old-gallery-themes.css') ) {
-			$upload_dir = explode('/', $upload_url['basedir']);
-			$count = count($upload_dir);
+		if ( file_exists( $upload_url['basedir'] . '/good-old-gallery-themes.css' ) ) {
+			$upload_dir = explode( '/', $upload_url['basedir'] );
+			$count = count( $upload_dir );
 			echo '<p>' . __( 'Cache location: ', 'goodoldgallery' ) . '<code>' . $upload_dir[$count-2] . '/' . $upload_dir[$count-1] . '/good-old-gallery-themes.css</code></p>';
-			echo '<p>' . __( 'Cache last updated: ', 'goodoldgallery' ) . date('H:i, Y-m-d', filemtime($upload_url['basedir'] . '/good-old-gallery-themes.css')) . '</p>';
+			echo '<p>' . __( 'Cache last updated: ', 'goodoldgallery' ) . date( 'H:i, Y-m-d', filemtime( $upload_url['basedir'] . '/good-old-gallery-themes.css' ) ) . '</p>';
 		}
 
-		echo "<p>" . sprintf(__( "* To use all themes you need to %s, otherwise the themes won't be loaded, <strong>you also need to rebuild the cache if you install or delete themes</strong>.", 'goodoldgallery' ), '<a href="' . GOG_PLUGIN_URL . 'inc/cache.php?redirect">' . __( 'rebuild the css cache', 'goodoldgallery' ) . '</a>') . "</p>";
+		echo "<p>" . sprintf( __( "* To use all themes you need to %s, otherwise the themes won't be loaded, <strong>you also need to rebuild the cache if you install or delete themes</strong>.", 'goodoldgallery' ), '<a href="' . GOG_PLUGIN_URL . 'inc/cache.php?redirect">' . __( 'rebuild the css cache', 'goodoldgallery' ) . '</a>' ) . "</p>";
 	}
 
 	/**

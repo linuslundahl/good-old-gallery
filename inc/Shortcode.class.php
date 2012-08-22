@@ -23,13 +23,13 @@ class GOG_Shortcode {
 		// Build Slider default settings
 		$slider = array();
 		foreach ( $s->plugin['settings'] as $key => $value ) {
-			$new_key = strtolower($key);
+			$new_key = strtolower( $key );
 			$slider[$new_key] = $key;
 		}
 
 		$settings = array();
 		foreach ( $slider as $key => $large ) {
-			if (isset($s->settings[$large])) {
+			if ( isset($s->settings[$large] ) ) {
 				$settings[$key] = array(
 					'key' => $large,
 					'val' => $s->settings[$large],
@@ -52,18 +52,18 @@ class GOG_Shortcode {
 		) + $settings, $attr );
 
 		// Setup Slider settings array
-		$settings = array_slice($attr, 10);
+		$settings = array_slice( $attr, 10 );
 		foreach( $settings as $key => $setting ) {
-			if ( isset($slider[$key]) ) {
+			if ( isset( $slider[$key] ) ) {
 				$settings[$key] = array(
 					'key' => $slider[$key],
-					'val' => is_array($setting) ? $setting['val'] : $setting,
+					'val' => is_array( $setting ) ? $setting['val'] : $setting,
 				);
 			}
 		}
 
 		// Extract GOG settings to vars
-		extract(array_slice($attr, 0, 10));
+		extract( array_slice( $attr, 0, 10 ) );
 
 		// Use post_id if no id is set in shortcode.
 		$id = ( !$id && $post->ID ) ? $post->ID : $id;
@@ -81,13 +81,13 @@ class GOG_Shortcode {
 		);
 
 		$sc_extras = $s->LoadPlugin( array( 'function' => 'shortcode_extras', 'settings' => $sc_extra_settings ) );
-		if ( is_array($sc_extras) && !empty($sc_extras) ) {
-			extract($sc_extras);
+		if ( is_array( $sc_extras ) && !empty( $sc_extras ) ) {
+			extract( $sc_extras );
 			$settings += $settings_extras;
 		}
 
 		$ret = '';
-		if ( isset($settings['animation']) && ( $settings['animation']['val'] == 'none' || empty( $s->settings['plugin'] ) ) ) {
+		if ( isset( $settings['animation'] ) && ( $settings['animation']['val'] == 'none' || empty( $s->settings['plugin'] ) ) ) {
 			$ret .= do_shortcode( '[gallery id="' . $id . '"]' );
 		}
 		else {
@@ -122,8 +122,8 @@ class GOG_Shortcode {
 
 						// Sort fields in set order
 						$order = GOG_Helpers::orderFields( $s->settings );
-						$order = array_flip($order);
-						foreach ($order as $field => $key) {
+						$order = array_flip( $order );
+						foreach ( $order as $field => $key ) {
 							$order[$field] = '';
 						}
 
@@ -155,7 +155,7 @@ class GOG_Shortcode {
 					$order['image'] .= '</div>';
 
 					foreach ( $order as $field ) {
-						$images .= !is_numeric($field) ? $field : '';
+						$images .= !is_numeric( $field ) ? $field : '';
 					}
 
 					// End list item
@@ -179,7 +179,7 @@ class GOG_Shortcode {
 
 				}
 
-				$gallery_style = !empty($gallery_style) ? ' style="' . $gallery_style . '"' : '';
+				$gallery_style = !empty( $gallery_style ) ? ' style="' . $gallery_style . '"' : '';
 
 				// Begin gallery div and ul
 				$ret .= '<div id="go-gallery-' . $id . '-' . $i . '" class="go-gallery-container' . $classes . '"' . $gallery_style . '>' . "\n";
@@ -193,8 +193,8 @@ class GOG_Shortcode {
 				$ret .= '</ul>' . "\n";
 
 				// Add pager and navigation markup if set
-				$ret .= is_string($pager) ? $pager : '';
-				$ret .= is_string($navigation) ? $navigation : '';
+				$ret .= is_string( $pager ) ? $pager : '';
+				$ret .= is_string( $navigation ) ? $navigation : '';
 
 				$ret .= '</div>' . "\n";
 
@@ -202,7 +202,7 @@ class GOG_Shortcode {
 				$script = '';
 				foreach( $settings as $key => $setting ) {
 					if ( !empty( $setting ) ) {
-						if ( !empty($setting['key']) && !empty($setting['val']) ) {
+						if ( !empty( $setting['key'] ) && !empty( $setting['val'] ) ) {
 							$script .= $setting['key'];
 							if ( $setting['val'] == 'true' ) {
 								$script .= ': true, ';
@@ -221,7 +221,7 @@ class GOG_Shortcode {
 				$script .= $script_extras;
 
 				// Finish script
-				$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $(function () { $("#go-gallery-' . $id . '-' . $i . ' ' . $s->plugin['setup']['class'] . '").' . $s->settings['plugin'] . '({' . rtrim($script, ', ') . '}); }); });</script>' . "\n";
+				$ret .= '<script type="text/javascript" charset="utf-8">jQuery(function($) { $(function () { $("#go-gallery-' . $id . '-' . $i . ' ' . $s->plugin['setup']['class'] . '").' . $s->settings['plugin'] . '({' . rtrim( $script, ', ' ) . '}); }); });</script>' . "\n";
 
 				// End gallery div
 				$ret .= '</div>' . "\n";
@@ -236,16 +236,16 @@ class GOG_Shortcode {
 	/**
 	 * Helper function that builds a shortcode for TinyMCE
 	 */
-	public function buildShortcode($post) {
+	public function buildShortcode( $post ) {
 		$ret = '[good-old-gallery';
 
 		foreach ( $post as $key => $item ) {
-			if ($key != 'gog-shortcode' && $key != 'submit') {
-				if (!empty($item)) {
-					if ( is_array($item) ) {
+			if ( $key != 'gog-shortcode' && $key != 'submit' ) {
+				if ( !empty( $item ) ) {
+					if ( is_array( $item ) ) {
 						$old_item = $item;
-						reset($item);
-						$new_key = key($item);
+						reset( $item );
+						$new_key = key( $item );
 						$ret .= $old_item[$new_key] ? ' ' . $new_key . '="' . $old_item[$new_key] . '"' : '';
 					}
 					else {

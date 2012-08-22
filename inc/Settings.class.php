@@ -39,8 +39,8 @@ class GOG_Settings {
 
 		$is_admin = is_admin();
 
-		$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
-		$this->themes = !$themes || !is_array($themes) ? $this->default['themes'] : $themes;
+		$this->settings = !$settings || !is_array( $settings ) ? $this->default['settings'] : $settings;
+		$this->themes = !$themes || !is_array( $themes ) ? $this->default['themes'] : $themes;
 
 		// Check for faulty settings in options
 		$u = FALSE;
@@ -51,7 +51,7 @@ class GOG_Settings {
 
 		// Load slider plugin settings from db, if not found load from settings file and save.
 		$this->plugin = $this->getOption( 'plugin' );
-		if ( $u || ( empty( $this->plugin['plugin'] ) || ( !empty($this->plugin['plugin'] ) && $this->plugin['plugin'] != $this->settings['plugin'] ) ) ) {
+		if ( $u || ( empty( $this->plugin['plugin'] ) || ( !empty( $this->plugin['plugin'] ) && $this->plugin['plugin'] != $this->settings['plugin'] ) ) ) {
 			$this->plugin = $this->loadPlugin( $u ? $this->default['settings'] : $this->settings );
 			update_option( GOG_PLUGIN_SHORT . '_plugin', $this->plugin );
 		}
@@ -59,7 +59,7 @@ class GOG_Settings {
 		// Extend default settings with slider plugin settings
 		if ( isset( $this->plugin['settings'] ) && is_array( $this->plugin['settings'] ) ) {
 			$this->default['settings'] += $this->plugin['settings'];
-			$this->settings = !$settings || !is_array($settings) ? $this->default['settings'] : $settings;
+			$this->settings = !$settings || !is_array( $settings ) ? $this->default['settings'] : $settings;
 		}
 
 		// Add update settings if faulty settings in options
@@ -100,7 +100,7 @@ class GOG_Settings {
 				$dir = @ opendir( $path );
 
 				while ( ( $file = readdir( $dir ) ) !== false ) {
-					if ( substr($file, 0, 1) != '.' ) {
+					if ( substr( $file, 0, 1 ) != '.' ) {
 						include_once( $path . '/' . $file . '/' . $file . '.php' );
 						if ( function_exists( 'goodold_gallery_' . $file . '_setup' ) ) {
 							$settings = call_user_func( 'goodold_gallery_' . $file . '_setup' );
@@ -139,20 +139,20 @@ class GOG_Settings {
 			'widget' => array(),
 		);
 
-		$ret['plugin'] = empty($args['plugin']) ? $this->settings['plugin'] : $args['plugin'];
-		if ( !empty($ret['plugin']) && $ret['plugin'] != 'none') {
-			require_once(GOG_PLUGIN_DIR . '/plugins/' . $ret['plugin'] . '/' . $ret['plugin'] . '.php');
+		$ret['plugin'] = empty( $args['plugin'] ) ? $this->settings['plugin'] : $args['plugin'];
+		if ( !empty( $ret['plugin'] ) && $ret['plugin'] != 'none') {
+			require_once( GOG_PLUGIN_DIR . '/plugins/' . $ret['plugin'] . '/' . $ret['plugin'] . '.php' );
 
-			if ( isset($args['function']) ) {
-				if ( function_exists('goodold_gallery_' . $ret['plugin'] . '_' . $args['function']) ) {
-					$settings = isset($args['settings']) ? $args['settings'] : array();
-					$ret = call_user_func('goodold_gallery_' . $ret['plugin'] . '_' . $args['function'], $settings);
+			if ( isset( $args['function'] ) ) {
+				if ( function_exists( 'goodold_gallery_' . $ret['plugin'] . '_' . $args['function'] ) ) {
+					$settings = isset( $args['settings'] ) ? $args['settings'] : array();
+					$ret = call_user_func( 'goodold_gallery_' . $ret['plugin'] . '_' . $args['function'], $settings );
 				}
 			}
 			else {
-				foreach ($ret as $callback => $item) {
-					if ( function_exists('goodold_gallery_' . $ret['plugin'] . '_' . $callback) ) {
-						$ret[$callback] = call_user_func('goodold_gallery_' . $ret['plugin'] . '_' . $callback);
+				foreach ( $ret as $callback => $item ) {
+					if ( function_exists( 'goodold_gallery_' . $ret['plugin'] . '_' . $callback ) ) {
+						$ret[$callback] = call_user_func( 'goodold_gallery_' . $ret['plugin'] . '_' . $callback );
 					}
 				}
 			}
@@ -190,7 +190,7 @@ class GOG_Settings {
 					}
 					if ( $file && is_dir( $path . '/' . $file ) ) {
 						$subdir = @ opendir( $path . '/' . $file );
-						while ( ($subfile = readdir( $subdir ) ) !== false ) {
+						while ( ( $subfile = readdir( $subdir ) ) !== false ) {
 							if ( substr( $subfile, 0, 1 ) == '.' ) {
 								continue;
 							}

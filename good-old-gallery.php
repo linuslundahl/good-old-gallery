@@ -128,18 +128,18 @@ class GoodOldGallery {
 	public function checkPost( $posts ) {
 		if ( !$this->is_loaded ) {
 			$found = FALSE;
-			if ( !empty($posts) ) {
+			if ( !empty( $posts ) ) {
 				foreach ( $posts as $gog_get['post'] ) {
 					// Check post content for shortcode.
-					if ( stripos($gog_get['post']->post_content, '[good-old-gallery') !== FALSE ) {
+					if ( stripos( $gog_get['post']->post_content, '[good-old-gallery') !== FALSE ) {
 						$found = TRUE;
 						break;
 					}
 					// Not found in post content, let's check custom fields.
 					else {
-						$custom = get_post_custom($gog_get['post']->ID);
+						$custom = get_post_custom( $gog_get['post']->ID );
 						foreach ( $custom as $field ) {
-							if ( stripos($field[0], '[good-old-gallery') !== FALSE ) {
+							if ( stripos( $field[0], '[good-old-gallery' ) !== FALSE ) {
 								$found = TRUE;
 								break;
 							}
@@ -168,14 +168,14 @@ class GoodOldGallery {
 				wp_enqueue_style( 'good-old-gallery-themes', $upload_url['baseurl'] . '/good-old-gallery-themes.css' );
 			}
 			// Add selected themes css
-			else if ( !empty($this->settings->themes['default']) && empty( $this->settings->themes['all'] ) ) {
+			else if ( !empty( $this->settings->themes['default'] ) && empty( $this->settings->themes['all'] ) ) {
 				wp_enqueue_style( 'good-old-gallery-theme', $this->settings->themes['theme']['url'] . '/' . $this->settings->themes['default'] );
 			}
 
 			// Include selected slider plugin files
-			if ( !empty($this->settings->settings['plugin']) ) {
+			if ( !empty( $this->settings->settings['plugin'] ) ) {
 				foreach ( $this->settings->plugin['setup']['files'] as $file ) {
-					wp_enqueue_script( 'slider', GOG_PLUGIN_URL . '/plugins/' . $this->settings->settings['plugin'] . '/' . $file, array('jquery'), '', FALSE );
+					wp_enqueue_script( 'slider', GOG_PLUGIN_URL . '/plugins/' . $this->settings->settings['plugin'] . '/' . $file, array( 'jquery' ), '', FALSE );
 				}
 			}
 

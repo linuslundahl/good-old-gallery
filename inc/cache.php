@@ -7,10 +7,10 @@ $wp_root = $h->getWPRoot( dirname( dirname( __FILE__ ) ) );
 
 /** WordPress Administration Bootstrap */
 $wp_load = $wp_root . "/wp-load.php";
-if ( !file_exists($wp_load) ) {
+if ( !file_exists( $wp_load ) ) {
 	$wp_config = $wp_root . "/wp-config.php";
-	if ( !file_exists($wp_config) ) {
-			exit("Can't find wp-config.php or wp-load.php");
+	if ( !file_exists( $wp_config ) ) {
+			exit( "Can't find wp-config.php or wp-load.php" );
 	}
 	else {
 			require_once( $wp_config );
@@ -23,17 +23,17 @@ else {
 $g = new GOG_Settings();
 $themes = $g->GetThemes();
 
-function compress($buffer) {
+function compress( $buffer ) {
 	global $themes;
 
 	// Remove comments
-	$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+	$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer );
 	// Remove tabs, spaces, newlines, etc.
-	$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '	 ', '		 ', '		 '), '', $buffer);
+	$buffer = str_replace( array( "\r\n", "\r", "\n", "\t", '	 ', '		 ', '		 ' ), '', $buffer );
 	// Add absolute paths
 	foreach ( $themes as $file => $theme ) {
-		$path = substr($file, 0, -4);
-		$buffer = str_replace($path, $theme['path']['url'] . '/' . $path, $buffer);
+		$path = substr( $file, 0, -4 );
+		$buffer = str_replace( $path, $theme['path']['url'] . '/' . $path, $buffer );
 	}
 
 	return $buffer;
@@ -56,6 +56,6 @@ if ( is_writeable( $upload_url['basedir'] ) ) {
 }
 
 // Redirect back to settings
-if ( isset($_GET['redirect']) ) {
+if ( isset( $_GET['redirect'] ) ) {
 	header( 'Location: /wp-admin/edit.php?post_type=goodoldgallery&page=gog_themes' );
 }

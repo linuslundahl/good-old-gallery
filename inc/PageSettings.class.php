@@ -18,13 +18,13 @@ class GOG_PageSettings {
 		register_setting( GOG_PLUGIN_SHORT . '_settings', GOG_PLUGIN_SHORT . '_settings', array( $this, 'settingsValidate' ) );
 
 		// Get themes for select dropdown
-		$plugin_options = array(NULL => __( 'No plugin', 'goodoldgallery' ));
+		$plugin_options = array( NULL => __( 'No plugin', 'goodoldgallery' ) );
 		$plugin_settings = $this->settings->GetPlugins( TRUE );
 		$plugin_info = '';
 		foreach ( $plugin_settings as $plugin => $settings ) {
 			$plugin_options[$plugin] = $settings['title'];
 			$plugin_info .= '<div class="plugin-info ' . $plugin . '">';
-			$plugin_info .= '<h4>' . $settings['title'] . ' <span class="version">' . sprintf(__( 'Version: %s', 'goodoldgallery' ), $settings['version']) . '</span></h4>';
+			$plugin_info .= '<h4>' . $settings['title'] . ' <span class="version">' . sprintf( __( 'Version: %s', 'goodoldgallery' ), $settings['version'] ) . '</span></h4>';
 			$plugin_info .= '<p><a href="' . $settings['url'] . '">' . $settings['url'] . '</a></p>';
 			$plugin_info .= '<p>' . __( $settings['info'], 'goodoldgallery' ) . '</p>';
 			$plugin_info .= '</div>';
@@ -153,7 +153,7 @@ class GOG_PageSettings {
 			),
 		);
 
-		if (!empty($this->settings->plugin)) {
+		if ( !empty($this->settings->plugin) ) {
 			$form += $this->settings->plugin['settings_form'];
 		}
 
@@ -180,9 +180,9 @@ class GOG_PageSettings {
 		$items = GOG_Helpers::orderFields( $this->settings->settings );
 
 		$li = '';
-		if (!empty($items) && count($items) == 3) {
-			foreach ($items as $key) {
-				switch ($key) {
+		if ( !empty( $items ) && count( $items ) == 3 ) {
+			foreach ( $items as $key ) {
+				switch ( $key ) {
 					case "title":
 						$title = __( "Title", 'goodoldgallery' );
 						break;
@@ -216,11 +216,11 @@ ITEMS;
 			<div class="icon32" id="icon-options-general"><br></div>
 			<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
 			<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
-			<p><?php echo sprintf(__( 'These settings are the defaults that will be used by your selected plugin (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.', 'goodoldgallery' ), '<code>[good-old-gallery]</code>'); ?><br />
-			<?php echo sprintf(__( 'Use the built in generator found under the %s tab, just click the %s button to find the tab on the far right.', 'goodoldgallery' ), '<em>' . GOG_PLUGIN_NAME . '</em>', '<em>' . __( 'Add an Image', 'goodoldgallery' ) . '</em>'); ?><br /><br />
-			<?php echo sprintf(__( 'More help can be found at %s', 'goodoldgallery' ), '<a href="http://wordpress.org/extend/plugins/good-old-gallery/installation/">wordpress.org</a>'); ?><br /><br />
-			<?php echo sprintf(__( '%s created and maintained by %s.', 'goodoldgallery' ), GOG_PLUGIN_NAME, '<a href="http://unwi.se/">Linus Lundahl</a>'); ?></p>
-			<div class="tip"><strong><?php echo __( 'Tip', 'goodoldgallery' ); ?>!</strong> <?php echo sprintf(__( "You can use %s with regular galleries that you have uploaded on a page/post, don't enter any ID in the shortcode and it will look for a gallery attached to the current page/post.", 'goodoldgallery' ), GOG_PLUGIN_NAME); ?></div>
+			<p><?php echo sprintf( __( 'These settings are the defaults that will be used by your selected plugin (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.', 'goodoldgallery' ), '<code>[good-old-gallery]</code>' ); ?><br />
+			<?php echo sprintf( __( 'Use the built in generator found under the %s tab, just click the %s button to find the tab on the far right.', 'goodoldgallery' ), '<em>' . GOG_PLUGIN_NAME . '</em>', '<em>' . __( 'Add an Image', 'goodoldgallery' ) . '</em>' ); ?><br /><br />
+			<?php echo sprintf( __( 'More help can be found at %s', 'goodoldgallery' ), '<a href="http://wordpress.org/extend/plugins/good-old-gallery/installation/">wordpress.org</a>' ); ?><br /><br />
+			<?php echo sprintf( __( '%s created and maintained by %s.', 'goodoldgallery' ), GOG_PLUGIN_NAME, '<a href="http://unwi.se/">Linus Lundahl</a>' ); ?></p>
+			<div class="tip"><strong><?php echo __( 'Tip', 'goodoldgallery' ); ?>!</strong> <?php echo sprintf( __( "You can use %s with regular galleries that you have uploaded on a page/post, don't enter any ID in the shortcode and it will look for a gallery attached to the current page/post.", 'goodoldgallery' ), GOG_PLUGIN_NAME ); ?></div>
 			<form action="options.php" method="post" id="go-settings-form">
 			<?php settings_fields( GOG_PLUGIN_SHORT . '_settings' ); ?>
 			<?php do_settings_sections( __FILE__ ); ?>
@@ -232,7 +232,7 @@ ITEMS;
 <?php
 	}
 
-	public function settingsValidate($input) {
+	public function settingsValidate( $input ) {
 		// Set default settings if plugin is changed
 		if ( $input['plugin'] != $this->settings->settings['plugin'] ) {
 			$plugin = $this->settings->LoadPlugin( array( 'plugin' => $input['plugin'] ) );
@@ -240,11 +240,11 @@ ITEMS;
 		}
 		// @TODO: Fix validation for numeric fields in plugins
 		// else {
-		// 	$input['speed'] = is_numeric($input['speed']) ? $input['speed'] : '';
-		// 	$input['timeout'] = is_numeric($input['timeout']) ? $input['timeout'] : '';
+		// 	$input['speed'] = is_numeric( $input['speed'] ) ? $input['speed'] : '';
+		// 	$input['timeout'] = is_numeric( $input['timeout'] ) ? $input['timeout'] : '';
 		// }
 
-		unset($input['save']);
+		unset( $input['save'] );
 
 		return $input;
 	}
