@@ -135,6 +135,7 @@ class GOG_Settings {
 		$ret = array(
 			'setup' => array(),
 			'settings' => array(),
+			'settings_numeric' => array(),
 			'settings_form' => array(),
 			'widget' => array(),
 		);

@@ -298,7 +298,7 @@ class GOG_Admin {
 				$theme_options .= '<option value="' . $theme['Class'] . '">' . $theme['Name'] . '</option>';
 			}
 		}
-	?>
+?>
 	<div id="go-gallery-generator">
 		<h3 class="media-title"><?php echo GOG_PLUGIN_NAME; ?> shortcode generator</h3>
 
@@ -322,7 +322,7 @@ class GOG_Admin {
 				<input id="gog-shortcode" name="gog-shortcode" type="hidden" value="true" />
 				<input class="button submit" type="submit" name="submit" value="<?php echo __( 'Insert into post', 'goodoldgallery' ); ?>" />
 
-	<?php if ( $gallery_options ): ?>
+<?php if ( $gallery_options ): ?>
 				<p>
 					<label for="id" title="<?php echo __( 'Select gallery', 'goodoldgallery' ); ?>" style="line-height:25px;"><?php echo __( 'Gallery', 'goodoldgallery' ); ?>:</label>
 					<select id="id" name="id">
@@ -330,9 +330,9 @@ class GOG_Admin {
 						<?php echo $gallery_options; ?>
 					</select>
 				</p>
-	<?php endif; ?>
+<?php endif; ?>
 
-	<?php if ( $theme_options ): ?>
+<?php if ( $theme_options ): ?>
 				<p>
 					<label for="theme" title="<?php echo __( 'Select theme', 'goodoldgallery' ); ?>" style="line-height:25px;"><?php echo __( 'Theme', 'goodoldgallery' ); ?>:</label>
 					<select id="theme" name="theme">
@@ -340,7 +340,7 @@ class GOG_Admin {
 						<?php echo $theme_options; ?>
 					</select>
 				</p>
-	<?php endif; ?>
+<?php endif; ?>
 
 				<p>
 					<label for="size" title="Select gallery size" style="line-height:25px;">Image size:</label>
@@ -353,13 +353,13 @@ class GOG_Admin {
 					</select>
 				</p>
 
-			<?php GOG_FormBuilder::parseFormCustom( $this->settings->plugin['settings_form'] ); ?>
+<?php GOG_FormBuilder::parseFormCustom( $this->settings->plugin['settings_form'] ); ?>
 
 			</form>
 			</div>
 		</div>
 	</div>
-	<?php
+<?php
 	}
 
 	/**

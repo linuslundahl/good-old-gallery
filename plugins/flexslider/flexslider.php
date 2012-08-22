@@ -34,6 +34,13 @@ function goodold_gallery_flexslider_settings() {
 	);
 }
 
+function goodold_gallery_flexslider_settings_numeric() {
+	return array(
+		'slideshowSpeed' => __( 'Slideshow speed', 'goodoldgallery'),
+		'animationDuration' => __( 'Animation speed', 'goodoldgallery'),
+	);
+}
+
 /**
  * Extends the settings form
  */

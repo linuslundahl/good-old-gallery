@@ -23,6 +23,13 @@ function goodold_gallery_cycle_settings() {
 	);
 }
 
+function goodold_gallery_cycle_settings_numeric() {
+	return array(
+		'speed' => __( 'Animation speed', 'goodoldgallery'),
+		'timeout' => __( 'Transition speed', 'goodoldgallery'),
+	);
+}
+
 function goodold_gallery_cycle_settings_form() {
 	return array(
 		// Section

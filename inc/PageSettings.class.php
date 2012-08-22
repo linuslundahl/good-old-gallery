@@ -238,11 +238,15 @@ ITEMS;
 			$plugin = $this->settings->LoadPlugin( array( 'plugin' => $input['plugin'] ) );
 			$input += $plugin['settings'];
 		}
-		// @TODO: Fix validation for numeric fields in plugins
-		// else {
-		// 	$input['speed'] = is_numeric( $input['speed'] ) ? $input['speed'] : '';
-		// 	$input['timeout'] = is_numeric( $input['timeout'] ) ? $input['timeout'] : '';
-		// }
+		else {
+			// Validate numeric fields
+			foreach ( $this->settings->plugin['settings_numeric'] as $key => $name ) {
+				if ( !empty( $input[$key] ) && !is_numeric( $input[$key] ) ) {
+					$input[$key] = '';
+					add_settings_error( $key, 'must_be_numeric', sprintf( __( 'The %s field must be numeric.', 'goodoldgallery' ), $name ) );
+				}
+			}
+		}
 
 		unset( $input['save'] );
 
