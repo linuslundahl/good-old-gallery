@@ -180,7 +180,7 @@ class GOG_Admin {
 			echo '<p>' . __( 'Shortcode for this gallery', 'goodoldgallery' ) . ': <code>[good-old-gallery id="' . $_GET['post'] . '"]</code></p>';
 			echo '<span class="description">';
 			echo '<p>' . __( 'Shortcodes can be used to paste a gallery into a post or a page, just copy the full code and paste it into the page/post in HTML mode.', 'goodoldgallery' ) . '</p>';
-			echo '<p>' . __( "To generate a shortcode with custom variables, click on the 'Add an Image' icon on a page or a post, then click the 'Good Old Gallery' tab.", 'goodoldgallery' ) . '</p>';
+			echo '<p>' . __( "To generate a shortcode with custom variables, click on the 'Insert Good Old Gallery' icon next to 'Upload/Insert' on a page or a post.", 'goodoldgallery' ) . '</p>';
 			echo '</span>';
 
 			$attachments = get_children( array(

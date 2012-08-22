@@ -6,7 +6,7 @@ function goodold_gallery_flexslider_setup() {
 		'version' => '2.1',
 		'files'   => array( 'jquery.flexslider-min.js' ),
 		'class'   => '.go-gallery-inner',
-		'url'     => 'http://flex.madebymufffin.com/',
+		'url'     => 'http://www.woothemes.com/flexslider/',
 		'info'    => 'An awesome, fully responsive jQuery slider plugin.',
 	);
 }

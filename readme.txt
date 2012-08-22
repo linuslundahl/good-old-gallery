@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.0.1
+Stable tag: 2.0.3
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
@@ -15,7 +15,7 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 = Main features =
 
 * Uses built in WP gallery functionality.
-* [Flexslider](http://flex.madebymufffin.com/) or [jQuert Cycle](http://jquery.malsup.com/cycle/).
+* [Flexslider](http://www.woothemes.com/flexslider/) or [jQuery Cycle](http://jquery.malsup.com/cycle/).
 * Shortcode generator.
 * Widgets.
 * Stylesheet theme support, per gallery.
@@ -44,11 +44,8 @@ Good Old Gallery is a WordPress plugin that helps you upload image galleries tha
 To use your new gallery in a page/post you use the `[good-old-gallery]` shortcode, use the generator to build one.
 
 1. Go to a page or a post.
-2. Click on the *Add an Image* icon.
-3. Click on the *Good Old Gallery* tab.
-4. Generate your shortcode and copy it, close the pop-up.
-5. Enter HTML mode in the editor.
-6. Paste your shortcode where it should be shown.
+2. Click on the *Insert Good Old Gallery* icon next to *Upload/Insert*.
+3. Generate your shortcode and click *Insert into post*.
 
 = Themes =
 

@@ -217,7 +217,7 @@ ITEMS;
 			<h2><?php echo GOG_PLUGIN_NAME; ?> settings</h2>
 			<div class="go-flattr"><a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/good-old-gallery/"></a></div>
 			<p><?php echo sprintf( __( 'These settings are the defaults that will be used by your selected plugin (if an animation is chosen), settings can be overridden by adding variables to the %s shortcode.', 'goodoldgallery' ), '<code>[good-old-gallery]</code>' ); ?><br />
-			<?php echo sprintf( __( 'Use the built in generator found under the %s tab, just click the %s button to find the tab on the far right.', 'goodoldgallery' ), '<em>' . GOG_PLUGIN_NAME . '</em>', '<em>' . __( 'Add an Image', 'goodoldgallery' ) . '</em>' ); ?><br /><br />
+			<?php echo sprintf( __( 'The simplest way to insert a shortcode is to use the built in %s button found next to <em>Upload/Insert</em> above the text area.', 'goodoldgallery' ), '<em>' . __( 'Insert Good Old Gallery', 'goodoldgallery' ) . '</em>' ); ?><br /><br />
 			<?php echo sprintf( __( 'More help can be found at %s', 'goodoldgallery' ), '<a href="http://wordpress.org/extend/plugins/good-old-gallery/installation/">wordpress.org</a>' ); ?><br /><br />
 			<?php echo sprintf( __( '%s created and maintained by %s.', 'goodoldgallery' ), GOG_PLUGIN_NAME, '<a href="http://unwi.se/">Linus Lundahl</a>' ); ?></p>
 			<div class="tip"><strong><?php echo __( 'Tip', 'goodoldgallery' ); ?>!</strong> <?php echo sprintf( __( "You can use %s with regular galleries that you have uploaded on a page/post, don't enter any ID in the shortcode and it will look for a gallery attached to the current page/post.", 'goodoldgallery' ), GOG_PLUGIN_NAME ); ?></div>
