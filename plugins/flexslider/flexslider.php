@@ -42,11 +42,11 @@ function goodold_gallery_flexslider_settings_form() {
 		// Section
 		'flexslider_settings' => array(
 			'title'    => 'Flexslider Settings',
-			'callback' => 'settings_header',
+			'callback' => array( 'GOG_PageSettings', 'settingsHeader' ),
 			'fields'   => array(
 				'animation' => array(
 					'title' => 'Transition animation',
-					'type'  => 'dropdown',
+					'type'  => 'select',
 					'args'  => array(
 						'items' => array(
 							'' => '- Select animation -',
@@ -98,7 +98,7 @@ function goodold_gallery_flexslider_settings_form() {
 		// Section
 		'flexslider_controls' => array(
 			'title'    => 'Flexslider Controls',
-			'callback' => 'settings_header',
+			'callback' => array( 'GOG_PageSettings', 'settingsHeader' ),
 			'fields'   => array(
 				'controlNav' => array(
 					'title' => 'Show pager',

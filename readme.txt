@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 2.0.3
+Stable tag: 2.0.1
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
@@ -59,9 +59,8 @@ Creating a theme is rather simple, just start out with one of the themes found i
 The structure of a theme is:
 
 `gog-themes 
-|- my-theme/ (folder with resources)
-|- my-theme.css (this is the only required file) 
-|- my-theme.png (must be a png)`
+|- my-theme/my-theme.css (this is the only required file)  
+|- my-theme/my-theme.png (preview in with size 300x150 px, must be a png)`
 
 Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better.
 
@@ -86,6 +85,10 @@ The FAQ is currently empty.
 5. Widget settings
 
 == Changelog ==
+
+= 2.1 =
+* Rewritten and optimized.
+* Themes are now stored in sub-folder of the `gog-themes` directory.
 
 = 2.0.3 =
 * Trying to fix issues with version 2.x for some people.
@@ -123,6 +126,9 @@ The FAQ is currently empty.
 * First version on wordpress.org.
 
 == Upgrade Notice ==
+
+= 2.1 =
+Please not that any custom themes you have should now be stored in separate folders, so for example: theme-name.css, theme-name.png should now be in theme-name/theme-name.css and theme-name/file.png inside your `gog-themes` directory.
 
 = 2.0 =
 !! WARNING !!  

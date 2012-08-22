@@ -28,11 +28,11 @@ function goodold_gallery_cycle_settings_form() {
 		// Section
 		'cycle_settings' => array(
 			'title'    => 'jQuery Cycle Settings',
-			'callback' => 'settings_header',
+			'callback' => array( 'GOG_PageSettings', 'settingsHeader' ),
 			'fields'   => array(
 				'fx' => array(
 					'title' => 'Transition animation',
-					'type'  => 'dropdown',
+					'type'  => 'select',
 					'args'  => array(
 						'items' => array(
 							'' => '- Select animation -',

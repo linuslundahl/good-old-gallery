@@ -1,12 +1,12 @@
 <?php
 /**
- * @file GogSettings.class.php
+ * @file Settings.class.php
  */
 
 /**
  * Sets up the settings for Good Old Gallery.
  */
-class GogSettings {
+class GOG_Settings {
 	private $default = array();
 
 	public $settings = array();
@@ -15,8 +15,8 @@ class GogSettings {
 	public $plugin = array();
 
 	public function __construct(){
-		$settings = $this->GetOption( 'settings' );
-		$themes = $this->GetOption( 'themes' );
+		$settings = $this->getOption( 'settings' );
+		$themes = $this->getOption( 'themes' );
 
 		$this->default = array(
 			'settings' => array(
@@ -31,8 +31,9 @@ class GogSettings {
 				'order_image' => 3,
 			),
 			'themes' => array(
-				'default'     => NULL,
-				'themes'      => NULL,
+				'default'     => '',
+				'default_css' => 'true',
+				'themes'      => '',
 			),
 		);
 
@@ -40,9 +41,9 @@ class GogSettings {
 		$this->themes = !$themes || !is_array($themes) ? $this->default['themes'] : $themes;
 
 		// Load slider plugin settings from db, if not found load from settings file and save.
-		$this->plugin = $this->GetOption( 'plugin' );
+		$this->plugin = $this->getOption( 'plugin' );
 		if (empty($this->plugin['plugin']) || (!empty($this->plugin['plugin']) && $this->plugin['plugin'] != $this->settings['plugin'])) {
-			$this->plugin = $this->LoadPlugin( $this->settings );
+			$this->plugin = $this->loadPlugin( $this->settings );
 			update_option( GOG_PLUGIN_SHORT . '_plugin', $this->plugin );
 		}
 
@@ -54,13 +55,13 @@ class GogSettings {
 	}
 
 	/**
-	 * Get a gog_ option from the database.
+	 * Get a Good Old Gallery option from the database.
 	 *
 	 * @param string $title
 	 *
 	 * @return array
 	 */
-	public function GetOption( $title ) {
+	public function getOption( $title ) {
 		return get_option( GOG_PLUGIN_SHORT . '_' . $title );
 	}
 
@@ -72,7 +73,7 @@ class GogSettings {
 	 *
 	 * @return array
 	 */
-	public function GetPlugins( $full = FALSE ) {
+	public function getPlugins( $full = FALSE ) {
 		$plugins = array();
 
 		$paths = array(
@@ -81,23 +82,24 @@ class GogSettings {
 		);
 
 		foreach ( $paths as $path => $url ) {
-			if ( is_dir($path) ) {
-				$folder = opendir($path);
+			if ( is_dir( $path ) ) {
+				$dir = @ opendir( $path );
 
-				while ( false !== ($filename = readdir($folder)) ) {
-					if ( substr($filename, 0, 1) != '.' ) {
-						include_once($path . '/' . $filename . '/' . $filename . '.php');
-						if ( function_exists('goodold_gallery_' . $filename . '_setup') ) {
-							$settings = call_user_func('goodold_gallery_' . $filename . '_setup');
+				while ( ( $file = readdir( $dir ) ) !== false ) {
+					if ( substr($file, 0, 1) != '.' ) {
+						include_once( $path . '/' . $file . '/' . $file . '.php' );
+						if ( function_exists( 'goodold_gallery_' . $file . '_setup' ) ) {
+							$settings = call_user_func( 'goodold_gallery_' . $file . '_setup' );
 							if ( $full ) {
-								$plugins[$filename] = $settings;
+								$plugins[$file] = $settings;
 							}
 							else {
-								$plugins[$filename] = $settings['title'];
+								$plugins[$file] = $settings['title'];
 							}
 						}
 					}
 				}
+				@ closedir( $dir );
 			}
 		}
 
@@ -114,7 +116,7 @@ class GogSettings {
 	 *
 	 * @return array
 	 */
-	public function LoadPlugin( $args = array() ) {
+	public function loadPlugin( $args = array() ) {
 		// Add default keys
 		$ret = array(
 			'setup' => array(),
@@ -153,35 +155,46 @@ class GogSettings {
 	 *
 	 * @return array
 	 */
-	public function GetThemes( $select = FALSE ) {
+	public function getThemes( $select = FALSE ) {
 		$themes = array();
 		$theme_path = get_stylesheet_directory();
 		$theme_url = get_bloginfo( 'template_url' );
 
 		$paths = array(
-			GOG_PLUGIN_DIR . '/themes' => GOG_PLUGIN_URL . '/themes',
+			GOG_PLUGIN_DIR . 'themes' => GOG_PLUGIN_URL . 'themes',
 			WP_CONTENT_DIR . '/gog-themes' => WP_CONTENT_URL . '/gog-themes',
 			$theme_path . '/gog-themes' => $theme_url . '/gog-themes',
 		);
 
 		foreach ( $paths as $path => $url ) {
-			if ( is_dir($path) ) {
-				$folder = opendir($path);
+			if ( is_dir( $path ) ) {
+				$dir = @ opendir( $path );
 
-				while ( false !== ($filename = readdir($folder)) ) {
-					if ( $filename ) {
-						if ( substr(strtolower($filename), -3) == 'css' ) {
-							$info = $this->LoadTheme( $path . '/' . $filename );
-							if ( $select ) {
-								$themes[$filename] = $info['Name'];
+				while ( ( $file = readdir( $dir ) ) !== false ) {
+					if ( substr( $file, 0, 1 ) == '.' ) {
+						continue;
+					}
+					if ( $file && is_dir( $path . '/' . $file ) ) {
+						$subdir = @ opendir( $path . '/' . $file );
+						while ( ($subfile = readdir( $subdir ) ) !== false ) {
+							if ( substr( $subfile, 0, 1 ) == '.' ) {
+								continue;
 							}
-							else {
-								$info['path'] = array( 'path' => $path, 'url' => $url );
-								$themes[$filename] = $info;
+							if ( substr( strtolower( $subfile ), -3) == 'css' ) {
+								$info = $this->loadTheme( $path . '/' . $file . '/' . $subfile );
+								if ( $select ) {
+									$themes[$subfile] = $info['Name'];
+								}
+								else {
+									$info['path'] = array( 'path' => $path . '/' . $file, 'url' => $url . '/' . $file );
+									$themes[$subfile] = $info;
+								}
 							}
 						}
+						@closedir( $subdir );
 					}
 				}
+				@ closedir( $dir );
 			}
 		}
 
@@ -196,7 +209,7 @@ class GogSettings {
 	 *
 	 * @return array
 	 */
-	public function LoadTheme( $file = NULL ) {
+	public function loadTheme( $file = NULL ) {
 		$default_headers = array(
 			'Name' => 'Style Name',
 			'Class' => 'Class',

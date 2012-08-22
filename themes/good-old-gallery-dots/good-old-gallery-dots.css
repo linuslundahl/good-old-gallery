@@ -4,7 +4,7 @@
  * Class: gog-dots
  * Description: A neat gallery pager with small dots floating on top of the gallery. Uses CSS3 to achieve this. (titles and descriptions are not styled yet)
  * Author: Linus Lundahl
- * Version: 1.01
+ * Version: 1.02
  * Author URI: http://unwi.se/
  *
  */
@@ -55,7 +55,7 @@
 	width: 6px;
 }
 .go-gallery-container.gog-dots .pager a.flex-active,
-.go-gallery-container.gog-dots .flex-control-nav a.active { background: #fff;}
+.go-gallery-container.gog-dots .flex-control-nav a.flex-active { background: #fff;}
 .go-gallery-container.gog-dots .pager a:first-child,
 .go-gallery-container.gog-dots .flex-control-nav li:first-child a { margin: 0; }
 /* end Pager */
@@ -74,13 +74,13 @@
 	width: 30px;
 }
 .go-gallery-container.gog-dots .nav .flex-prev,
-.go-gallery-container.gog-dots .flex-direction-nav .flex-prev { background: url("good-old-gallery-dots/arrows.png") 0 center no-repeat; left: 0; cursor: pointer; }
+.go-gallery-container.gog-dots .flex-direction-nav .flex-prev { background: url("arrows.png") 0 center no-repeat; left: 0; cursor: pointer; }
 .go-gallery-container.gog-dots .nav .flex-next,
-.go-gallery-container.gog-dots .flex-direction-nav .flex-next { background: url("good-old-gallery-dots/arrows.png") -90px center no-repeat; right: 0; cursor: pointer; }
+.go-gallery-container.gog-dots .flex-direction-nav .flex-next { background: url("arrows.png") -90px center no-repeat; right: 0; cursor: pointer; }
 .go-gallery-container.gog-dots .nav .flex-prev:hover,
-.go-gallery-container.gog-dots .flex-direction-nav .flex-prev:hover { background: url("good-old-gallery-dots/arrows.png") -30px center no-repeat; }
+.go-gallery-container.gog-dots .flex-direction-nav .flex-prev:hover { background: url("arrows.png") -30px center no-repeat; }
 .go-gallery-container.gog-dots .nav .flex-next:hover,
-.go-gallery-container.gog-dots .flex-direction-nav .flex-next:hover { background: url("good-old-gallery-dots/arrows.png") -60px center no-repeat; }
+.go-gallery-container.gog-dots .flex-direction-nav .flex-next:hover { background: url("arrows.png") -60px center no-repeat; }
 /* end Navigation */
 
 /** Flex Play/Pause */
