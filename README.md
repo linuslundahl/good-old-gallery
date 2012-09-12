@@ -1,6 +1,6 @@
 # Good Old Gallery
 
-Version 2.1-beta
+Version 2.1
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=linuslundahl&url=https://github.com/linuslundahl/good-old-gallery&title=Good Old Gallery&language=&tags=github&category=software)
 
@@ -10,10 +10,8 @@ Get the latest stable version from [wordpress.org](http://wordpress.org/extend/p
 
 ## Change Log
 
-2.1-beta
+2.1
 --------
-
-This version is still in beta and will probably be revised some more before it's released on wordpress.org.
 
 * __Rewritten and Optimized__  
 I have tried to optimize as much as possible to make version 2.1 more maintainable.
