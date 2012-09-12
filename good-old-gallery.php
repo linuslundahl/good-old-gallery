@@ -24,7 +24,7 @@ $upload_url = wp_upload_dir();
 // Load classes
 $classes = array( 'Admin', 'FormBuilder', 'Helpers', 'PageSettings', 'PageThemes', 'Settings', 'Shortcode', 'Widget' );
 foreach ( $classes as $class ) {
-	require_once dirname( __FILE__ ) . '/inc/' . $class . '.class.php';
+	require_once dirname( __FILE__ ) . '/includes/' . $class . '.class.php';
 }
 
 /**
@@ -175,13 +175,13 @@ class GoodOldGallery {
 			// Include selected slider plugin files
 			if ( !empty( $this->settings->settings['plugin'] ) ) {
 				foreach ( $this->settings->plugin['setup']['files'] as $file ) {
-					wp_enqueue_script( 'slider', GOG_PLUGIN_URL . '/plugins/' . $this->settings->settings['plugin'] . '/' . $file, array( 'jquery' ), '', FALSE );
+					wp_enqueue_script( 'slider', GOG_PLUGIN_URL . 'plugins/' . $this->settings->settings['plugin'] . '/' . $file, array( 'jquery' ), '', FALSE );
 				}
 			}
 
 			// Includ default good-old-gallery.css
 			if ( $this->settings->themes['default_css'] == 'true' ) {
-				wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery.css' );
+				wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . 'assets/css/good-old-gallery.css' );
 			}
 		}
 	}

@@ -91,8 +91,8 @@ class GOG_Settings {
 		$plugins = array();
 
 		$paths = array(
-			GOG_PLUGIN_DIR . '/plugins' => GOG_PLUGIN_URL . '/plugins',
-			WP_CONTENT_DIR . '/gog-plugins' => WP_CONTENT_URL . '/gog-plugins',
+			GOG_PLUGIN_DIR . '/plugins' => GOG_PLUGIN_URL . 'plugins',
+			WP_CONTENT_DIR . '/gog-plugins' => WP_CONTENT_URL . 'gog-plugins',
 		);
 
 		foreach ( $paths as $path => $url ) {

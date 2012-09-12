@@ -12,25 +12,25 @@
 
 /* Attachments on Add/Edit Gallery page */
 .attachments li {
+	overflow: hidden;
+	padding: 10px;
+	border: 1px solid #dfdfdf;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	background: #fff;
-	border: 1px solid #dfdfdf;
-	overflow: hidden;
-	padding: 10px;
 }
 .attachments li.deleted {
-	background-color: lightYellow;
 	border-color: #E6DB55;
+	background-color: lightYellow;
 }
 .attachments li .image {
 	float: left;
 	margin-right: 10px;
 }
 .attachments li .del-link {
-	color: red;
 	border-bottom: 1px solid red;
+	color: red;
 	text-decoration: none;
 }
 .attachments li .del-link:hover {
@@ -53,42 +53,42 @@ h3.hndle { cursor: default !important; }
 
 .form-table { margin-bottom: 0; }
 
-.go-flattr { position: absolute; right: 20px; top: 20px; }
+.go-flattr { position: absolute; top: 20px; right: 20px; }
 
 .tip {
+	margin: 1em 0;
+	padding: 10px;
+	max-width: 700px;
+	border: 1px solid #e3e3e3;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 	background: #f1f1f1;
-	border: 1px solid #e3e3e3;
-	margin: 1em 0;
-	padding: 10px;
-	max-width: 700px;
 }
 
-div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
+div.help { padding: 0 0 10px 0; width: 400px; font-size: 10px; }
 
 /* Plugin info in settings */
 .goodoldgallery_page_gog_settings .plugin-info { margin: 0 0 10px 0; }
-.js.goodoldgallery_page_gog_settings .plugin-info { display: none; margin: 0 }
+.js.goodoldgallery_page_gog_settings .plugin-info { display: none; margin: 0; }
 .js.goodoldgallery_page_gog_settings .plugin-info h4,
 .js.goodoldgallery_page_gog_settings .plugin-info p { margin: .3em 0; }
-.js.goodoldgallery_page_gog_settings .plugin-info .version { font-size: 10px; font-weight: normal; }
+.js.goodoldgallery_page_gog_settings .plugin-info .version { font-weight: normal; font-size: 10px; }
 
 /* Order fields in Settings */
 .goodoldgallery_page_gog_settings #order { display: none; }
 .js.goodoldgallery_page_gog_settings #order { display: block; }
 .js.goodoldgallery_page_gog_settings #order li {
+	margin: 5px 10px;
+	padding: 5px 10px;
+	width: 400px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	background: #eee;
 	color: #777;
-	cursor: move;
 	font-weight: bold;
-	padding: 5px 10px;
-	margin: 5px 10px;
-	width: 400px;
+	cursor: move;
 }
 .js.goodoldgallery_page_gog_settings #order li i,
 .js.goodoldgallery_page_gog_settings #order li:hover i {
@@ -101,8 +101,8 @@ div.help { font-size: 10px; padding: 0 0 10px 0; width: 400px; }
 
 /* Themes settings */
 .themes-link,
-.themes-available { clear: both; font-size: 10px; margin: 0; overflow: hidden; padding: 10px 0; }
-.themes-available .theme { border: 5px solid #eee; font-weight: bold; float: left; margin: 0 10px 10px 0; width: 300px; }
+.themes-available { clear: both; overflow: hidden; margin: 0; padding: 10px 0; font-size: 10px; }
+.themes-available .theme { float: left; margin: 0 10px 10px 0; width: 300px; border: 5px solid #eee; font-weight: bold; }
 .themes-available .theme .screenshot { border-bottom: 5px solid #eee; }
-.themes-available .theme .information { min-height: 80px; padding: 5px; }
+.themes-available .theme .information { padding: 5px; min-height: 80px; }
 .themes-available .theme .description { font-weight: normal; }

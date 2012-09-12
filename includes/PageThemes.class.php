@@ -19,7 +19,7 @@ class GOG_PageThemes {
 
 		// Build cache if needed.
 		if ( $this->settings->themes['themes'] && !file_exists( $upload_url['basedir'] . '/good-old-gallery-themes.css' ) ) {
-			wp_redirect( GOG_PLUGIN_URL . 'inc/cache.php?redirect' );
+			wp_redirect( GOG_PLUGIN_URL . 'includes/cache.php?redirect' );
 		}
 
 		register_setting( GOG_PLUGIN_SHORT . '_themes', GOG_PLUGIN_SHORT . '_themes', array( $this, 'themesValidate' ) );
@@ -139,7 +139,7 @@ class GOG_PageThemes {
 			echo '<p>' . __( 'Cache last updated: ', 'goodoldgallery' ) . date( 'H:i, Y-m-d', filemtime( $upload_url['basedir'] . '/good-old-gallery-themes.css' ) ) . '</p>';
 		}
 
-		echo "<p>" . sprintf( __( "* To use all themes you need to %s, otherwise the themes won't be loaded, <strong>you also need to rebuild the cache if you install or delete themes</strong>.", 'goodoldgallery' ), '<a href="' . GOG_PLUGIN_URL . 'inc/cache.php?redirect">' . __( 'rebuild the css cache', 'goodoldgallery' ) . '</a>' ) . "</p>";
+		echo "<p>" . sprintf( __( "* To use all themes you need to %s, otherwise the themes won't be loaded, <strong>you also need to rebuild the cache if you install or delete themes</strong>.", 'goodoldgallery' ), '<a href="' . GOG_PLUGIN_URL . 'includes/cache.php?redirect">' . __( 'rebuild the css cache', 'goodoldgallery' ) . '</a>' ) . "</p>";
 	}
 
 	/**

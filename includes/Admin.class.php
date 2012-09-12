@@ -17,7 +17,7 @@ class GOG_Admin {
 		// Register new Good Old Gallery post type.
 		$this->registerPostType();
 
-		// Add admin 
+		// Add admin
 		add_filter( 'plugin_action_links', array( $this, 'pluginActionLinks' ), 10, 2 );
 
 		// Add media
@@ -79,7 +79,7 @@ class GOG_Admin {
 			'exclude_from_search'  => true,
 			'supports'             => array( 'title' ),
 			'rewrite'              => array( 'slug' => 'good-old-gallery', 'with_front' => false ),
-			'menu_icon'            => GOG_PLUGIN_URL . '/style/img/good-old-gallery.png',
+			'menu_icon'            => GOG_PLUGIN_URL . 'assets/img/good-old-gallery.png',
 			'register_meta_box_cb' => array( $this, 'addMeta' ),
 			)
 		);
@@ -105,27 +105,27 @@ class GOG_Admin {
 			add_thickbox();
 
 			wp_enqueue_script( 'media-upload' );
-			wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'js/good-old-gallery-admin.js', 'jquery', false, false );
+			wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'assets/js/good-old-gallery-admin.js', 'jquery', false, false );
 
-			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'style/good-old-gallery-admin.css' );
+			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'assets/css/good-old-gallery-admin.css' );
 			wp_enqueue_style( 'good-old-gallery-admin' );
 		}
 
 		// Add CSS and JS for admin section
 		if ( $hook == 'goodoldgallery_page_gog_settings' || $hook == 'goodoldgallery_page_gog_themes' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
-			wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'js/good-old-gallery-admin.js', 'jquery', false, false );
+			wp_enqueue_script( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'assets/js/good-old-gallery-admin.js', 'jquery', false, false );
 
-			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'style/good-old-gallery-admin.css' );
+			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'assets/css/good-old-gallery-admin.css' );
 			wp_enqueue_style( 'good-old-gallery-admin' );
 
-			wp_register_style( 'font-awesome', GOG_PLUGIN_URL . 'style/font-awesome.css' );
+			wp_register_style( 'font-awesome', GOG_PLUGIN_URL . 'assets/css/font-awesome.css' );
 			wp_enqueue_style( 'font-awesome' );
 		}
 
 		// Add CSS to thickbox media popup
 		if ( $hook == 'media-upload-popup' && ( isset( $_GET['tab'] ) && $_GET['tab'] == 'gallery' ) && get_post_type( $_GET['post_id'] ) == 'goodoldgallery' ) {
-			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'style/good-old-gallery-admin.css' );
+			wp_register_style( 'good-old-gallery-admin', GOG_PLUGIN_URL . 'assets/css/good-old-gallery-admin.css' );
 			wp_enqueue_style( 'good-old-gallery-admin' );
 		}
 	}
@@ -202,7 +202,7 @@ class GOG_Admin {
 					// Delete code borrowed from wordpress.
 					echo "<a href='#' class='del-link' onclick=\"document.getElementById('del_attachment_$id').style.display='block';return false;\">" . __( 'Delete', 'goodoldgallery' ) . "</a>
 						<div id='del_attachment_$id' class='del-attachment' style='display:none;'>" . sprintf( __( 'You are about to delete <strong>%s</strong>.', 'goodoldgallery' ), $filename ) . "
-						<a href='" . wp_nonce_url( GOG_PLUGIN_URL . "/inc/delete.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' data-id='$attachment->ID' data-nonce='" . wp_create_nonce( 'goodold_gallery_delete_attachment' ) . "' class='submitdelete button'>" . __( 'Continue', 'goodoldgallery' ) . '</a>' . "
+						<a href='" . wp_nonce_url( GOG_PLUGIN_URL . "/includes/delete.php?action=delete&amp;post=$attachment->ID", 'delete-attachment_' . $attachment->ID ) . "' id='del[$attachment->ID]' data-id='$attachment->ID' data-nonce='" . wp_create_nonce( 'goodold_gallery_delete_attachment' ) . "' class='submitdelete button'>" . __( 'Continue', 'goodoldgallery' ) . '</a>' . "
 						<a href='#' class='button' onclick=\"this.parentNode.style.display='none';return false;\">" . __( 'Cancel', 'goodoldgallery' ) . "</a>
 						</div>" . "\n";
 					echo '</li>' . "\n";
@@ -238,7 +238,7 @@ class GOG_Admin {
 	 * Saves custom image link field.
 	 */
 	public function imageAttachmentFieldsToSave( $post, $attachment ) {
-		if( isset( $attachment['goodold_gallery_image_link'] ) ){
+		if ( isset( $attachment['goodold_gallery_image_link'] ) ){
 			update_post_meta( $post['ID'], '_goodold_gallery_image_link', $attachment['goodold_gallery_image_link'] );
 		}
 		return $post;
@@ -367,8 +367,8 @@ class GOG_Admin {
 	 */
 	public function mediaTabHandle() {
 		wp_enqueue_style( 'media' );
-		wp_enqueue_script( 'gallery-insert', GOG_PLUGIN_URL . '/js/good-old-gallery-admin.js', 'jquery', false, true );
-		wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . '/style/good-old-gallery-admin.css' );
+		wp_enqueue_script( 'gallery-insert', GOG_PLUGIN_URL . 'assets/js/good-old-gallery-admin.js', 'jquery', false, true );
+		wp_enqueue_style( 'good-old-gallery', GOG_PLUGIN_URL . 'assets/css/good-old-gallery-admin.css' );
 		return wp_iframe( array( $this, 'mediaProcess' ) );
 	}
 
@@ -398,7 +398,7 @@ class GOG_Admin {
 
 		$button = ' %s';
 		if ( get_post_type() != 'goodoldgallery' && isset( $post->ID ) ) {
-			$image = GOG_PLUGIN_URL . '/style/img/good-old-gallery-small.png';
+			$image = GOG_PLUGIN_URL . 'assets/img/good-old-gallery-small.png';
 			$button .= '<a href="media-upload.php?post_id=' . $post->ID . '&tab=gogallery&TB_iframe=1" id="add_gogallery" class="thickbox add_media" title="Insert ' . GOG_PLUGIN_NAME . '"><img src="' . $image . '" /></a>';
 		}
 
@@ -409,7 +409,7 @@ class GOG_Admin {
 	 * Delete attachments from gallery posts with ajax.
 	 */
 	public function deleteAttachment( $post ) {
-		if( wp_delete_attachment( $_POST['att_ID'], true ) ) {
+		if ( wp_delete_attachment( $_POST['att_ID'], true ) ) {
 			echo sprintf( __( 'Attachment ID: %s has been deleted.', 'goodoldgallery' ), $_POST['att_ID'] );
 		}
 		exit();

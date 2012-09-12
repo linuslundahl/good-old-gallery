@@ -114,7 +114,7 @@ class GOG_FormBuilder {
 		extract( $args );
 
 		echo '<select id="' . $id . '" name="' . $name . '">';
-		foreach( $items as $key => $item ) {
+		foreach ( $items as $key => $item ) {
 			$selected = ( $default == $key ) ? ' selected="selected"' : '';
 			echo "<option value=\"$key\"$selected>" . __( $item, 'goodoldgallery' ) . "</option>";
 		}
@@ -170,7 +170,7 @@ class GOG_FormBuilder {
 	public function radio( $args ) {
 		extract( $args );
 
-		foreach( $items as $key => $item ) {
+		foreach ( $items as $key => $item ) {
 			$checked = ( $default == $key ) ? ' checked="checked"' : '';
 			echo "<label><input value=\"$key\" name=\"$name\" type=\"radio\"$checked /> $item</label><br />";
 		}

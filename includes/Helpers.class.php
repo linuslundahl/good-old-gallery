@@ -8,7 +8,7 @@ class GOG_Helpers {
 	public function getWPRoot( $directory ) {
 		global $wp_root;
 
-		foreach( glob( $directory . "/*" ) as $f ) {
+		foreach ( glob( $directory . "/*" ) as $f ) {
 			if ( 'wp-load.php' == basename( $f ) ) {
 				return $wp_root = str_replace( "\\", "/", dirname( $f ) );
 			}
@@ -33,7 +33,7 @@ class GOG_Helpers {
 	public function paths( $paths ) {
 		$paths = explode( "\n", $paths );
 
-		foreach( $paths as $key => $path ) {
+		foreach ( $paths as $key => $path ) {
 			$paths[$key] = trim( $path );
 		}
 

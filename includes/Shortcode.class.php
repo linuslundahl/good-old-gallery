@@ -53,7 +53,7 @@ class GOG_Shortcode {
 
 		// Setup Slider settings array
 		$settings = array_slice( $attr, 10 );
-		foreach( $settings as $key => $setting ) {
+		foreach ( $settings as $key => $setting ) {
 			if ( isset( $slider[$key] ) ) {
 				$settings[$key] = array(
 					'key' => $slider[$key],
@@ -200,7 +200,7 @@ class GOG_Shortcode {
 
 				// Build javascript
 				$script = '';
-				foreach( $settings as $key => $setting ) {
+				foreach ( $settings as $key => $setting ) {
 					if ( !empty( $setting ) ) {
 						if ( !empty( $setting['key'] ) && !empty( $setting['val'] ) ) {
 							$script .= $setting['key'];
