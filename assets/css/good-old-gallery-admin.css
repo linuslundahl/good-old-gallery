@@ -37,6 +37,10 @@
 	background: red;
 	color: #fff;
 }
+.attachments .image img {
+  height: 150px;
+  width: 150px;
+}
 .inside { padding: 0 8px; }
 #add_image img { vertical-align: text-bottom; }
 
