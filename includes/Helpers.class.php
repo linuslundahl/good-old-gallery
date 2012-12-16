@@ -82,4 +82,16 @@ class GOG_Helpers {
 
 		return $ret;
 	}
+
+	/**
+	 * Returns galleries
+	 */
+	public function getGalleries( $state ) {
+		global $wpdb;
+		return $wpdb->get_results( $wpdb->prepare("
+			SELECT ID, post_title FROM $wpdb->posts
+				WHERE post_type = %s AND post_status = %s;",
+				'goodoldgallery', $state
+			) );
+	}
 }

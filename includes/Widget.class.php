@@ -103,13 +103,10 @@ class GOG_Widget extends WP_Widget {
 	 * Settings form.
 	 */
 	public function form( $instance ) {
-		global $wpdb, $gog;
+		global $gog;
 
 		// Build dropdown with galleries
-		$posts = $wpdb->get_results( $wpdb->prepare("
-			SELECT ID, post_title FROM $wpdb->posts
-				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		) );
+		$posts = GOG_Helpers::getGalleries( 'publish' );
 
 		if ( !$posts ) {
 			echo '<p>' . __( 'No galleries found.', 'goodoldgallery' ) . '</p>';

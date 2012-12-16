@@ -253,12 +253,7 @@ class GOG_Admin {
 	 * Adds Good Old Gallery media tab.
 	 */
 	public function mediaTab( $tabs ) {
-		global $wpdb;
-
-		$posts = $wpdb->get_results( $wpdb->prepare("
-			SELECT ID FROM $wpdb->posts
-				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		) );
+		$posts = GOG_Helpers::getGalleries( 'publish' );
 
 		if ( $posts ) {
 			$newtab = array( 'gogallery' => __( GOG_PLUGIN_NAME, 'goodoldgallery' ) );
@@ -272,15 +267,10 @@ class GOG_Admin {
 	 * Good Old Gallery tab page.
 	 */
 	public function mediaProcess() {
-		global $wpdb;
-
 		media_upload_header();
 
 		// Build dropdown with galleries
-		$posts = $wpdb->get_results( $wpdb->prepare("
-			SELECT ID, post_title FROM $wpdb->posts
-				WHERE post_type = 'goodoldgallery' AND post_status = 'publish';"
-		) );
+		$posts = GOG_Helpers::getGalleries( 'publish' );
 
 		$options = !$posts ? "<option value=\"\">No galleries found</option>" : "";
 
