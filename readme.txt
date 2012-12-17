@@ -3,8 +3,8 @@ Contributors: linuslundahl
 Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 2.1
+Tested up to: 3.5
+Stable tag: 2.1.2
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
@@ -85,6 +85,9 @@ The FAQ is currently empty.
 5. Widget settings
 
 == Changelog ==
+
+= 2.1.2 =
+* Bugfix for WP 3.5.
 
 = 2.1 =
 * Rewritten and optimized.
