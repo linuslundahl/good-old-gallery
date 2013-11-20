@@ -4,7 +4,7 @@ Donate link: https://flattr.com/thing/119963/Good-Old-Gallery
 Tags: simple, image, gallery, slideshow, jQuery, Flexslider, slide, sliding, fade, fading, multiple, widget
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 Good Old Gallery helps you use galleries on multiple pages and posts, it also uses jQuery plugins for sliding and fading transitions.
 
@@ -55,9 +55,9 @@ Creating a theme is rather simple, just start out with one of the themes found i
 
 The structure of a theme is:
 
-`gog-themes 
+`gog-themes
 |- my-theme/my-theme/*.* (any image resources used in theme-name.css)
-|- my-theme/my-theme.css (this is the only required file)  
+|- my-theme/my-theme.css (this is the only required file)
 |- my-theme/my-theme.png (preview in with size 300x150 px, must be a png)`
 
 Fill in the file headers in the css, only *Style Name* and *Class* are required, but the more you fill in the better.
@@ -85,6 +85,10 @@ The FAQ is currently empty.
 5. Widget settings
 
 == Changelog ==
+
+= 2.1.3 =
+* Upgrade Flexslider to 2.2 and fix animation speed bug.
+* Upgrade jQuery Cycle to 3.0.3.
 
 = 2.1.2 =
 * Bugfix for WP 3.5.
@@ -134,13 +138,13 @@ The FAQ is currently empty.
 Please not that any custom themes you have should now be stored in separate folders, so for example: theme-name.css, theme-name.png should now be in theme-name/theme-name.css and theme-name/file.png inside your `gog-themes` directory.
 
 = 2.0 =
-!! WARNING !!  
-The plugin now comes with both Flexslider and jQuery Cycle support, if you've been using the plugin for long time it might be best to stick with jQuery Cycle.  
+!! WARNING !!
+The plugin now comes with both Flexslider and jQuery Cycle support, if you've been using the plugin for long time it might be best to stick with jQuery Cycle.
 Once the plugin is updated please *re-save the settings page.*
 
 = 1.12 =
 Once again you need to *re-save the settings page.*
 
 = 1.1 =
-The new theme system allows you to add your own themes.  
+The new theme system allows you to add your own themes.
 *When upgrading you need to re-save the settings on the settings page.*

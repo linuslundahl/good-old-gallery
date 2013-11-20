@@ -3,7 +3,7 @@
 function goodold_gallery_flexslider_setup() {
 	return array(
 		'title'   => 'Flexslider',
-		'version' => '2.1',
+		'version' => '2.2',
 		'files'   => array( 'jquery.flexslider-min.js' ),
 		'class'   => '.go-gallery-inner',
 		'url'     => 'http://www.woothemes.com/flexslider/',
@@ -16,7 +16,7 @@ function goodold_gallery_flexslider_settings() {
 		'animation'         => 'slide',
 		'slideshow'         => 'true',
 		'slideshowSpeed'    => 7000,
-		'animationDuration' => 600,
+		'animatonSpeed'     => 600,
 		'directionNav'      => 'true',
 		'controlNav'        => 'true',
 		'keyboardNav'       => 'true',
@@ -37,7 +37,7 @@ function goodold_gallery_flexslider_settings() {
 function goodold_gallery_flexslider_settings_numeric() {
 	return array(
 		'slideshowSpeed' => __( 'Slideshow speed', 'goodoldgallery'),
-		'animationDuration' => __( 'Animation speed', 'goodoldgallery'),
+		'animatonSpeed' => __( 'Animation speed', 'goodoldgallery'),
 	);
 }
 
@@ -78,7 +78,7 @@ function goodold_gallery_flexslider_settings_form() {
 						'desc' => 'ms',
 					),
 				),
-				'animationDuration' => array(
+				'animationSpeed' => array(
 					'title' => 'Animation speed',
 					'type'  => 'text',
 					'args'  => array(
