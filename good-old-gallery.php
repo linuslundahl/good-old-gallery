@@ -34,7 +34,7 @@ foreach ( $classes as $class ) {
 class GoodOldGallery {
 	public $settings;
 	public $is_admin;
-	static $is_loaded;
+	public $is_loaded;
 
 	public function __construct() {
 		$this->settings = new GOG_Settings();
